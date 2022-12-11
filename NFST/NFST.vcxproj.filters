@@ -1,0 +1,384 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Fichiers sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Fichiers de ressources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Personnages">
+      <UniqueIdentifier>{c747dab1-3a48-44cd-9236-b0204b6d1956}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Personnages">
+      <UniqueIdentifier>{3938a542-5def-4cdb-9ba9-b2a81f4fb862}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Ennemis">
+      <UniqueIdentifier>{fd9c3353-28e3-4282-8a5c-88f3a110e6c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Fonctionnalites">
+      <UniqueIdentifier>{fdc38c9c-3925-43f0-a010-6f7f942e6a9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Ennemis">
+      <UniqueIdentifier>{3ab2e06e-1ddd-427a-89c4-d7cd18fd070a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Fonctionnalites">
+      <UniqueIdentifier>{de214ed9-1073-40e2-9c35-7f6995ca8581}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Affichages">
+      <UniqueIdentifier>{ecb6f0cc-078b-4b1d-aec4-32155579c06e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Affichages">
+      <UniqueIdentifier>{39aa5197-9578-4588-9356-dc64e7e02dc6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Orbes.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Affichage.cpp">
+      <Filter>Fichiers sources\Affichages</Filter>
+    </ClCompile>
+    <ClCompile Include="Aleatoire.cpp">
+      <Filter>Fichiers sources\Fonctionnalites</Filter>
+    </ClCompile>
+    <ClCompile Include="Amine.cpp">
+      <Filter>Fichiers sources\Personnages</Filter>
+    </ClCompile>
+    <ClCompile Include="Animal.cpp">
+      <Filter>Fichiers sources\Fonctionnalites</Filter>
+    </ClCompile>
+    <ClCompile Include="Animaux.cpp">
+      <Filter>Fichiers sources\Fonctionnalites</Filter>
+    </ClCompile>
+    <ClCompile Include="Bouton.cpp">
+      <Filter>Fichiers sources\Affichages</Filter>
+    </ClCompile>
+    <ClCompile Include="Brute.cpp">
+      <Filter>Fichiers sources\Ennemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Bryan.cpp">
+      <Filter>Fichiers sources\Personnages</Filter>
+    </ClCompile>
+    <ClCompile Include="Cerf.cpp">
+      <Filter>Fichiers sources\Ennemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Chasseur.cpp">
+      <Filter>Fichiers sources\Ennemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Cloe.cpp">
+      <Filter>Fichiers sources\Personnages</Filter>
+    </ClCompile>
+    <ClCompile Include="Combat.cpp">
+      <Filter>Fichiers sources\Fonctionnalites</Filter>
+    </ClCompile>
+    <ClCompile Include="Conseils.cpp">
+      <Filter>Fichiers sources\Fonctionnalites</Filter>
+    </ClCompile>
+    <ClCompile Include="Creeper.cpp">
+      <Filter>Fichiers sources\Ennemis</Filter>
+    </ClCompile>
+    <ClCompile Include="David.cpp">
+      <Filter>Fichiers sources\Personnages</Filter>
+    </ClCompile>
+    <ClCompile Include="Delais.cpp">
+      <Filter>Fichiers sources\Fonctionnalites</Filter>
+    </ClCompile>
+    <ClCompile Include="Dragon.cpp">
+      <Filter>Fichiers sources\Ennemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Elite.cpp">
+      <Filter>Fichiers sources\Ennemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Equipes.cpp">
+      <Filter>Fichiers sources\Fonctionnalites</Filter>
+    </ClCompile>
+    <ClCompile Include="Experiences.cpp">
+      <Filter>Fichiers sources\Fonctionnalites</Filter>
+    </ClCompile>
+    <ClCompile Include="Fabian.cpp">
+      <Filter>Fichiers sources\Personnages</Filter>
+    </ClCompile>
+    <ClCompile Include="Fiona.cpp">
+      <Filter>Fichiers sources\Personnages</Filter>
+    </ClCompile>
+    <ClCompile Include="Florian.cpp">
+      <Filter>Fichiers sources\Personnages</Filter>
+    </ClCompile>
+    <ClCompile Include="Ghast.cpp">
+      <Filter>Fichiers sources\Ennemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Grognard.cpp">
+      <Filter>Fichiers sources\Ennemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Isidore.cpp">
+      <Filter>Fichiers sources\Personnages</Filter>
+    </ClCompile>
+    <ClCompile Include="JeanBaptiste.cpp">
+      <Filter>Fichiers sources\Personnages</Filter>
+    </ClCompile>
+    <ClCompile Include="Lapin.cpp">
+      <Filter>Fichiers sources\Ennemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Maelle.cpp">
+      <Filter>Fichiers sources\Personnages</Filter>
+    </ClCompile>
+    <ClCompile Include="Magicien.cpp">
+      <Filter>Fichiers sources\Ennemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Moustick.cpp">
+      <Filter>Fichiers sources\Personnages</Filter>
+    </ClCompile>
+    <ClCompile Include="Nicolas.cpp">
+      <Filter>Fichiers sources\Personnages</Filter>
+    </ClCompile>
+    <ClCompile Include="Objet.cpp">
+      <Filter>Fichiers sources\Fonctionnalites</Filter>
+    </ClCompile>
+    <ClCompile Include="Objets.cpp">
+      <Filter>Fichiers sources\Fonctionnalites</Filter>
+    </ClCompile>
+    <ClCompile Include="Personnage.cpp">
+      <Filter>Fichiers sources\Fonctionnalites</Filter>
+    </ClCompile>
+    <ClCompile Include="Phenix.cpp">
+      <Filter>Fichiers sources\Personnages</Filter>
+    </ClCompile>
+    <ClCompile Include="PhenixE.cpp">
+      <Filter>Fichiers sources\Ennemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Point.cpp">
+      <Filter>Fichiers sources\Fonctionnalites</Filter>
+    </ClCompile>
+    <ClCompile Include="Rapace.cpp">
+      <Filter>Fichiers sources\Ennemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Salim.cpp">
+      <Filter>Fichiers sources\Personnages</Filter>
+    </ClCompile>
+    <ClCompile Include="Sanglier.cpp">
+      <Filter>Fichiers sources\Ennemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Sebastien.cpp">
+      <Filter>Fichiers sources\Personnages</Filter>
+    </ClCompile>
+    <ClCompile Include="SqueletteArcher.cpp">
+      <Filter>Fichiers sources\Ennemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Statistiques.cpp">
+      <Filter>Fichiers sources\Fonctionnalites</Filter>
+    </ClCompile>
+    <ClCompile Include="Status.cpp">
+      <Filter>Fichiers sources\Fonctionnalites</Filter>
+    </ClCompile>
+    <ClCompile Include="Tellurique.cpp">
+      <Filter>Fichiers sources\Ennemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Thomas.cpp">
+      <Filter>Fichiers sources\Personnages</Filter>
+    </ClCompile>
+    <ClCompile Include="Tortue.cpp">
+      <Filter>Fichiers sources\Personnages</Filter>
+    </ClCompile>
+    <ClCompile Include="TortueE.cpp">
+      <Filter>Fichiers sources\Ennemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Wither.cpp">
+      <Filter>Fichiers sources\Ennemis</Filter>
+    </ClCompile>
+    <ClCompile Include="WitherSquelette.cpp">
+      <Filter>Fichiers sources\Ennemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Zombie.cpp">
+      <Filter>Fichiers sources\Ennemis</Filter>
+    </ClCompile>
+    <ClCompile Include="Zones.cpp">
+      <Filter>Fichiers sources\Fonctionnalites</Filter>
+    </ClCompile>
+    <ClCompile Include="entiter.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="AffichageCombat.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Affichage.h">
+      <Filter>Fichiers d%27en-tête\Affichages</Filter>
+    </ClInclude>
+    <ClInclude Include="Aleatoire.h">
+      <Filter>Fichiers d%27en-tête\Fonctionnalites</Filter>
+    </ClInclude>
+    <ClInclude Include="Amine.h">
+      <Filter>Fichiers d%27en-tête\Personnages</Filter>
+    </ClInclude>
+    <ClInclude Include="Animal.h">
+      <Filter>Fichiers d%27en-tête\Fonctionnalites</Filter>
+    </ClInclude>
+    <ClInclude Include="Animaux.h">
+      <Filter>Fichiers d%27en-tête\Fonctionnalites</Filter>
+    </ClInclude>
+    <ClInclude Include="Bouton.h">
+      <Filter>Fichiers d%27en-tête\Affichages</Filter>
+    </ClInclude>
+    <ClInclude Include="Brute.h">
+      <Filter>Fichiers d%27en-tête\Ennemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Bryan.h">
+      <Filter>Fichiers d%27en-tête\Personnages</Filter>
+    </ClInclude>
+    <ClInclude Include="Cerf.h">
+      <Filter>Fichiers d%27en-tête\Ennemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Chasseur.h">
+      <Filter>Fichiers d%27en-tête\Ennemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Cloe.h">
+      <Filter>Fichiers d%27en-tête\Personnages</Filter>
+    </ClInclude>
+    <ClInclude Include="Combat.h">
+      <Filter>Fichiers d%27en-tête\Fonctionnalites</Filter>
+    </ClInclude>
+    <ClInclude Include="Conseils.h">
+      <Filter>Fichiers d%27en-tête\Fonctionnalites</Filter>
+    </ClInclude>
+    <ClInclude Include="Creeper.h">
+      <Filter>Fichiers d%27en-tête\Ennemis</Filter>
+    </ClInclude>
+    <ClInclude Include="David.h">
+      <Filter>Fichiers d%27en-tête\Personnages</Filter>
+    </ClInclude>
+    <ClInclude Include="Delais.h">
+      <Filter>Fichiers d%27en-tête\Fonctionnalites</Filter>
+    </ClInclude>
+    <ClInclude Include="Dragon.h">
+      <Filter>Fichiers d%27en-tête\Ennemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Elite.h">
+      <Filter>Fichiers d%27en-tête\Ennemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Equipes.h">
+      <Filter>Fichiers d%27en-tête\Fonctionnalites</Filter>
+    </ClInclude>
+    <ClInclude Include="Experiences.h">
+      <Filter>Fichiers d%27en-tête\Fonctionnalites</Filter>
+    </ClInclude>
+    <ClInclude Include="Fabian.h">
+      <Filter>Fichiers d%27en-tête\Personnages</Filter>
+    </ClInclude>
+    <ClInclude Include="Fiona.h">
+      <Filter>Fichiers d%27en-tête\Personnages</Filter>
+    </ClInclude>
+    <ClInclude Include="Florian.h">
+      <Filter>Fichiers d%27en-tête\Personnages</Filter>
+    </ClInclude>
+    <ClInclude Include="Ghast.h">
+      <Filter>Fichiers d%27en-tête\Ennemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Grognard.h">
+      <Filter>Fichiers d%27en-tête\Ennemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Isidore.h">
+      <Filter>Fichiers d%27en-tête\Personnages</Filter>
+    </ClInclude>
+    <ClInclude Include="JeanBaptiste.h">
+      <Filter>Fichiers d%27en-tête\Personnages</Filter>
+    </ClInclude>
+    <ClInclude Include="Lapin.h">
+      <Filter>Fichiers d%27en-tête\Ennemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Maelle.h">
+      <Filter>Fichiers d%27en-tête\Personnages</Filter>
+    </ClInclude>
+    <ClInclude Include="Magicien.h">
+      <Filter>Fichiers d%27en-tête\Ennemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Moustick.h">
+      <Filter>Fichiers d%27en-tête\Personnages</Filter>
+    </ClInclude>
+    <ClInclude Include="Nicolas.h">
+      <Filter>Fichiers d%27en-tête\Personnages</Filter>
+    </ClInclude>
+    <ClInclude Include="Objet.h">
+      <Filter>Fichiers d%27en-tête\Fonctionnalites</Filter>
+    </ClInclude>
+    <ClInclude Include="Objets.h">
+      <Filter>Fichiers d%27en-tête\Fonctionnalites</Filter>
+    </ClInclude>
+    <ClInclude Include="Orbes.h">
+      <Filter>Fichiers d%27en-tête\Fonctionnalites</Filter>
+    </ClInclude>
+    <ClInclude Include="Personnage.h">
+      <Filter>Fichiers d%27en-tête\Fonctionnalites</Filter>
+    </ClInclude>
+    <ClInclude Include="Phenix.h">
+      <Filter>Fichiers d%27en-tête\Personnages</Filter>
+    </ClInclude>
+    <ClInclude Include="PhenixE.h">
+      <Filter>Fichiers d%27en-tête\Ennemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>Fichiers d%27en-tête\Fonctionnalites</Filter>
+    </ClInclude>
+    <ClInclude Include="Rapace.h">
+      <Filter>Fichiers d%27en-tête\Ennemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Salim.h">
+      <Filter>Fichiers d%27en-tête\Personnages</Filter>
+    </ClInclude>
+    <ClInclude Include="Sanglier.h">
+      <Filter>Fichiers d%27en-tête\Ennemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Sebastien.h">
+      <Filter>Fichiers d%27en-tête\Personnages</Filter>
+    </ClInclude>
+    <ClInclude Include="SqueletteArcher.h">
+      <Filter>Fichiers d%27en-tête\Ennemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Statistiques.h">
+      <Filter>Fichiers d%27en-tête\Fonctionnalites</Filter>
+    </ClInclude>
+    <ClInclude Include="Status.h">
+      <Filter>Fichiers d%27en-tête\Fonctionnalites</Filter>
+    </ClInclude>
+    <ClInclude Include="Tellurique.h">
+      <Filter>Fichiers d%27en-tête\Ennemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Thomas.h">
+      <Filter>Fichiers d%27en-tête\Personnages</Filter>
+    </ClInclude>
+    <ClInclude Include="Tortue.h">
+      <Filter>Fichiers d%27en-tête\Personnages</Filter>
+    </ClInclude>
+    <ClInclude Include="TortueE.h">
+      <Filter>Fichiers d%27en-tête\Ennemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Wither.h">
+      <Filter>Fichiers d%27en-tête\Ennemis</Filter>
+    </ClInclude>
+    <ClInclude Include="WitherSquelette.h">
+      <Filter>Fichiers d%27en-tête\Ennemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Zombie.h">
+      <Filter>Fichiers d%27en-tête\Ennemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Zones.h">
+      <Filter>Fichiers d%27en-tête\Fonctionnalites</Filter>
+    </ClInclude>
+    <ClInclude Include="entiter.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="AffichageCombat.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
