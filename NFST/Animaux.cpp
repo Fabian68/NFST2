@@ -72,7 +72,7 @@ bool Animaux::animalDebloquer(int indicePersonnage, int indiceAnimal, int rarete
 	return _animauxPosseder[indicePersonnage][indiceAnimal]>=rareteAnimal;
 }
 
-void Animaux::deblocageAnimal(int indicePersonnage, int indiceAnimal, int rareteAnimal,std::string perso, sf::RenderWindow* window)
+void Animaux::deblocageAnimal(int indicePersonnage, int indiceAnimal, int rareteAnimal,std::string perso, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound>>& allSounds)
 {
 	std::string txt= "";
 	txt+= perso + " a débloquer un animal ";
@@ -152,11 +152,11 @@ void Animaux::deblocageAnimal(int indicePersonnage, int indiceAnimal, int rarete
 				xc = (float)position.x;
 				yc = (float)position.y;
 
-				if (Equiper.comprendLesCoord(xc, yc)) {
+				if (Equiper.comprendLesCoord(xc, yc,allSounds)) {
 					selectionner = true;
 					_animauxUtiliser[indicePersonnage] = indiceAnimal;
 				}
-				else if (NePasEquiper.comprendLesCoord(xc, yc)) {
+				else if (NePasEquiper.comprendLesCoord(xc, yc,allSounds)) {
 					selectionner = true;
 				}
 			}

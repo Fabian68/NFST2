@@ -7,7 +7,7 @@
 #include "AffichageCombat.h"
 
 
-Combat::Combat(Equipes  & Joueur, Equipes  & Ia,Zones & Z,Animaux & A,Orbes & O, sf::RenderWindow* window) : _joueur{Joueur}, _ia{Ia},_tour{0}
+Combat::Combat(Equipes  & Joueur, Equipes  & Ia,Zones & Z,Animaux & A,Orbes & O, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound>>& allSounds) : _joueur{Joueur}, _ia{Ia},_tour{0}
 {
 
 
@@ -136,13 +136,13 @@ Combat::Combat(Equipes  & Joueur, Equipes  & Ia,Zones & Z,Animaux & A,Orbes & O,
 		Experiences E;
 		
 		_joueur.ajouterExperience(xp, E);
-		tirageRecompenses(Z, A, O, window);
+		tirageRecompenses(Z, A, O, window,allSounds);
 	}
 	//Affichage().dessinerDeuxEquipes(_joueur, _ia,window);
 	
 }
 
-void Combat::tirageRecompenses(Zones Z,Animaux A,Orbes O, sf::RenderWindow* window) {
+void Combat::tirageRecompenses(Zones Z,Animaux A,Orbes O, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound>>& allSounds) {
 	int indiceJoueur;
 
 	int chanceTirage;
@@ -156,7 +156,7 @@ void Combat::tirageRecompenses(Zones Z,Animaux A,Orbes O, sf::RenderWindow* wind
 			for (int k = 1; k <= 5; k++) {
 				if (Aleatoire(0, chanceTirage).entier() ==1) {
 					if (!A.animalDebloquer(indiceJoueur, j, k)) {
-						A.deblocageAnimal(indiceJoueur, j, k, _joueur[i]->nom(),window);
+						A.deblocageAnimal(indiceJoueur, j, k, _joueur[i]->nom(),window,allSounds);
 					}
 				}
 				//detecting overflow
@@ -179,7 +179,7 @@ void Combat::tirageRecompenses(Zones Z,Animaux A,Orbes O, sf::RenderWindow* wind
 		for (int j = 1; j <= 5; j++) {
 			if (Aleatoire(0, chanceTirage).entier() == 1) {
 				if (!O.orbeDebloquer(indiceJoueur,j)) {
-					O.deblocageOrbe(indiceJoueur, j, _joueur[i]->nom(),window);
+					O.deblocageOrbe(indiceJoueur, j, _joueur[i]->nom(),window,allSounds);
 				}
 			}
 			if (chanceTirage > (int)(INT_MAX / 10.0 -1)) {
@@ -196,11 +196,11 @@ void Combat::tirageRecompenses(Zones Z,Animaux A,Orbes O, sf::RenderWindow* wind
 		if (!obj.estDebloquer(objets[i])) {
 			if (objets[i].numero() == 34 ) {
 				if (_joueur.comprendPersonnage(1) && Aleatoire(0, objets[i].rareter() + 1).entier() == 1) {
-					obj.deblocageObjet(objets[i].numero(),window);
+					obj.deblocageObjet(objets[i].numero(),window,allSounds);
 				}
 			}
 			else if (Aleatoire(0, objets[i].rareter() + 1).entier()==1) {
-				obj.deblocageObjet(objets[i].numero(),window);
+				obj.deblocageObjet(objets[i].numero(),window,allSounds);
 			}
 		}
 	}

@@ -91,7 +91,7 @@ bool Orbes::orbeDebloquer(int indiceJoueur, int rareter) const
 	return _orbesLVL[indiceJoueur][rareter-1] != 0;
 }
 
-void Orbes::deblocageOrbe(int indiceJoueur, int rareter, std::string perso, sf::RenderWindow* window)
+void Orbes::deblocageOrbe(int indiceJoueur, int rareter, std::string perso, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound>>& allSounds)
 {
 	std::string txt = "";
 	txt+= perso +" a débloquer une orbe ";
@@ -149,15 +149,15 @@ void Orbes::deblocageOrbe(int indiceJoueur, int rareter, std::string perso, sf::
 		xc = (float)position.x;
 		yc = (float)position.y;
 
-		if (Un.comprendLesCoord(xc, yc)) {
+		if (Un.comprendLesCoord(xc, yc,allSounds)) {
 			selectionner = true;
 			select = 1;
 		}
-		else if (Deux.comprendLesCoord(xc, yc)) {
+		else if (Deux.comprendLesCoord(xc, yc,allSounds)) {
 			selectionner = true;
 			select = 2;
 		}
-		else if(Trois.comprendLesCoord(xc, yc)){
+		else if(Trois.comprendLesCoord(xc, yc,allSounds)){
 			selectionner = true;
 			select = 3;
 		}

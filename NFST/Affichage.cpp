@@ -44,7 +44,7 @@ void Affichage::affichageTexte(float x, float y, std::string texte, sf::Color co
 	//(*window).display();
 }
 
-void Affichage::afficherJoueurs(int indice, Equipes& Liste, sf::RenderWindow* window)const {
+void Affichage::afficherJoueurs(int indice, Equipes& Liste, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound >>& allSounds)const {
 	float x = 50;
 	float y = 20;
 	std::string str;
@@ -268,7 +268,7 @@ void Affichage::afficherJoueurs(int indice, Equipes& Liste, sf::RenderWindow* wi
 				yc = (float)position.y;
 				for (int i = 0, k = 210; i < 9; i++) {
 					if (N.animalDebloquer(Liste[indice]->id(), i, 1) && i != A.indice()) {
-						if (Bouton(665.f, (float)k, "Equiper").comprendLesCoord(xc, yc)) {
+						if (Bouton(665.f, (float)k, "Equiper").comprendLesCoord(xc, yc,allSounds)) {
 
 							N.setAnimalPersonnage(indice, i);
 							Liste[indice]->setAnimal(Animal(i));
@@ -281,7 +281,7 @@ void Affichage::afficherJoueurs(int indice, Equipes& Liste, sf::RenderWindow* wi
 					if (O.orbeDebloquer(indice, i)) {
 						for (int jj = 1, xpas = 0; jj <= 3; jj++) {
 							if (O.choixOrbe(indice, i) != jj) {
-								if (Bouton(x + 210.f + (float)xpas, (float)k - 10.f, "ATK", sf::Color::Black, sf::Color::White, sf::Color::White).comprendLesCoord(xc, yc)) {
+								if (Bouton(x + 210.f + (float)xpas, (float)k - 10.f, "ATK", sf::Color::Black, sf::Color::White, sf::Color::White).comprendLesCoord(xc, yc,allSounds)) {
 									O.setChoixOrbe(indice, i, jj);
 									OrbeChoisit = true;
 								}
@@ -295,50 +295,50 @@ void Affichage::afficherJoueurs(int indice, Equipes& Liste, sf::RenderWindow* wi
 		}
 
 
-	} while (!Retour.comprendLesCoord(xc, yc) && !Suivant.comprendLesCoord(xc, yc) && !equiperAnimal && !Precedent.comprendLesCoord(xc, yc) && !OrbeChoisit && !AjouterObjet1.comprendLesCoord(xc, yc) && !AjouterObjet2.comprendLesCoord(xc, yc) && !AjouterObjet3.comprendLesCoord(xc, yc) && !AjouterObjet4.comprendLesCoord(xc, yc));
+	} while (!Retour.comprendLesCoord(xc, yc,allSounds) && !Suivant.comprendLesCoord(xc, yc,allSounds) && !equiperAnimal && !Precedent.comprendLesCoord(xc, yc,allSounds) && !OrbeChoisit && !AjouterObjet1.comprendLesCoord(xc, yc,allSounds) && !AjouterObjet2.comprendLesCoord(xc, yc,allSounds) && !AjouterObjet3.comprendLesCoord(xc, yc,allSounds) && !AjouterObjet4.comprendLesCoord(xc, yc,allSounds));
 
-	if (Suivant.comprendLesCoord(xc, yc)) {
+	if (Suivant.comprendLesCoord(xc, yc,allSounds)) {
 		indice = (indice + 1) % Liste.taille();
 		(*window).clear();
-		afficherJoueurs(indice, Liste, window);
+		afficherJoueurs(indice, Liste, window,allSounds);
 	}
-	else if (Precedent.comprendLesCoord(xc, yc)) {
+	else if (Precedent.comprendLesCoord(xc, yc,allSounds)) {
 		indice--;
 		if (indice < 0) {
 			indice = Liste.taille() - 1;
 		}
 		(*window).clear();
-		afficherJoueurs(indice, Liste, window);
+		afficherJoueurs(indice, Liste, window,allSounds);
 	}
 	else if (equiperAnimal || OrbeChoisit) {
 		(*window).clear();
-		afficherJoueurs(indice, Liste, window);
+		afficherJoueurs(indice, Liste, window,allSounds);
 	}
-	else if (AjouterObjet1.comprendLesCoord(xc, yc)) {
+	else if (AjouterObjet1.comprendLesCoord(xc, yc,allSounds)) {
 		Objets obj;
 		(*window).clear();
-		choixObjets(1, obj, true, indice, Liste, window);
+		choixObjets(1, obj, true, indice, Liste, window,allSounds);
 	}
-	else if (AjouterObjet2.comprendLesCoord(xc, yc)) {
+	else if (AjouterObjet2.comprendLesCoord(xc, yc,allSounds)) {
 		Objets obj;
 		(*window).clear();
-		choixObjets(1, obj, false, indice, Liste, window);
+		choixObjets(1, obj, false, indice, Liste, window,allSounds);
 	}
-	else if (AjouterObjet3.comprendLesCoord(xc, yc) && Z.niveauMax() >= 25) {
+	else if (AjouterObjet3.comprendLesCoord(xc, yc,allSounds) && Z.niveauMax() >= 25) {
 		Objets obj;
 		(*window).clear();
-		choixObjets(1, obj, true, indice, Liste, window, 2);
+		choixObjets(1, obj, true, indice, Liste, window,allSounds, 2);
 	}
-	else if (AjouterObjet4.comprendLesCoord(xc, yc) && Z.niveauMax() >= 25) {
+	else if (AjouterObjet4.comprendLesCoord(xc, yc,allSounds) && Z.niveauMax() >= 25) {
 		Objets obj;
 		(*window).clear();
-		choixObjets(1, obj, false, indice, Liste, window, 2);
+		choixObjets(1, obj, false, indice, Liste, window,allSounds, 2);
 	}
 	(*window).display();
 	(*window).clear();
 }
 
-void Affichage::choixObjets(int page, Objets  obj, bool premierObjet, int indicePersonnage, Equipes& Liste, sf::RenderWindow* window, int set)const {
+void Affichage::choixObjets(int page, Objets  obj, bool premierObjet, int indicePersonnage, Equipes& Liste, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound >>& allSounds, int set)const {
 	int maxPage = (int)(obj.nombreObjets() / 15) + 1;
 	std::cout << obj.nombreObjets() << " " << maxPage << " ";
 	float y = 20.f;
@@ -387,7 +387,7 @@ void Affichage::choixObjets(int page, Objets  obj, bool premierObjet, int indice
 				yc = (float)position.y;
 
 				for (int i = (page - 1) * 15 + 1; i <= std::min(obj.nombreObjets(), page * 15); i++) {
-					if (obj.estDebloquer(obj.objetNumero(i)) && Bouton(1000.f, y + 25.f, "Equiper").comprendLesCoord(xc, yc)) {
+					if (obj.estDebloquer(obj.objetNumero(i)) && Bouton(1000.f, y + 25.f, "Equiper").comprendLesCoord(xc, yc,allSounds)) {
 						if (set == 2) {
 							Liste[indicePersonnage]->equiperObjet2(obj.objetNumero(i), premierObjet);
 							obj.equiperObjetDuPersonnage2(indicePersonnage, obj.objetNumero(i), premierObjet);
@@ -402,25 +402,25 @@ void Affichage::choixObjets(int page, Objets  obj, bool premierObjet, int indice
 					y += 50.f;
 				}
 				if (choix != true) {
-					if (Precedent.comprendLesCoord(xc, yc)) {
+					if (Precedent.comprendLesCoord(xc, yc,allSounds)) {
 						page--;
 						if (page <= 0) {
 							page = maxPage;
 						}
 						choix = true;
 						(*window).clear();
-						choixObjets(page, obj, premierObjet, indicePersonnage, Liste, window, set);
+						choixObjets(page, obj, premierObjet, indicePersonnage, Liste, window,allSounds, set);
 					}
-					else if (Suivant.comprendLesCoord(xc, yc)) {
+					else if (Suivant.comprendLesCoord(xc, yc,allSounds)) {
 						page++;
 						if (page > maxPage) {
 							page = 1;
 						}
 						choix = true;
 						(*window).clear();
-						choixObjets(page, obj, premierObjet, indicePersonnage, Liste, window, set);
+						choixObjets(page, obj, premierObjet, indicePersonnage, Liste, window,allSounds, set);
 					}
-					else if (Retour.comprendLesCoord(xc, yc)) {
+					else if (Retour.comprendLesCoord(xc, yc,allSounds)) {
 						choix = true;
 					}
 				}
@@ -429,9 +429,9 @@ void Affichage::choixObjets(int page, Objets  obj, bool premierObjet, int indice
 	} while (!choix);
 	(*window).display();
 	(*window).clear();
-	afficherJoueurs(indicePersonnage, Liste, window);
+	afficherJoueurs(indicePersonnage, Liste, window,allSounds);
 }
-void Affichage::afficherAnimaux(Animaux A, sf::RenderWindow* window) const
+void Affichage::afficherAnimaux(Animaux A, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound >>& allSounds) const
 {
 	sf::Color couleurTexte = sf::Color::Red;
 	sf::Color couleurFond = sf::Color::Black;
@@ -568,7 +568,7 @@ void Affichage::afficherAnimaux(Animaux A, sf::RenderWindow* window) const
 				yc = (float)position.y;
 			}
 		}
-	} while (!retour.comprendLesCoord(xc, yc));
+	} while (!retour.comprendLesCoord(xc, yc,allSounds));
 	(*window).display();
 	(*window).clear();
 }
@@ -580,7 +580,7 @@ void Affichage::dessinerTexte(std::string texte, sf::RenderWindow* window)const 
 	sf::Time  DELAY = sf::milliseconds(Delais().getDelais() * 10);
 }
 
-void Affichage::choixNiveau(Zones Z, Objets obj, int& niveau, int& repetition, sf::RenderWindow* window) const
+void Affichage::choixNiveau(Zones Z, Objets obj, int& niveau, int& repetition, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound >>& allSounds) const
 {
 
 	int niveauMax = Z.niveauMax();
@@ -642,53 +642,53 @@ void Affichage::choixNiveau(Zones Z, Objets obj, int& niveau, int& repetition, s
 				xc = (float)position.x;
 				yc = (float)position.y;
 
-				if (plus1.comprendLesCoord(xc, yc)) {
+				if (plus1.comprendLesCoord(xc, yc,allSounds)) {
 					(*window).clear();
 					bouttonHit = true;
-					choixNiveau(Z, obj, ++niveau, repetition, window);
+					choixNiveau(Z, obj, ++niveau, repetition, window,allSounds);
 				}
-				else if (plus10.comprendLesCoord(xc, yc)) {
+				else if (plus10.comprendLesCoord(xc, yc,allSounds)) {
 					(*window).clear();
 					bouttonHit = true;
 					niveau = niveau + 10;
-					choixNiveau(Z, obj, niveau, repetition, window);
+					choixNiveau(Z, obj, niveau, repetition, window,allSounds);
 				}
-				else if (moins1.comprendLesCoord(xc, yc)) {
+				else if (moins1.comprendLesCoord(xc, yc,allSounds)) {
 					(*window).clear();
 					bouttonHit = true;
-					choixNiveau(Z, obj, --niveau, repetition, window);
+					choixNiveau(Z, obj, --niveau, repetition, window,allSounds);
 				}
-				else if (moins10.comprendLesCoord(xc, yc)) {
+				else if (moins10.comprendLesCoord(xc, yc,allSounds)) {
 					(*window).clear();
 					bouttonHit = true;
 					niveau = niveau - 10;
-					choixNiveau(Z, obj, niveau, repetition, window);
+					choixNiveau(Z, obj, niveau, repetition, window,allSounds);
 				}
-				else if (plus1r.comprendLesCoord(xc, yc)) {
+				else if (plus1r.comprendLesCoord(xc, yc,allSounds)) {
 					(*window).clear();
 					bouttonHit = true;
-					choixNiveau(Z, obj, niveau, ++repetition, window);
+					choixNiveau(Z, obj, niveau, ++repetition, window,allSounds);
 				}
-				else if (plus10r.comprendLesCoord(xc, yc)) {
+				else if (plus10r.comprendLesCoord(xc, yc,allSounds)) {
 					(*window).clear();
 					bouttonHit = true;
 					repetition += 10;
-					choixNiveau(Z, obj, niveau, repetition, window);
+					choixNiveau(Z, obj, niveau, repetition, window,allSounds);
 				}
-				else if (moins1r.comprendLesCoord(xc, yc)) {
+				else if (moins1r.comprendLesCoord(xc, yc,allSounds)) {
 					(*window).clear();
 					bouttonHit = true;
-					choixNiveau(Z, obj, niveau, --repetition, window);
+					choixNiveau(Z, obj, niveau, --repetition, window,allSounds);
 				}
-				else if (moins10r.comprendLesCoord(xc, yc)) {
+				else if (moins10r.comprendLesCoord(xc, yc,allSounds)) {
 					(*window).clear();
 					bouttonHit = true;
 					repetition -= 10;
-					choixNiveau(Z, obj, niveau, repetition, window);
+					choixNiveau(Z, obj, niveau, repetition, window,allSounds);
 				}
 			}
 		}
-	} while (!confirmer.comprendLesCoord(xc, yc) && !bouttonHit);
+	} while (!confirmer.comprendLesCoord(xc, yc,allSounds) && !bouttonHit);
 	(*window).display();
 	(*window).clear();
 }
@@ -717,7 +717,7 @@ void Affichage::afficherObjetsDeblocableNiveau(Objets obj, int niveau, sf::Rende
 	afficherTexte(300.f, 460.f, "LOOT", sf::Color::White, window);
 	afficherTexte(50.f, 490.f, txt, sf::Color::White, window);
 }
-void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix, int max, sf::RenderWindow* window) const
+void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix, int max, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound >>& allSounds) const
 {
 	//(*window).clear();
 	Objets O = Objets();
@@ -778,7 +778,7 @@ void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix, int max, sf::
 
 				if (max > 0) {
 					for (int i = 0; i < 14; i++) {
-						if (Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + choix[i]->nom()).comprendLesCoord(xc, yc)) {
+						if (Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + choix[i]->nom()).comprendLesCoord(xc, yc,allSounds)) {
 							if (Gentil.comprendPersonnage(choix[i]->id())) {
 								afficherTexte(400.f, 20.f, "Personnage déja selectionner", sf::Color::White, window);
 							}
@@ -790,7 +790,7 @@ void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix, int max, sf::
 
 							boutonSelectionnerPerso = true;
 							(*window).clear();
-							menuModifierEquipe(Gentil, choix, max, window);
+							menuModifierEquipe(Gentil, choix, max, window,allSounds);
 						}
 					}
 					for (int i = 14; i < choix.taille(); i++) {
@@ -802,7 +802,7 @@ void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix, int max, sf::
 
 							}
 							else {
-								if (Bouton(600.f, (float)(i - 13) * 45.f, std::to_string(i) + choix[i]->nom()).comprendLesCoord(xc, yc)) {
+								if (Bouton(600.f, (float)(i - 13) * 45.f, std::to_string(i) + choix[i]->nom()).comprendLesCoord(xc, yc,allSounds)) {
 									if (Gentil.comprendPersonnage(choix[i]->id())) {
 										afficherTexte(400, 20, "Personnage déja selectionner", sf::Color::White, window);
 									}
@@ -814,7 +814,7 @@ void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix, int max, sf::
 
 									boutonSelectionnerPerso = true;
 									(*window).clear();
-									menuModifierEquipe(Gentil, choix, max, window);
+									menuModifierEquipe(Gentil, choix, max, window,allSounds);
 								}
 							}
 						}
@@ -822,20 +822,20 @@ void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix, int max, sf::
 					}
 				}
 				if (Gentil.taille() > 0) {
-					if (retirer.comprendLesCoord(xc, yc)) {
+					if (retirer.comprendLesCoord(xc, yc,allSounds)) {
 						boutonSelectionnerAutre = true;
 						Gentil.retirerDernierPerso();
 						(*window).clear();
-						menuModifierEquipe(Gentil, choix, ++max, window);
+						menuModifierEquipe(Gentil, choix, ++max, window,allSounds);
 					}
 				}
-				if (Sauvegarder.comprendLesCoord(xc, yc)) {
+				if (Sauvegarder.comprendLesCoord(xc, yc,allSounds)) {
 					Gentil.sauvegarderEquipe();
 					boutonSelectionnerAutre = true;
 					(*window).clear();
-					menuModifierEquipe(Gentil, choix, max, window);
+					menuModifierEquipe(Gentil, choix, max, window,allSounds);
 				}
-				else if (Retour.comprendLesCoord(xc, yc)) {
+				else if (Retour.comprendLesCoord(xc, yc,allSounds)) {
 
 					boutonSelectionnerAutre = true;
 				}

@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-Bouton::Bouton(float xDepart, float yDepart, std::string texte, sf::Color couleurRectangle, sf::Color couleurBordure, sf::Color couleurTexte) : _xPos{xDepart}, _yPos{yDepart},_couleurRectangle{couleurRectangle},_couleurBordure{couleurBordure},_couleurTexte{couleurTexte}, _texte{texte}
+Bouton::Bouton(float xDepart, float yDepart, std::string texte,  sf::Color couleurRectangle, sf::Color couleurBordure, sf::Color couleurTexte) : _xPos{xDepart}, _yPos{yDepart},_couleurRectangle{couleurRectangle},_couleurBordure{couleurBordure},_couleurTexte{couleurTexte}, _texte{texte}
 {
 	_xSize = 8.f * (float)texte.size()+20.f;
 	_ySize =  40.f;
@@ -12,13 +12,6 @@ Bouton::Bouton(float xDepart, float yDepart, std::string texte, sf::Color couleu
 
 	_x2 = _x1 + _xSize;
 	_y2 = _y1 + _ySize;
-	if (!buffer.loadFromFile("vine-boom.ogg")) {
-
-	}
-	else {
-		sound.setBuffer(buffer);
-		//sound.play();
-	}
 }
 
 void Bouton::afficher(sf::RenderWindow * window) const
@@ -45,14 +38,11 @@ void Bouton::afficher(sf::RenderWindow * window) const
 	(* window).draw(text);
 }
 
-bool Bouton::comprendLesCoord(float x, float y) 
+bool Bouton::comprendLesCoord(float x, float y, std::pair < sf::SoundBuffer,std::vector< sf::Sound >> &allSounds)
 {
 	if ((x >= _x1 && x <= _x2) && (y >= _y1 && y <= _y2)) {
-	
-		sound.play();
-		
-		//sf::sleep(sf::milliseconds(500));
-		
+		allSounds.second[1].play();
+		//asound.play();
 		return true;
 	}
 	else {

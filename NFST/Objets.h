@@ -3,6 +3,7 @@
 #include <vector>
 #include <utility>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 class Objets
 {
@@ -18,7 +19,7 @@ public:
 	bool estDebloquer(Objet obj) const;
 	int nombreObjets() const;
 	Objet  objetNumero(int numero);
-	void deblocageObjet( int indiceObjet, sf::RenderWindow* window);
+	void deblocageObjet( int indiceObjet, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound>>& allSounds);
 	void sauvegarderObjetsDebloquer();
 private:
 	std::vector<std::vector<Objet>> _tableLoot;

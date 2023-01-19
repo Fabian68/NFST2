@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 class Orbes
 {
 public:
@@ -9,7 +10,7 @@ public:
 	void sauvegarder();
 	void buffOrbes(int indiceJoueur, int& attaqueLvlBonus, int& vieLvLBonus, int& vitesseLvlBonus)const;
 	bool orbeDebloquer(int indiceJoueur, int rareter)const;
-	void deblocageOrbe(int indiceJoueur, int rareter, std::string perso, sf::RenderWindow* window);
+	void deblocageOrbe(int indiceJoueur, int rareter, std::string perso, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound>>& allSounds);
     int choixOrbe(int indicePerso,int rareter)const;
 	void setChoixOrbe(int indicePerso,int rareter, int choix);
 private:

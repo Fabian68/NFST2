@@ -32,6 +32,7 @@
 #include"AffichageCombat.h"
 #define PI 3.14159265
 
+
 void reinitListeEquipe(Equipes& Liste) {
 	Experiences E;
 	Orbes O;
@@ -61,21 +62,32 @@ void reinitListeEquipe(Equipes& Liste) {
 void reinitEquipe(Equipes& monEquipe, Equipes& ListePerso) {
 	monEquipe.vider();
 	monEquipe.chargerEquipe(ListePerso);
+	
+
+}
+void loadSongs(sf::SoundBuffer& buffer, std::vector< sf::Sound>& sounds) {	
+	buffer.loadFromFile("giga-chad.ogg");
+	sf::Sound sound1;	
+	sound1.setBuffer(buffer);
+	sounds.push_back(sound1);
+	buffer.loadFromFile("vine-boom.ogg");
+	sf::Sound sound2;
+	sound2.setBuffer(buffer);
+	sounds.push_back(sound2);
+	
 }
 int main()
 {
 	srand(time(0));
 
-	sf::Music buffer;
-	if (!buffer.openFromFile("dry-fart.ogg")) {
-		std::cout << "Son fonctionne pas" << std::endl;
-	}
-	else {
-		//buffer.setLoop(true);
-		buffer.play();
-		std::cout << "Son fonctionne " << std::endl;
-	}
 	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1200, 800), "My window");
+
+	sf::SoundBuffer buffer;
+	std::vector< sf::Sound> sounds;
+	sounds.reserve(100);
+	loadSongs(buffer, sounds);
+	std::pair < sf::SoundBuffer, std::vector< sf::Sound>> allSounds(buffer,sounds);
+	
 	(*window).setActive(true);
 	//(*window).setVerticalSyncEnabled(true);
 	//(*window).setFramerateLimit(10);
@@ -131,19 +143,19 @@ int main()
 				y = (float)position.y;
 				std::cout << '(' << x << ',' << y << ')' << std::endl;
 
-				if (AfficherJoueurs.comprendLesCoord(x, y)) {
+				if (AfficherJoueurs.comprendLesCoord(x, y,allSounds)) {
 					(*window).clear();
-					H.afficherJoueurs(0, choix, window);
+					H.afficherJoueurs(0, choix, window,allSounds);
 				}
-				else if (AfficherAnimaux.comprendLesCoord(x, y)) {
+				else if (AfficherAnimaux.comprendLesCoord(x, y,allSounds)) {
 					(*window).clear();
-					H.afficherAnimaux(A, window);
+					H.afficherAnimaux(A, window,allSounds);
 				}
-				else if (Jouer.comprendLesCoord(x, y) && Gentil.taille() > 0) {
+				else if (Jouer.comprendLesCoord(x, y,allSounds) && Gentil.taille() > 0) {
 					(*window).clear();
 					int niveauChoisit = Z.niveauActuel();
 					int repetition = 1;
-					H.choixNiveau(Z, Obj, niveauChoisit, repetition, window);
+					H.choixNiveau(Z, Obj, niveauChoisit, repetition, window,allSounds);
 					Z.choixNiveau(niveauChoisit);
 				
 					for (int i = 0; i < repetition; i++) {
@@ -155,7 +167,7 @@ int main()
 						Z.equipeEnZone(Z.niveauActuel(), Meuchant);
 						Gentil.setAllierEtEnnemis(Meuchant);
 						Meuchant.setAllierEtEnnemis(Gentil);
-						Combat C(Gentil, Meuchant, Z, A, O, window);
+						Combat C(Gentil, Meuchant, Z, A, O, window,allSounds);
 						//(*window).display();
 						//(*window).clear();
 					}	
@@ -177,19 +189,19 @@ int main()
 								std::cout << '(' << x << ',' << y << ')' << std::endl;
 							}
 						}
-					} while (!Continuer.comprendLesCoord(x, y));
+					} while (!Continuer.comprendLesCoord(x, y,allSounds));
 
 					(*window).display();
 					(*window).clear();
 				
 					//afficherstats
 				}
-				else if (modifierEquipe.comprendLesCoord(x, y)) {
+				else if (modifierEquipe.comprendLesCoord(x, y,allSounds)) {
 					(*window).clear();
-					H.menuModifierEquipe(Gentil, choix, Z.nbPersoJouable() - Gentil.taille(), window);
+					H.menuModifierEquipe(Gentil, choix, Z.nbPersoJouable() - Gentil.taille(), window,allSounds);
 					
 				}
-				else if (Secret.comprendLesCoord(x, y)) {
+				else if (Secret.comprendLesCoord(x, y,allSounds)) {
 					H.afficherTexte(Aleatoire(20, 1100).entier(), Aleatoire(20, 700).entier(), "BOING", sf::Color::Red, window);
 				}
 			}

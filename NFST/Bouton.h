@@ -4,9 +4,9 @@
 class Bouton
 {
 public:
-	Bouton(float xDepart, float yDepart, std::string texte, sf::Color couleurRectangle = sf::Color::Black, sf::Color couleurBordure = sf::Color::White, sf::Color couleurTexte = sf::Color::White);
+	Bouton(float xDepart, float yDepart, std::string texte,sf::Color couleurRectangle = sf::Color::Black, sf::Color couleurBordure = sf::Color::White, sf::Color couleurTexte = sf::Color::White);
 	void afficher(sf::RenderWindow * window )const;
-	bool comprendLesCoord(float x, float y);
+	bool comprendLesCoord(float x, float y,  std::pair < sf::SoundBuffer,std::vector< sf::Sound >> & allSounds);
 	~Bouton();
 private:
 	float _x1, _x2, _y1, _y2;
@@ -14,9 +14,5 @@ private:
 	float _xPos, _yPos;
 	float _xSize, _ySize;
 	std::string _texte;
-	
-    sf::SoundBuffer  buffer;
-	sf::Sound  sound;
-	//sf::Music music;
 };
 

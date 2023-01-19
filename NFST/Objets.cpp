@@ -409,7 +409,7 @@ Objet  Objets::objetNumero(int numero) {
 	return _listeObjets[numero];
 }
 
-void Objets::deblocageObjet(int indiceObjet, sf::RenderWindow* window)
+void Objets::deblocageObjet(int indiceObjet, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound>>& allSounds)
 {
 	std::string txt = "";
 	txt += "Vous avez débloquer l'objet : ";
@@ -439,7 +439,7 @@ void Objets::deblocageObjet(int indiceObjet, sf::RenderWindow* window)
 				yc = (float)position.y;
 			}
 		}
-	} while (!Continuer.comprendLesCoord(xc,yc));
+	} while (!Continuer.comprendLesCoord(xc,yc,allSounds));
 	(*window).display();
 	(* window).clear();
 }
