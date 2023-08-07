@@ -20,6 +20,7 @@ public:
 	
 	void afficherJoueurs(int indice, Equipes& Liste, sf::RenderWindow * window, std::vector< sf::Sound >& allSounds) const;
 	void afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) const;
+	void afficherMecaniques( sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) const;
 	void choixObjets(int page, Objets  obj, bool premierObjet, int indicePersonnage, Equipes & Liste, sf::RenderWindow * window, std::vector< sf::Sound >& allSounds,int set =1)const;
 	void afficherAnimaux(Animaux A, sf::RenderWindow * window, std::vector< sf::Sound >& allSounds)const;
 	

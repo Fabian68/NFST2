@@ -425,6 +425,86 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 	(*window).clear();
 }
 
+void Affichage::afficherMecaniques(sf::RenderWindow* window, std::vector<sf::Sound>& allSounds) const
+{
+	float x = 50;
+	float y = 20;
+	std::string str;
+	sf::Color couleurFond = sf::Color::Black;
+	sf::Color couleurTexte = sf::Color::White;
+
+	str = "Statistiques :";
+	str = str + "\n" + "Attaque : Statistique principale pour les dégats et soins";
+	str = str + "\n" + "Vie : Statistique pour avoir plus de vie (Point de vie = 10x la statistique vie)";
+	str = str + "\n" + "Vitesse : Permet d'attaquer plus souvent, pris en compte avant le combat pour initialiser les priorités";
+	afficherTexte(x, y, str, couleurTexte, window);
+
+	str = "Double attaque : Permet d'attaquer deux fois sur certaines attaques, certains effets sur certains personnages.";
+	afficherTexte(x, y+60.f, str, couleurTexte, window);
+
+	str = "Coup habile : Permet d'avoir les dégats et soins multiplié par deux";
+	afficherTexte(x, y + 80.f, str, couleurTexte, window);
+	
+	str = "Coup critique : Un coup critique permet de faire des dégats/soins critiques, de base 5% de chances de faire 50% de dégats/soins supplémentaires";
+	afficherTexte(x, y + 100.f, str, couleurTexte, window);
+
+	str = "Pourcentage de reduction de dégats : Reduit les dégats reçu en pourcentage, ne fonctionne pas avec les dégats brut";
+	afficherTexte(x, y + 120.f, str, couleurTexte, window);
+
+	str = "Pourcentage de déviation : Renvoie une attaque après le calcul des dégats, ne fonctionne pas avec les attaques brut,le passif défensif ne s'applique pas";
+	afficherTexte(x, y + 140.f, str, couleurTexte, window);
+
+	str = "Pourcentage de blocage : Une attaque bloqué bloque 50% des dégats, ne fonctionne pas avec les attaques brut";
+	afficherTexte(x, y + 160.f, str, couleurTexte, window);
+	
+	str = "Pourcentage d'esquive : Une attaque esquivé ne fait aucun dégats, le passif défensif n'est pas appliqué";
+	afficherTexte(x, y + 180.f, str, couleurTexte, window);
+
+	str = "Pourcentage de ricochet : Permet de relancer une attaque sur une cible aléatoire après calcul des dégats";
+	afficherTexte(x, y + 200.f, str, couleurTexte, window);
+
+	str = "Le bouclier : Le bouclier est la barre en dessous des points de vie, le bouclier est réduit avant les points de vies.";
+	str = str + "\n" + "Montant de bouclier maximum : (Force * 10 + vie_max)/4";
+	afficherTexte(x, y + 220.f, str, couleurTexte, window);
+
+	str = "Compteur de protection : Prochaine attaque à des dégats diviser par 2, le compteur décrémente.";
+	str = str + "\n" + "Compteur de fragilisation : Prochaine attaque à des dégats multiplié par 2, le compteur décrémente.";
+	afficherTexte(x, y + 250.f, str, couleurTexte, window);
+
+	str = "Attaque brut : Une attaque brut n'active pas les passif et animaux, les dégats ne sont pas réduits";
+	afficherTexte(x, y + 280.f, str, couleurTexte, window);
+
+	str = "Status brulé : Reduit de 1 à 10% des pv max par tour du personnage brulé, augmente de 1% chaque tour";
+	afficherTexte(x, y + 300.f, str, couleurTexte, window);
+
+	str = "Status empoisonné : Incurable, dégats très très faible au départ mais finit mais les dégats augmente de manière exponentiel";
+	afficherTexte(x, y + 320.f, str, couleurTexte, window);
+
+
+	Bouton Retour(300.f, 700.f, "RETOUR");
+	Retour.afficher(window);
+
+
+
+	float  xc = 0.f, yc = 0.f;
+	(*window).display();
+	sf::Event event;
+	do {
+		while ((*window).pollEvent(event))
+		{
+			if (event.type == sf::Event::MouseButtonPressed) {
+				sf::Vector2i position = sf::Mouse::getPosition((*window));
+				xc = (float)position.x;
+				yc = (float)position.y;
+			}
+		}
+
+	} while (!Retour.comprendLesCoord(xc, yc, allSounds));
+
+	(*window).display();
+	(*window).clear();
+}
+
 void Affichage::choixObjets(int page, Objets  obj, bool premierObjet, int indicePersonnage, Equipes& Liste, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int set)const {
 	int maxPage = (int)(obj.nombreObjets() / 15) + 1;
 	std::cout << obj.nombreObjets() << " " << maxPage << " ";

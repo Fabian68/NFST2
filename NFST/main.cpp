@@ -108,7 +108,8 @@ int main()
 	Bouton AfficherJoueurs(500.f, 100.f, "AfficherJoueurs");
 	Bouton AfficherCompetences(500.f, 150.f, "AfficherCompetences");
 	Bouton AfficherAnimaux(500.f, 200.f, "AfficherAnimaux");
-	Bouton Jouer(500.f, 250.f, "Jouer");
+	Bouton AfficherMecaniques(500.f, 250.f, "AfficherMecaniques");
+	Bouton Jouer(500.f, 300.f, "Jouer");
 	Bouton Secret(900.f, 700.f, "Boing");
 	Bouton Conseil(100.f, 400.f, C.conseilAleatoire());
 	
@@ -132,6 +133,7 @@ int main()
 		AfficherJoueurs.afficher(window);
 		AfficherCompetences.afficher(window);
 		AfficherAnimaux.afficher(window);
+		AfficherMecaniques.afficher(window);
 		Conseil.afficher(window);
 
 		if (Gentil.taille() > 0) {
@@ -157,6 +159,10 @@ int main()
 				else if (AfficherCompetences.comprendLesCoord(x, y, allSounds)) {
 					(*window).clear();
 					H.afficherCompetences(0, choix, window, allSounds);
+				}
+				else if (AfficherMecaniques.comprendLesCoord(x, y, allSounds)) {
+					(*window).clear();
+					H.afficherMecaniques(window, allSounds);
 				}
 				else if (AfficherAnimaux.comprendLesCoord(x, y,allSounds)) {
 					(*window).clear();
