@@ -5,7 +5,7 @@ Amine::Amine(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(10, E, 
 {
 }
 
-void Amine::attaqueEnnemis(sf::RenderWindow* window)
+void Amine::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -17,13 +17,13 @@ void Amine::attaqueEnnemis(sf::RenderWindow* window)
 		Affichage().dessinerTexte(nom() + " poings du dragon ! ",window);
 		equipeEnnemi().plusProcheVivant()->ajouterReduction(-2);
 		DEGATS = degats(1.0, 2.0);
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		ajouterMana(1);
 		break;
 	case 1:
 		Affichage().dessinerTexte(nom() + " a la flemme ",window);
 		if (vie() == vieMax()&& bouclier()==bouclierMax()) {
-			attaqueEnnemis(window);
+			attaqueEnnemis(window,allSounds);
 		}
 		else {
 			SOINS = soins(0.4, 0.8);
@@ -42,13 +42,13 @@ void Amine::attaqueEnnemis(sf::RenderWindow* window)
 		Affichage().dessinerTexte(nom() + " ASURA STRIKE ! ",window);
 		DEGATS = degats(5.0, 10.0)+degats(0.5,2.0,CHOIXBOUCLIER);
 		reduireBouclier(bouclierMax());
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		ajouterMana(-3);
 		break;
 	}
 }
 
-void Amine::passif(int tour, sf::RenderWindow* window)
+void Amine::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int DEGATS;
 	double ratio = equipeEnnemi().plusProcheVivant()->pourcentageReduction() / 20.0;
@@ -63,7 +63,7 @@ void Amine::passif(int tour, sf::RenderWindow* window)
 	}
 }
 
-void Amine::passifDefensif(sf::RenderWindow* window)
+void Amine::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 	bouclier(niveau(), this,window);
 }

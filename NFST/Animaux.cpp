@@ -72,7 +72,7 @@ bool Animaux::animalDebloquer(int indicePersonnage, int indiceAnimal, int rarete
 	return _animauxPosseder[indicePersonnage][indiceAnimal]>=rareteAnimal;
 }
 
-void Animaux::deblocageAnimal(int indicePersonnage, int indiceAnimal, int rareteAnimal,std::string perso, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound>>& allSounds)
+void Animaux::deblocageAnimal(int indicePersonnage, int indiceAnimal, int rareteAnimal,std::string perso, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	std::string txt= "";
 	txt+= perso + " a débloquer un animal ";

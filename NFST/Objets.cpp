@@ -409,7 +409,7 @@ Objet  Objets::objetNumero(int numero) {
 	return _listeObjets[numero];
 }
 
-void Objets::deblocageObjet(int indiceObjet, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound>>& allSounds)
+void Objets::deblocageObjet(int indiceObjet, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	std::string txt = "";
 	txt += "Vous avez débloquer l'objet : ";

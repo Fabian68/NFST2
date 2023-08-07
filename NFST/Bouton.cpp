@@ -38,10 +38,10 @@ void Bouton::afficher(sf::RenderWindow * window) const
 	(* window).draw(text);
 }
 
-bool Bouton::comprendLesCoord(float x, float y, std::pair < sf::SoundBuffer,std::vector< sf::Sound >> &allSounds)
+bool Bouton::comprendLesCoord(float x, float y, std::vector< sf::Sound >& allSounds)
 {
 	if ((x >= _x1 && x <= _x2) && (y >= _y1 && y <= _y2)) {
-		allSounds.second[1].play();
+		//allSounds.second[1].play();
 		//asound.play();
 		return true;
 	}

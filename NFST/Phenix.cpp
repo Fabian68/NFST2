@@ -66,7 +66,7 @@ Phenix::Phenix(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(16, E
 	
 }
 
-void Phenix::attaqueEnnemis(sf::RenderWindow* window)
+void Phenix::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -78,14 +78,14 @@ void Phenix::attaqueEnnemis(sf::RenderWindow* window)
 		for (int i = 1;i <= _taille;i++) {
 			if (equipeEnnemi().estEnVie()) {
 				DEGATS = degats(0.45, 0.85);
-				Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+				Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 			}
 		}
 		if (attaqueDouble()) {
 			for (int i = 1;i <= _taille;i++) {
 				if (equipeEnnemi().estEnVie()) {
 					DEGATS = degats(0.45, 0.85);
-					Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+					Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 				}
 			}
 		}
@@ -106,7 +106,7 @@ void Phenix::attaqueEnnemis(sf::RenderWindow* window)
 			ajouterMana(-1);
 		}
 		else {
-			attaqueEnnemis(window);
+			attaqueEnnemis(window,allSounds);
 		}
 
 		break;
@@ -125,24 +125,24 @@ void Phenix::attaqueEnnemis(sf::RenderWindow* window)
 			ajouterMana(-2);
 		}
 		else {
-			attaqueEnnemis(window);
+			attaqueEnnemis(window,allSounds);
 		}
 
 		break;
 		if (_taille == 4) {
 			Affichage().dessinerTexte(nom() + " MAELSTROM !  ",window);
 			DEGATS = (2.0, 4.0);
-			equipeEnnemi().attaqueZone(DEGATS, this,window);
+			equipeEnnemi().attaqueZone(DEGATS, this,window,allSounds);
 			ajouterMana(-3);
 		}
 		else {
-			attaqueEnnemis(window);
+			attaqueEnnemis(window,allSounds);
 		}
 		break;
 	}
 }
 
-void Phenix::passif(int tour, sf::RenderWindow* window)
+void Phenix::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	soigner((int)(vieMax() - vie()) / 10, this,window);
 	bouclier((bouclierMax() - bouclier()) / 10, this,window);
@@ -152,7 +152,7 @@ void Phenix::passif(int tour, sf::RenderWindow* window)
 	sauvegarderCharge();
 }
 
-void Phenix::passifDefensif(sf::RenderWindow* window)
+void Phenix::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degatss, Personnage* P)
 {
 	if (equipeEnnemi().estEnVie()) {
 

@@ -8,7 +8,7 @@ Moustick::Moustick(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(4
 }
 
 
-void Moustick::attaqueEnnemis(sf::RenderWindow* window)
+void Moustick::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -29,7 +29,7 @@ void Moustick::attaqueEnnemis(sf::RenderWindow* window)
 		
 		for (int i = 0; i < ratioPositif&&equipeEnnemi().estEnVie(); i++) {
 			DEGATS = degats(ratioPositif / 8.0, ratioPositif / 4.0);
-			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 			ajouterMana(1);
 		}
 		break;
@@ -43,7 +43,7 @@ void Moustick::attaqueEnnemis(sf::RenderWindow* window)
 		}
 		DEGATS += status().enmagasination();
 		status().retirerEmagasination(status().enmagasination());
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		ajouterMana(-1);
 		break;
 	case 2:
@@ -52,7 +52,7 @@ void Moustick::attaqueEnnemis(sf::RenderWindow* window)
 		for (int i = 0; i < ratioPositif && equipeEnnemi().estEnVie(); i++) {
 			DEGATS = degats(ratioPositif / 6.0, ratioPositif / 3.0);
 			equipeEnnemi().plusProcheVivant()->status().ajouterCompteurFragile(5);
-			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 			ajouterMana(1);
 		}
 		ajouterMana(-2);
@@ -63,12 +63,12 @@ void Moustick::attaqueEnnemis(sf::RenderWindow* window)
 		status().ajouterCompteurProteger(20);
 		reduireVie(vie() / 2);
 		ajouterMana(-3);
-		attaqueEnnemis(window);
+		attaqueEnnemis(window,allSounds);
 		break;
 	}
 }
 
-void Moustick::passif(int tour, sf::RenderWindow* window)
+void Moustick::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	reduireVie(static_cast<int>(vie() / 20.0));
 
@@ -77,7 +77,7 @@ void Moustick::passif(int tour, sf::RenderWindow* window)
 	setReduction(ratio);
 }
 
-void Moustick::passifDefensif(sf::RenderWindow* window)
+void Moustick::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 	int ratio = 100 * static_cast<int>(1.0 - (vie() * 1.0) / (vieMax() * 1.0));
 	ratio = std::min(99, ratio);

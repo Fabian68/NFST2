@@ -8,7 +8,7 @@ JeanBaptiste::JeanBaptiste(Experiences E, Orbes O, Animaux A, Objets Obj) : Pers
 }
 
 
-void JeanBaptiste::attaqueEnnemis(sf::RenderWindow* window)
+void JeanBaptiste::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	if (equipeEnnemi().estEnVie()) {
 		int choix = choixAttaque();
@@ -21,7 +21,7 @@ void JeanBaptiste::attaqueEnnemis(sf::RenderWindow* window)
 			if (devie()) {
 				Affichage().dessinerTexte(nom() + " se défend ",window);	
 				DEGATS = degats(0.5, 2.0);
-				Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+				Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 			}
 			else {
 				ajouterMana(1);
@@ -56,7 +56,7 @@ void JeanBaptiste::attaqueEnnemis(sf::RenderWindow* window)
 	}
 }
 
-void JeanBaptiste::passif(int tour, sf::RenderWindow* window)
+void JeanBaptiste::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int xp;
 	
@@ -98,6 +98,6 @@ void JeanBaptiste::passif(int tour, sf::RenderWindow* window)
 	
 }
 
-void JeanBaptiste::passifDefensif(sf::RenderWindow* window)
+void JeanBaptiste::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 }

@@ -14,7 +14,7 @@ Rapace::Rapace(int LVL, std::string nom, int difficulte, int animal, int rareteA
 }
 
 
-void Rapace::attaqueEnnemis(sf::RenderWindow* window)
+void Rapace::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -25,10 +25,10 @@ void Rapace::attaqueEnnemis(sf::RenderWindow* window)
 
 		Affichage().dessinerTexte(nom() + " Assaut",window);
 		DEGATS = degats(0.6, 0.9);
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		if (attaqueDouble()) {
 			DEGATS = degats(0.6, 0.9);
-			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 			ajouterMana(1);
 		}
 		ajouterMana(1);
@@ -44,7 +44,7 @@ void Rapace::attaqueEnnemis(sf::RenderWindow* window)
 
 		Affichage().dessinerTexte(nom() + "SNIPE ",window);
 		DEGATS = degats(1.0, 6.0);
-		Attaque(DEGATS, equipeEnnemi().plusFaible(),window);
+		Attaque(DEGATS, equipeEnnemi().plusFaible(),window,allSounds);
 		if (attaqueDouble()) {
 			DEGATS = degats(1.0, 6.0);
 			AttaqueBrut(DEGATS, equipeEnnemi().plusFaible(),window);
@@ -62,7 +62,7 @@ void Rapace::attaqueEnnemis(sf::RenderWindow* window)
 	}
 }
 
-void Rapace::passif(int tour, sf::RenderWindow* window)
+void Rapace::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	if ((tour + 1) % 10 == 0) {
 		bouclier(bouclierMax(),this,window);
@@ -70,6 +70,6 @@ void Rapace::passif(int tour, sf::RenderWindow* window)
 	status().ajouterCompteurProteger(1);
 }
 
-void Rapace::passifDefensif(sf::RenderWindow* window)
+void Rapace::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 }

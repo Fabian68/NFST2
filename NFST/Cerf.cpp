@@ -20,7 +20,7 @@ Cerf::Cerf(int LVL, std::string nom, int difficulte, int animal, int rareteAnima
 	}
 }
 
-void Cerf::attaqueEnnemis(sf::RenderWindow* window)
+void Cerf::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -31,14 +31,14 @@ void Cerf::attaqueEnnemis(sf::RenderWindow* window)
 	case 0:
 		DEGATS = degats(0.75, 1.5);
 		Affichage().dessinerTexte(nom() + "coup de bois ! ",window);
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		ajouterMana(1);
 		break;
 	case 1:
 
 		DEGATS = degats(1.25, 1.75);
 		Affichage().dessinerTexte(nom() + " coup viser !  ",window);
-		Attaque(DEGATS, equipeEnnemi().plusFaible(),window);
+		Attaque(DEGATS, equipeEnnemi().plusFaible(),window,allSounds);
 
 		ajouterMana(-1);
 		break;
@@ -57,7 +57,7 @@ void Cerf::attaqueEnnemis(sf::RenderWindow* window)
 	case 3:
 		Affichage().dessinerTexte(nom() + "sacrifice !",window);
 		DEGATS = degats(10.0, 15.0);
-		Attaque(DEGATS, equipeEnnemi().plusFort(),window);
+		Attaque(DEGATS, equipeEnnemi().plusFort(),window,allSounds);
 		minusVie =(long long int)(vie() / 100);
 		reduireVie(minusVie*99);
 		
@@ -66,10 +66,10 @@ void Cerf::attaqueEnnemis(sf::RenderWindow* window)
 	}
 }
 
-void Cerf::passif(int tour, sf::RenderWindow* window)
+void Cerf::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 }
 
-void Cerf::passifDefensif(sf::RenderWindow* window)
+void Cerf::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 }

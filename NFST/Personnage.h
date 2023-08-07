@@ -8,7 +8,7 @@
 #include "Animaux.h"
 #include "Statistiques.h"
 #include "Objets.h"
-
+#include <SFML/Audio.hpp>
 const int CHOIXFORCE = 0;
 const int CHOIXVIEMAX = 1;
 const int CHOIXVITESSE = 2;
@@ -36,9 +36,9 @@ public:
 	int reduireBouclier(int nb);
 	int pourcentageVie()const;
 	int pourcentageBouclier() const;
-	virtual void attaqueEnnemis(sf::RenderWindow* window)=0;
-	virtual void passif(int tour, sf::RenderWindow* window) = 0 ;
-	virtual void passifDefensif(sf::RenderWindow* window) = 0;
+	virtual void attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound > &allSounds)=0;
+	virtual void passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound > &allSounds) = 0 ;
+	virtual void passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound > &allSounds,int degats,Personnage * P) = 0;
 	bool estEnVie() const;
 	int force() const;
 	int vitesse()const;
@@ -62,8 +62,8 @@ public:
 	Equipes& equipeAllier();
 	Equipes& equipeEnnemi();
 	bool habile() const;
-	void traitementAnimaux(sf::RenderWindow* window);
-    void   Attaque(int Degat, Personnage * Defenseur, sf::RenderWindow* window) ;
+	void traitementAnimaux(sf::RenderWindow* window, std::vector< sf::Sound > &allSounds);
+    void   Attaque(int Degat, Personnage * Defenseur, sf::RenderWindow* window, std::vector< sf::Sound > &allSounds) ;
 	void AttaqueBrut(int Degat, Personnage* Defenseur, sf::RenderWindow* window);
 	int degatsCritiques() const;
 	void setReduction(int montant);

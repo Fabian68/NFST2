@@ -5,7 +5,7 @@
 Salim::Salim(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(15, E, O, A, Obj, "Salim", 6, 3, 1, 0, 25, 25, 0, 25, 0, 0), estTransformer{ false }, superTransformation{ false } {}
 
 
-void Salim::attaqueEnnemis(sf::RenderWindow* window)
+void Salim::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -18,7 +18,7 @@ void Salim::attaqueEnnemis(sf::RenderWindow* window)
 
 		Affichage().dessinerTexte(nom() + " racine poignard ",window);
 		DEGATS = (int)(Aleatoire(0.03, 0.06).decimal() * (double)vieMax() + degats(0.2, 0.4));
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		if (habile()&&equipeEnnemi().estEnVie()) {
 			DEGATS = (int)(Aleatoire(0.01, 0.02).decimal() * (double)vieMax() + degats(0.05, 0.15));
 			AttaqueBrut(DEGATS, equipeEnnemi().plusProcheVivant(),window);
@@ -78,7 +78,7 @@ void Salim::attaqueEnnemis(sf::RenderWindow* window)
 	}
 }
 
-void Salim::passif(int tour, sf::RenderWindow* window)
+void Salim::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int DEGATS;
 
@@ -97,13 +97,13 @@ void Salim::passif(int tour, sf::RenderWindow* window)
 				AttaqueBrut(DEGATS, equipeEnnemi()[i],window);
 			}
 			else {
-				Attaque(DEGATS, equipeEnnemi()[i],window);
+				Attaque(DEGATS, equipeEnnemi()[i],window,allSounds);
 			}
 		}
 	}
 }
 
-void Salim::passifDefensif(sf::RenderWindow* window)
+void Salim::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 	if (habile()) {
 		ajouterVieMax(force() / 5);

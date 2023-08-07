@@ -18,7 +18,7 @@ Tellurique::Tellurique(int LVL, std::string nom, int difficulte, int animal, int
 	}
 }
 
-void Tellurique::attaqueEnnemis(sf::RenderWindow* window)
+void Tellurique::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -32,7 +32,7 @@ void Tellurique::attaqueEnnemis(sf::RenderWindow* window)
 	case 0:
 		DEGATS = degats(0.7+pourcentageReduction()/100.0, 1.4 + pourcentageReduction() / 20.0);
 		Affichage().dessinerTexte(nom() + " charge ",window);
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 
 		ajouterCoupCritique(2);
 		ajouterDegatsCritique(6);
@@ -51,12 +51,12 @@ void Tellurique::attaqueEnnemis(sf::RenderWindow* window)
 		for (int i = 0; i <= equipeEnnemi().taille() / 2; i++) {
 			DEGATS = degats(0.10+mult1/80, 0.20+mult1/40 );
 			mult1 += equipeEnnemi()[i]->pourcentageReduction();
-			Attaque(DEGATS, equipeEnnemi()[i],window);
+			Attaque(DEGATS, equipeEnnemi()[i],window,allSounds);
 
 			DEGATS = degats(0.10 + mult2 / 80, 0.20 + mult2 / 40);
 			indice = abs(equipeEnnemi().taille() - 1 - i);
 			mult2 += equipeEnnemi()[indice]->pourcentageReduction();
-			Attaque(DEGATS, equipeEnnemi()[indice],window);
+			Attaque(DEGATS, equipeEnnemi()[indice],window,allSounds);
 		}
 		ajouterChanceHabileter(3);
 		ajouterMana(1);
@@ -72,7 +72,7 @@ void Tellurique::attaqueEnnemis(sf::RenderWindow* window)
 				else {
 					DEGATS = degats( i/2, i);
 				}
-				Attaque(DEGATS, equipeEnnemi()[i],window);
+				Attaque(DEGATS, equipeEnnemi()[i],window,allSounds);
 				equipeEnnemi()[i]->status().ajouterCompteurFragile(1);
 			}
 		}
@@ -88,14 +88,14 @@ void Tellurique::attaqueEnnemis(sf::RenderWindow* window)
 	}
 }
 
-void Tellurique::passif(int tour, sf::RenderWindow* window)
+void Tellurique::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	AjouterBouclier(bouclierMax() / 10,window);
 	status().ajouterCompteurProteger(1);
 	ajouterVieMax( vie()/100);
 }
 
-void Tellurique::passifDefensif(sf::RenderWindow* window)
+void Tellurique::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 	for (int i = 0;i < equipeAllier().taille();i++) {
 		equipeAllier()[i]->ajouterReduction(1);

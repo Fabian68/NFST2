@@ -18,7 +18,7 @@ Florian::Florian(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(11,
 	}
 }
 
-void Florian::attaqueEnnemis(sf::RenderWindow* window)
+void Florian::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -29,9 +29,9 @@ void Florian::attaqueEnnemis(sf::RenderWindow* window)
 	case 0:
 		if (floppy == true) {
 			Affichage().dessinerTexte(nom() + " coup épée ",window);
-			Attaque(force(), equipeEnnemi().plusProcheVivant(),window);
+			Attaque(force(), equipeEnnemi().plusProcheVivant(),window,allSounds);
 			if ((attaqueDouble() && equipeEnnemi().estEnVie())) {
-				Attaque(force(), equipeEnnemi().plusProcheVivant(),window);
+				Attaque(force(), equipeEnnemi().plusProcheVivant(),window,allSounds);
 			}
 		}
 		else {
@@ -43,7 +43,7 @@ void Florian::attaqueEnnemis(sf::RenderWindow* window)
 
 				Affichage().dessinerTexte(nom() + " se trompe ",window);
 				DEGATS = degats(0.37, 1.37);
-				Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+				Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 				ajouterMana(-2);
 			}
 			
@@ -53,7 +53,7 @@ void Florian::attaqueEnnemis(sf::RenderWindow* window)
 	case 1:
 		if (floppy) {
 			Affichage().dessinerTexte(nom() + " envoie une bombe",window);
-			equipeEnnemi().attaqueZone(2 * force(), this,window);
+			equipeEnnemi().attaqueZone(2 * force(), this,window,allSounds);
 			ajouterMana(-4);
 		}
 		else {
@@ -66,7 +66,7 @@ void Florian::attaqueEnnemis(sf::RenderWindow* window)
 				Affichage().dessinerTexte(nom() + " rote ",window);
 				DEGATS = degats(0.15, 0.25);
 				DEGATS += static_cast<int>(Aleatoire(0.02, 0.07).decimal() * vieMax()+ Aleatoire(0.04, 0.14).decimal() * vie()) ;
-				equipeEnnemi().attaqueZone(DEGATS, this,window);
+				equipeEnnemi().attaqueZone(DEGATS, this,window,allSounds);
 				ajouterMana(-4);
 			}
 		}
@@ -78,19 +78,19 @@ void Florian::attaqueEnnemis(sf::RenderWindow* window)
 			Affichage().dessinerTexte(nom() + " envoie des fleches ",window);
 			for (int i = 0;i <3 && equipeEnnemi().estEnVie();i++) {
 				if (habile()) {
-					Attaque(degats(1.0, 3.0), equipeEnnemi().plusFort(),window);
+					Attaque(degats(1.0, 3.0), equipeEnnemi().plusFort(),window,allSounds);
 				}
 				else {
-					Attaque(degats(0.5, 1.5), equipeEnnemi().plusFort(),window);
+					Attaque(degats(0.5, 1.5), equipeEnnemi().plusFort(),window,allSounds);
 				}
 			}
 			if ( attaqueDouble()  && equipeEnnemi().estEnVie()) {
 				for (int i = 0;i < 3 && equipeEnnemi().estEnVie();i++) {
 					if (habile()) {
-						Attaque(degats(1.0, 3.0), equipeEnnemi().plusFort(),window);
+						Attaque(degats(1.0, 3.0), equipeEnnemi().plusFort(),window,allSounds);
 					}
 					else {
-						Attaque(degats(0.5, 1.5), equipeEnnemi().plusFort(),window);
+						Attaque(degats(0.5, 1.5), equipeEnnemi().plusFort(),window,allSounds);
 					}
 				}
 			}
@@ -106,7 +106,7 @@ void Florian::attaqueEnnemis(sf::RenderWindow* window)
 			if ((habile() && attaqueDouble()) || (vie() == vieMax() && equipeEnnemi().estEnVie())) {
 				Affichage().dessinerTexte(nom() + " est fauché et fauche les ennemis ",window);
 				DEGATS = degats(0.20, 0.60) + static_cast<int>(Aleatoire(0.6, 2.6).decimal() * vitesse());
-				equipeEnnemi().attaqueZone(DEGATS, this,window);
+				equipeEnnemi().attaqueZone(DEGATS, this,window,allSounds);
 				ajouterMana(-2);
 			}
 		}
@@ -118,12 +118,12 @@ void Florian::attaqueEnnemis(sf::RenderWindow* window)
 		if (floppy) {
 			Affichage().dessinerTexte(nom() + " Attque de la sainte trinité ! ",window);
 			DEGATS = degats(0.3, 3.0)+degats(0.03,0.3,CHOIXVIEMAX)+degats(0.3,3.0,CHOIXVITESSE);
-			Attaque(DEGATS, equipeEnnemi().plusFaible(),window);
+			Attaque(DEGATS, equipeEnnemi().plusFaible(),window,allSounds);
 		}
 		else {
 			Affichage().dessinerTexte(nom() + " fait du bilboquet et touche un ennemi ! ",window);
 			DEGATS = degats(0.65, 6.5);
-			Attaque(DEGATS, equipeEnnemi().aleatoireEnVie(),window);
+			Attaque(DEGATS, equipeEnnemi().aleatoireEnVie(),window,allSounds);
 		}
 	
 		ajouterMana(-3);
@@ -131,7 +131,7 @@ void Florian::attaqueEnnemis(sf::RenderWindow* window)
 	}
 }
 
-void Florian::passif(int tour, sf::RenderWindow* window)
+void Florian::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	if (floppy && tour % 10 == 0) {
 		status().ajouterCompteurRessurections();
@@ -173,7 +173,7 @@ void Florian::passif(int tour, sf::RenderWindow* window)
 	}
 }
 
-void Florian::passifDefensif(sf::RenderWindow* window)
+void Florian::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 	if (floppy) {
 		if (habile()) {

@@ -7,7 +7,7 @@
 #include "AffichageCombat.h"
 
 
-Combat::Combat(Equipes  & Joueur, Equipes  & Ia,Zones & Z,Animaux & A,Orbes & O, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound>>& allSounds) : _joueur{Joueur}, _ia{Ia},_tour{0}
+Combat::Combat(Equipes  & Joueur, Equipes  & Ia,Zones & Z,Animaux & A,Orbes & O, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) : _joueur{Joueur}, _ia{Ia},_tour{0}
 {
 
 
@@ -89,7 +89,7 @@ Combat::Combat(Equipes  & Joueur, Equipes  & Ia,Zones & Z,Animaux & A,Orbes & O,
 							Affichage().affichageTexte(5, 3, "Tour : " + std::to_string(_tour+1),sf::Color::Magenta,window);
 							for (int i = 0; i < _joueur.taille(); i++) {
 								if (_joueur[i]->estEnVie()) {
-									_joueur[i]->passif(_tour,window);
+									_joueur[i]->passif(_tour,window,allSounds);
 									if (_joueur[i]->possedeObjetNumero(1)) {
 										_joueur[i]->status().soignerPoison();
 									}
@@ -112,7 +112,7 @@ Combat::Combat(Equipes  & Joueur, Equipes  & Ia,Zones & Z,Animaux & A,Orbes & O,
 							}
 							for (int i = 0; i < _ia.taille(); i++) {
 								if (_ia[i]->estEnVie()) {
-									_ia[i]->passif(_tour,window);
+									_ia[i]->passif(_tour,window,allSounds);
 									if (_ia[i]->possedeObjetNumero(1)) {
 										_ia[i]->status().soignerPoison();
 									}
@@ -126,7 +126,7 @@ Combat::Combat(Equipes  & Joueur, Equipes  & Ia,Zones & Z,Animaux & A,Orbes & O,
 							
 							//AffichageCombat().dessinerDeuxEquipes(_joueur, _ia,window);
 						}
-						_quiJoue[i]->attaqueEnnemis(window);
+						_quiJoue[i]->attaqueEnnemis(window,allSounds);
 					}
 			}
 		}
@@ -142,7 +142,7 @@ Combat::Combat(Equipes  & Joueur, Equipes  & Ia,Zones & Z,Animaux & A,Orbes & O,
 	
 }
 
-void Combat::tirageRecompenses(Zones Z,Animaux A,Orbes O, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound>>& allSounds) {
+void Combat::tirageRecompenses(Zones Z,Animaux A,Orbes O, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) {
 	int indiceJoueur;
 
 	int chanceTirage;

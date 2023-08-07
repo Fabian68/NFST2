@@ -19,6 +19,7 @@
 #include "Magicien.h"
 #include "TortueE.h"
 #include "PhenixE.h"
+#include <SFML/Audio.hpp>
 
 Zones::Zones()
 {

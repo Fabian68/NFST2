@@ -21,7 +21,7 @@ Grognard::Grognard(int LVL, std::string nom, int difficulte, int animal, int rar
 	}
 }
 
-void Grognard::attaqueEnnemis(sf::RenderWindow* window)
+void Grognard::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -35,12 +35,12 @@ void Grognard::attaqueEnnemis(sf::RenderWindow* window)
 		Affichage().dessinerTexte(nom() + " needler !",window);
 		for (int i = 0;i < 10 && equipeEnnemi().estEnVie();i++) {
 			DEGATS = degats(0.1, 0.2);
-			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 			inc += 0.1;
 			if (attaqueDouble() && equipeEnnemi().estEnVie()) {
 				inc += 0.1;
 				DEGATS = degats(0.1, 0.2);
-				Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+				Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 
 			}
 		}
@@ -72,17 +72,17 @@ void Grognard::attaqueEnnemis(sf::RenderWindow* window)
 
 		Affichage().dessinerTexte(nom() + " SUICIDE ",window);
 		DEGATS = degats(5.0, 10.0);
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
-		Attaque(DEGATS, this,window);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
+		Attaque(DEGATS, this,window,allSounds);
 		ajouterMana(-3);
 		break;
 	}
 }
 
-void Grognard::passif(int tour, sf::RenderWindow* window)
+void Grognard::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 }
 
-void Grognard::passifDefensif(sf::RenderWindow* window)
+void Grognard::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 }

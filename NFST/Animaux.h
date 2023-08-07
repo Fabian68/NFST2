@@ -11,7 +11,7 @@ public:
 	int indiceAnimal(int indicePersonnage) const;
 	int rareteAnimal(int indicePersonnage, int indiceAnimal) const;
 	bool animalDebloquer(int indicePersonnage, int indiceAnimal, int rareteAnimal)const;
-	void deblocageAnimal(int indicePersonnage, int indiceAnimal, int rareteAnimal, std::string perso, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound>>& allSounds);
+	void deblocageAnimal(int indicePersonnage, int indiceAnimal, int rareteAnimal, std::string perso, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds);
 	void sauvegarder();
 	Animal animalNumero(int indice)const;
 	void setAnimalPersonnage(int indicePersonnage, int  indiceAnimal);

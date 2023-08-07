@@ -32,7 +32,7 @@ Tortue::Tortue(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(14, E
 	status().devientEnmagasineur();
 }
 
-void Tortue::attaqueEnnemis(sf::RenderWindow* window)
+void Tortue::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -42,7 +42,7 @@ void Tortue::attaqueEnnemis(sf::RenderWindow* window)
 		DEGATS = degats(0.31, 0.62)+status().enmagasination()/10;
 		status().retirerEmagasination(status().enmagasination());
 		Affichage().dessinerTexte(nom() + " Morsure ! ",window);
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 	
 		ajouterMana(1);
 		break;
@@ -71,23 +71,23 @@ void Tortue::attaqueEnnemis(sf::RenderWindow* window)
 		Affichage().dessinerTexte(nom() + " coup de queue ! ",window);
 		for (int i = 0; i < equipeEnnemi().taille(); i++) {
 			DEGATS =(int)( 0.015 * (double)vie() + 0.005 * (double)vieMax() + 0.5 * (double)force() + 1.0 * (double)vitesse());
-			Attaque(DEGATS, equipeEnnemi()[i],window);
+			Attaque(DEGATS, equipeEnnemi()[i],window,allSounds);
 		}
 		ajouterMana(-3);
 		break;
 	}
 }
 
-void Tortue::passif(int tour, sf::RenderWindow* window)
+void Tortue::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	soigner((int)(vieMax()-vie())/10, this,window);
 	bouclier((bouclierMax() - bouclier()) / 10, this,window);
 }
 
-void Tortue::passifDefensif(sf::RenderWindow* window)
+void Tortue::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 	if (Aleatoire(0, 101).entier() <= chanceHabileter()) {
-		Attaque((int)vieMax()/100, equipeEnnemi().plusProcheVivant(),window);
+		Attaque((int)vieMax()/100, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		equipeAllier().moinsResistant()->ajouterReduction(1);
 		equipeAllier().moinsResistant()->status().ajouterCompteurProteger(1);
 	}

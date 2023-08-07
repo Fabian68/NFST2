@@ -44,7 +44,7 @@ void Affichage::affichageTexte(float x, float y, std::string texte, sf::Color co
 	//(*window).display();
 }
 
-void Affichage::afficherJoueurs(int indice, Equipes& Liste, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound >>& allSounds)const {
+void Affichage::afficherJoueurs(int indice, Equipes& Liste, sf::RenderWindow* window, std::vector< sf::Sound > &allSounds)const {
 	float x = 50;
 	float y = 20;
 	std::string str;
@@ -338,7 +338,94 @@ void Affichage::afficherJoueurs(int indice, Equipes& Liste, sf::RenderWindow* wi
 	(*window).clear();
 }
 
-void Affichage::choixObjets(int page, Objets  obj, bool premierObjet, int indicePersonnage, Equipes& Liste, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound >>& allSounds, int set)const {
+void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow* window, std::vector<sf::Sound>& allSounds) const
+{
+	float x = 50;
+	float y = 20;
+	std::string str;
+	sf::Color couleurFond = sf::Color::Black;
+	sf::Color couleurTexte = sf::Color::White;
+
+	str = "Pseudo : " + Liste[indice]->nom();
+	afficherTexte(x, y, str, couleurTexte, window);
+
+	str = "Passif ";
+	afficherTexte(x, y + 20.f, str, couleurTexte, window);
+	switch (indice) {
+		case 0:
+			str = "Gagne force/(7/5/3/2) + niveau de dégats à chaque attaque. Niveau (1/10/100/1000) Valeur actuelle : " + std::to_string(Liste[indice]->status().adducteur());
+			str = str + "\n" + "Recois niveaux dégats en moins, Valeur actuel : "+ std::to_string(Liste[indice]->niveau());
+			
+		break;
+	}
+	afficherTexte(x, y + 40.f, str, couleurTexte, window);
+
+	str = "Passif par tour";
+	afficherTexte(x, y + 80.f, str, couleurTexte, window);
+	switch (indice) {
+	case 0:
+		str = "Tout les 17 tours vous gagnez 7% de réduction de dégats";
+		str = str + "\n" + "Tout les 70 tours vous gagnez 17% de force ";
+		
+		break;
+	}
+	afficherTexte(x, y + 100.f, str, couleurTexte, window);
+
+	str = "Passif defensif";
+	afficherTexte(x, y + 140.f, str, couleurTexte, window);
+	switch (indice) {
+	case 0:
+		str = "Vous augmenter votre reduction de dégats de 1";
+		break;
+	}
+	afficherTexte(x, y + 160.f, str, couleurTexte, window);
+
+	str = "Compétence 1 ";
+	afficherTexte(x, y + 180.f, str, couleurTexte, window);
+
+
+
+	Bouton Retour(300.f, 700.f, "RETOUR");
+	Retour.afficher(window);
+	Bouton Precedent(450.f, 700.f, "Precedent");
+	Precedent.afficher(window);
+	Bouton Suivant(600.f, 700.f, "Suivant");
+	Suivant.afficher(window);
+
+
+	float  xc = 0.f, yc = 0.f;
+	(*window).display();
+	sf::Event event;
+	do {
+		while ((*window).pollEvent(event))
+		{
+			if (event.type == sf::Event::MouseButtonPressed) {
+				sf::Vector2i position = sf::Mouse::getPosition((*window));
+				xc = (float)position.x;
+				yc = (float)position.y;
+			}
+		}
+
+	} while (!Retour.comprendLesCoord(xc, yc, allSounds) && !Suivant.comprendLesCoord(xc, yc, allSounds) && !Precedent.comprendLesCoord(xc, yc, allSounds));
+
+	if (Suivant.comprendLesCoord(xc, yc, allSounds)) {
+		indice = (indice + 1) % Liste.taille();
+		(*window).clear();
+		afficherCompetences(indice, Liste, window, allSounds);
+	}
+	else if (Precedent.comprendLesCoord(xc, yc, allSounds)) {
+		indice--;
+		if (indice < 0) {
+			indice = Liste.taille() - 1;
+		}
+		(*window).clear();
+		afficherCompetences(indice, Liste, window, allSounds);
+	}
+	(*window).display();
+	(*window).clear();
+}
+
+void Affichage::choixObjets(int page, Objets  obj, bool premierObjet, int indicePersonnage, Equipes& Liste, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int set)const {
 	int maxPage = (int)(obj.nombreObjets() / 15) + 1;
 	std::cout << obj.nombreObjets() << " " << maxPage << " ";
 	float y = 20.f;
@@ -431,7 +518,7 @@ void Affichage::choixObjets(int page, Objets  obj, bool premierObjet, int indice
 	(*window).clear();
 	afficherJoueurs(indicePersonnage, Liste, window,allSounds);
 }
-void Affichage::afficherAnimaux(Animaux A, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound >>& allSounds) const
+void Affichage::afficherAnimaux(Animaux A, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) const
 {
 	sf::Color couleurTexte = sf::Color::Red;
 	sf::Color couleurFond = sf::Color::Black;
@@ -580,7 +667,7 @@ void Affichage::dessinerTexte(std::string texte, sf::RenderWindow* window)const 
 	sf::Time  DELAY = sf::milliseconds(Delais().getDelais() * 10);
 }
 
-void Affichage::choixNiveau(Zones Z, Objets obj, int& niveau, int& repetition, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound >>& allSounds) const
+void Affichage::choixNiveau(Zones Z, Objets obj, int& niveau, int& repetition, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) const
 {
 
 	int niveauMax = Z.niveauMax();
@@ -717,7 +804,7 @@ void Affichage::afficherObjetsDeblocableNiveau(Objets obj, int niveau, sf::Rende
 	afficherTexte(300.f, 460.f, "LOOT", sf::Color::White, window);
 	afficherTexte(50.f, 490.f, txt, sf::Color::White, window);
 }
-void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix, int max, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound >>& allSounds) const
+void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix, int max, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) const
 {
 	//(*window).clear();
 	Objets O = Objets();

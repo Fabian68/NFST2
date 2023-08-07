@@ -6,7 +6,7 @@ Maelle::Maelle(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(13, E
 	estTransformer = false;
 }
 
-void Maelle::attaqueEnnemis(sf::RenderWindow* window)
+void Maelle::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -21,9 +21,9 @@ void Maelle::attaqueEnnemis(sf::RenderWindow* window)
 			DEGATS = degats(0.01, 0.10);
 			compteur = 1;
 			Affichage().dessinerTexte(nom() + " s'enerve ! ",window);
-			Attaque(DEGATS+force()/5, equipeEnnemi().plusProcheVivant(),window);
+			Attaque(DEGATS+force()/5, equipeEnnemi().plusProcheVivant(),window,allSounds);
 			while (habile() && equipeEnnemi().estEnVie()&&compteur<=6) {
-				Attaque(DEGATS + force() / 5, equipeEnnemi().plusProcheVivant(),window);
+				Attaque(DEGATS + force() / 5, equipeEnnemi().plusProcheVivant(),window,allSounds);
 				DEGATS = degats(0.01*k, 0.10*k*2);
 				k *= 2;
 				compteur++;
@@ -32,7 +32,7 @@ void Maelle::attaqueEnnemis(sf::RenderWindow* window)
 				compteur = 1;
 				k =1.0;
 				while (habile() && equipeEnnemi().estEnVie() && compteur <= 6) {
-					Attaque(DEGATS + force() / 5, equipeEnnemi().plusProcheVivant(),window);
+					Attaque(DEGATS + force() / 5, equipeEnnemi().plusProcheVivant(),window,allSounds);
 					DEGATS = degats(0.01*k,0.10* k * 2);
 					k *= 2;
 					compteur++;
@@ -44,7 +44,7 @@ void Maelle::attaqueEnnemis(sf::RenderWindow* window)
 			Affichage().dessinerTexte(nom() + " fait du tapis roulant !  ",window);
 			for (double i = 1.0;i <= 25.0&&this->estEnVie();i += 1.0) {
 				DEGATS = degats(i/100, i/50);
-				Attaque(DEGATS,this,window);
+				Attaque(DEGATS,this,window,allSounds);
 				SOINS = soins(i / 200, i / 100);
 				soigner(SOINS, this,window);
 				ajouterVieMax(niveau() / 100);
@@ -85,7 +85,7 @@ void Maelle::attaqueEnnemis(sf::RenderWindow* window)
 	}
 }
 
-void Maelle::passif(int tour, sf::RenderWindow* window)
+void Maelle::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	if ((tour + 1) % 10 == 0) {
 		Affichage().dessinerTexte(nom() + " Les graisses de Maelle la guerrissent ! ",window);
@@ -93,7 +93,7 @@ void Maelle::passif(int tour, sf::RenderWindow* window)
 	}
 }
 
-void Maelle::passifDefensif(sf::RenderWindow* window)
+void Maelle::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 	bouclier((int)vieMax()/100+niveau(), this,window);
 }

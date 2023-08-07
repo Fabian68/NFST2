@@ -7,7 +7,7 @@ Bryan::Bryan(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(5, E, O
 	ajouterDegatsCritique(25);
 }
 
-void Bryan::attaqueEnnemis(sf::RenderWindow* window)
+void Bryan::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -16,14 +16,14 @@ void Bryan::attaqueEnnemis(sf::RenderWindow* window)
 	double RATIO;
 	DEGATS = static_cast<int>(degats(0.10, 0.30) * (1.0 + degatsCritiques() / 100.0));
 	Affichage().dessinerTexte(nom() + "Attaque critique",window);
-	Attaque(DEGATS, equipeEnnemi().plusFaible(),window);
+	Attaque(DEGATS, equipeEnnemi().plusFaible(),window,allSounds);
 	switch (choix) {
 
 	case 0:
 		if (equipeEnnemi().estEnVie()) {
 			DEGATS = degats(0.45, 0.75);
 			Affichage().dessinerTexte(nom() + " coup de dague ! ",window);
-			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 			if (attaqueDouble() && equipeEnnemi().estEnVie()) {
 				DEGATS = degats(0.12, 0.24);
 				AttaqueBrut(DEGATS, equipeEnnemi().plusProcheVivant(),window);
@@ -39,7 +39,7 @@ void Bryan::attaqueEnnemis(sf::RenderWindow* window)
 			RATIO = (equipeEnnemi()[indice]->vieMax() * 1.0) / (equipeEnnemi()[indice]->vie() * 1.0);
 			RATIO = std::min(RATIO, 20.0);
 			DEGATS = static_cast<int>(DEGATS * RATIO);
-			Attaque(DEGATS, equipeEnnemi().plusFaible(),window);
+			Attaque(DEGATS, equipeEnnemi().plusFaible(),window,allSounds);
 		}
 		ajouterMana(-1);
 		break;
@@ -77,7 +77,7 @@ void Bryan::attaqueEnnemis(sf::RenderWindow* window)
 	}
 }
 
-void Bryan::passif(int tour, sf::RenderWindow* window)
+void Bryan::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	if (status().estEmpoisoner()) {
 		status().soignerPoison();
@@ -92,7 +92,7 @@ void Bryan::passif(int tour, sf::RenderWindow* window)
 	}
 }
 
-void Bryan::passifDefensif(sf::RenderWindow* window)
+void Bryan::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 	if (Aleatoire(0, 101).entier() < pourcentageEsquive()) {
 		int SOINS = static_cast<int>(0.25 * vitesse());

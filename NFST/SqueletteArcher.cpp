@@ -13,7 +13,7 @@ SqueletteArcher::SqueletteArcher(int LVL, std::string nom, int difficulte, int a
 
 
 
-void SqueletteArcher::attaqueEnnemis(sf::RenderWindow* window)
+void SqueletteArcher::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -21,29 +21,29 @@ void SqueletteArcher::attaqueEnnemis(sf::RenderWindow* window)
 	Affichage().dessinerTexte(nom() + " fleches ",window);
 	for (int i = 1; i <= 3&& equipeEnnemi().estEnVie(); i++) {
 		DEGATS = degats(0.3*i, 0.3*(i+1.0));
-		Attaque(DEGATS, equipeEnnemi().plusFaible(),window);
+		Attaque(DEGATS, equipeEnnemi().plusFaible(),window,allSounds);
 		if (attaqueDouble() && equipeEnnemi().estEnVie()) {
 			DEGATS = degats(0.3 * i, 0.3 * (i + 1.0));
-			Attaque(DEGATS, equipeEnnemi().plusFaible(),window);
+			Attaque(DEGATS, equipeEnnemi().plusFaible(),window,allSounds);
 		}
 	}
 	if (attaqueDouble() && equipeEnnemi().estEnVie()) {
 		for (int i = 1; i <= 3 && equipeEnnemi().estEnVie(); i++) {
 			DEGATS = degats(0.3 * i, 0.3 * (i + 1.0));
-			Attaque(DEGATS, equipeEnnemi().plusFaible(),window);
+			Attaque(DEGATS, equipeEnnemi().plusFaible(),window,allSounds);
 			if (attaqueDouble() && equipeEnnemi().estEnVie()) {
 				DEGATS = degats(0.3 * i, 0.3 * (i + 1.0));
-				Attaque(DEGATS, equipeEnnemi().plusFaible(),window);
+				Attaque(DEGATS, equipeEnnemi().plusFaible(),window,allSounds);
 			}
 		}
 	}
 	ajouterMana(1);
 }
 
-void SqueletteArcher::passif(int tour, sf::RenderWindow* window)
+void SqueletteArcher::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 }
 
-void SqueletteArcher::passifDefensif(sf::RenderWindow* window)
+void SqueletteArcher::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 }

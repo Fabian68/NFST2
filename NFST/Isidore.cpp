@@ -4,7 +4,7 @@
 Isidore::Isidore(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(7, E, O, A, Obj, "Isidore", 1, 1, 8, 10, 10, 10, 10, 10, 10, 10) {}
 
 
-void Isidore::attaqueEnnemis(sf::RenderWindow* window)
+void Isidore::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -18,7 +18,7 @@ void Isidore::attaqueEnnemis(sf::RenderWindow* window)
 		Affichage().dessinerTexte(nom() + "dit bonjour",window);
 		DEGATS = degats(0.001, 0.01);
 		cible = equipeEnnemi().aleatoireEnVie()->indiceEquipe();
-		Attaque(DEGATS, equipeEnnemi()[cible],window);
+		Attaque(DEGATS, equipeEnnemi()[cible],window,allSounds);
 
 		if (habile() && equipeEnnemi()[cible]->estEnVie()) {
 
@@ -26,7 +26,7 @@ void Isidore::attaqueEnnemis(sf::RenderWindow* window)
 			Affichage().dessinerTexte(nom() + "saute sur " + equipeEnnemi()[cible]->nom(),window);
 			DEGATS = degats(1.0, 6.0);
 		
-			Attaque(DEGATS, equipeEnnemi()[cible],window);
+			Attaque(DEGATS, equipeEnnemi()[cible],window,allSounds);
 			ajouterMana(2);
 		}
 		ajouterMana(1);
@@ -57,13 +57,13 @@ void Isidore::attaqueEnnemis(sf::RenderWindow* window)
 		cible = equipeEnnemi().aleatoireEnVie()->indiceEquipe();
 		Affichage().dessinerTexte(nom() + " encule " + equipeEnnemi()[cible]->nom(),window);
 		DEGATS = degats(1.0, 2.5)+degats(1.0,2.5,CHOIXVITESSE);
-		Attaque(DEGATS, equipeEnnemi()[cible],window);
+		Attaque(DEGATS, equipeEnnemi()[cible],window,allSounds);
 		ajouterMana(-3);
 		break;
 	}
 }
 
-void Isidore::passif(int tour, sf::RenderWindow* window)
+void Isidore::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	ajouterVieMax(niveau()/10);
 	if ((tour + 1) % 5 == 0) {
@@ -86,6 +86,6 @@ void Isidore::passif(int tour, sf::RenderWindow* window)
 	
 }
 
-void Isidore::passifDefensif(sf::RenderWindow* window)
+void Isidore::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 }

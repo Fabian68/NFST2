@@ -6,7 +6,7 @@
 
 Fiona::Fiona(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(3, E, O, A, Obj, "Fiona", 3, 5, 2, 17, 17, -17, 7, 7, 7, 70) , _nbAnimaux{0} {}
 
-void Fiona::attaqueEnnemis(sf::RenderWindow* window)
+void Fiona::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -18,10 +18,10 @@ void Fiona::attaqueEnnemis(sf::RenderWindow* window)
 		equipeEnnemi().plusProcheVivant()->ajouterReduction(-1);
 		DEGATS = degats(0.4, 0.8);
 		Affichage().dessinerTexte(nom() + " tire oreille",window);
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		if (attaqueDouble() && equipeEnnemi().estEnVie()) {
 			DEGATS = degats(0.55, 0.95);
-			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		}
 		ajouterMana(1);
 		break;
@@ -49,13 +49,13 @@ void Fiona::attaqueEnnemis(sf::RenderWindow* window)
 		for (int i = 1; i <= 3 && equipeEnnemi().estEnVie(); i++) {
 			equipeEnnemi().plusProcheVivant()->ajouterReduction(-1);
 			DEGATS = degats(0.2 * i , 0.4 *i);
-			Attaque(DEGATS, equipeEnnemi().plusFort(),window);
+			Attaque(DEGATS, equipeEnnemi().plusFort(),window,allSounds);
 		}
 		if (attaqueDouble() && equipeEnnemi().estEnVie()) {
 			for (int i = 1; i <= 3 && equipeEnnemi().estEnVie(); i++) {
 				equipeEnnemi().plusProcheVivant()->ajouterReduction(-1);
 				DEGATS = degats(0.3 * i, 0.6 * i);
-				Attaque(DEGATS, equipeEnnemi().plusFort(),window);
+				Attaque(DEGATS, equipeEnnemi().plusFort(),window,allSounds);
 			}
 		}
 		ajouterMana(-2);
@@ -67,24 +67,24 @@ void Fiona::attaqueEnnemis(sf::RenderWindow* window)
 		equipeEnnemi().plusProcheVivant()->ajouterReduction(-7);
 
 		Affichage().dessinerTexte(nom() + " pûissance 17 ",window);
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		ajouterChanceHabileter(7);
 		if (attaqueDouble() && equipeEnnemi().estEnVie()) {
 			DEGATS = degats(1.17, 1.77);
 			equipeEnnemi().plusProcheVivant()->ajouterReduction(-7);
-			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		}
 		ajouterMana(-3);
 		break;
 	}
 	for (int i = 0; i < equipeAllier().taille() && equipeEnnemi().estEnVie();i++) {
 		if (equipeAllier()[i]->id() == 3 && equipeAllier()[i]->nom() != nom()) {
-			equipeAllier()[i]->attaqueEnnemis(window);
+			equipeAllier()[i]->attaqueEnnemis(window,allSounds);
 		}
 	}
 }
 
-void Fiona::passif(int tour, sf::RenderWindow* window)
+void Fiona::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	std::string nom;
 	int Degats;
@@ -125,19 +125,19 @@ void Fiona::passif(int tour, sf::RenderWindow* window)
 		for (size_t i = 0; i < 17; i++)
 		{
 			Degats = degats(0.17, 0.18 + 0.01 * i);
-			Attaque(Degats, equipeEnnemi().plusFort(),window);
+			Attaque(Degats, equipeEnnemi().plusFort(),window,allSounds);
 		}
 	}
 }
 
-void Fiona::passifDefensif(sf::RenderWindow* window)
+void Fiona::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 	ajouterReduction(1);
 	for (int i = 0; i < equipeAllier().taille()&&equipeEnnemi().estEnVie();i++) {
 		if (equipeAllier()[i]->id() == 3 && equipeAllier()[i]->nom() != nom()) {
-			equipeAllier()[i]->attaqueEnnemis(window);
-			equipeAllier()[i]->attaqueEnnemis(window);
-			equipeAllier()[i]->attaqueEnnemis(window);
+			equipeAllier()[i]->attaqueEnnemis(window,allSounds);
+			equipeAllier()[i]->attaqueEnnemis(window,allSounds);
+			equipeAllier()[i]->attaqueEnnemis(window,allSounds);
 		}
 	}
 }

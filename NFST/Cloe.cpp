@@ -4,7 +4,7 @@
 Cloe::Cloe(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(9, E, O, A, Obj, "Cloe", 1, 6, 3, 25, 25, -50, 0, 75, 0, 0) {}
 
 
-void Cloe::attaqueEnnemis(sf::RenderWindow* window)
+void Cloe::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -86,13 +86,13 @@ void Cloe::attaqueEnnemis(sf::RenderWindow* window)
 	case 3:
 		Affichage().dessinerTexte(nom() + "balance de la KPOP ",window);
 		DEGATS = degats(1.0, 2.0);
-		equipeEnnemi().attaqueZone(DEGATS, this,window);
+		equipeEnnemi().attaqueZone(DEGATS, this,window,allSounds);
 		ajouterMana(-3);
 		break;
 	}
 }
 
-void Cloe::passif(int tour, sf::RenderWindow* window)
+void Cloe::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	if ((tour + 1) % 5 == 0) {
 		Affichage().dessinerTexte(nom() + " est fatiguer ",window);
@@ -100,7 +100,7 @@ void Cloe::passif(int tour, sf::RenderWindow* window)
 	}
 }
 
-void Cloe::passifDefensif(sf::RenderWindow* window)
+void Cloe::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 	ajouterReduction(1);
 	ajouterForce(force() / 10);

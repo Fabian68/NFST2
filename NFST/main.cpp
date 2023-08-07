@@ -70,11 +70,16 @@ void loadSongs(sf::SoundBuffer& buffer, std::vector< sf::Sound>& sounds) {
 	sf::Sound sound1;	
 	sound1.setBuffer(buffer);
 	sounds.push_back(sound1);
+
 	buffer.loadFromFile("vine-boom.ogg");
 	sf::Sound sound2;
 	sound2.setBuffer(buffer);
 	sounds.push_back(sound2);
-	
+
+	buffer.loadFromFile("./song/bow_shoot.ogg");
+	sf::Sound sound3;
+	sound3.setBuffer(buffer);
+	sounds.push_back(sound3);
 }
 int main()
 {
@@ -83,10 +88,10 @@ int main()
 	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1200, 800), "My window");
 
 	sf::SoundBuffer buffer;
-	std::vector< sf::Sound> sounds;
-	sounds.reserve(100);
-	loadSongs(buffer, sounds);
-	std::pair < sf::SoundBuffer, std::vector< sf::Sound>> allSounds(buffer,sounds);
+	std::vector< sf::Sound> allSounds;
+	allSounds.reserve(100);
+	loadSongs(buffer, allSounds);
+	
 	
 	(*window).setActive(true);
 	//(*window).setVerticalSyncEnabled(true);
@@ -101,10 +106,11 @@ int main()
 	
 	Bouton modifierEquipe(500.f, 50.f, "Modifier equipe");
 	Bouton AfficherJoueurs(500.f, 100.f, "AfficherJoueurs");
-	Bouton AfficherAnimaux(500.f, 150.f, "AfficherAnimaux");
-	Bouton Jouer(500.f, 200.f, "Jouer");
+	Bouton AfficherCompetences(500.f, 150.f, "AfficherCompetences");
+	Bouton AfficherAnimaux(500.f, 200.f, "AfficherAnimaux");
+	Bouton Jouer(500.f, 250.f, "Jouer");
 	Bouton Secret(900.f, 700.f, "Boing");
-	Bouton Conseil(100.f, 300.f, C.conseilAleatoire());
+	Bouton Conseil(100.f, 400.f, C.conseilAleatoire());
 	
 	float x, y;
 	sf::Color couleurTexte = sf::Color::White;
@@ -124,6 +130,7 @@ int main()
 		reinitEquipe(Gentil, choix);
 		modifierEquipe.afficher(window);
 		AfficherJoueurs.afficher(window);
+		AfficherCompetences.afficher(window);
 		AfficherAnimaux.afficher(window);
 		Conseil.afficher(window);
 
@@ -146,6 +153,10 @@ int main()
 				if (AfficherJoueurs.comprendLesCoord(x, y,allSounds)) {
 					(*window).clear();
 					H.afficherJoueurs(0, choix, window,allSounds);
+				}
+				else if (AfficherCompetences.comprendLesCoord(x, y, allSounds)) {
+					(*window).clear();
+					H.afficherCompetences(0, choix, window, allSounds);
 				}
 				else if (AfficherAnimaux.comprendLesCoord(x, y,allSounds)) {
 					(*window).clear();

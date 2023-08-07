@@ -19,7 +19,7 @@ public:
 	bool estDebloquer(Objet obj) const;
 	int nombreObjets() const;
 	Objet  objetNumero(int numero);
-	void deblocageObjet( int indiceObjet, sf::RenderWindow* window, std::pair < sf::SoundBuffer, std::vector< sf::Sound>>& allSounds);
+	void deblocageObjet( int indiceObjet, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds);
 	void sauvegarderObjetsDebloquer();
 private:
 	std::vector<std::vector<Objet>> _tableLoot;

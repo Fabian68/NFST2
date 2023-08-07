@@ -17,7 +17,7 @@ Dragon::Dragon(int LVL, std::string nom, int difficulte, int animal, int rareteA
 	status().setReducteur(niveau() * 2);
 }
 
-void Dragon::attaqueEnnemis(sf::RenderWindow* window)
+void Dragon::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -29,10 +29,10 @@ void Dragon::attaqueEnnemis(sf::RenderWindow* window)
 
 		Affichage().dessinerTexte(nom() + " morsure ",window);
 		DEGATS = degats(1.0, 2.0);
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		if (attaqueDouble()) {
 			DEGATS = degats(1.0, 2.0);
-			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		}
 		ajouterMana(1);
 		break;
@@ -41,7 +41,7 @@ void Dragon::attaqueEnnemis(sf::RenderWindow* window)
 		DEGATS = degats(6.0, 12.0);
 		for (int i = 0;i < equipeEnnemi().taille();i++) {
 			if (equipeEnnemi()[i]->estEnVie()) {
-				Attaque(DEGATS*(int)mult, equipeEnnemi()[i],window);
+				Attaque(DEGATS*(int)mult, equipeEnnemi()[i],window,allSounds);
 				equipeEnnemi()[i]->status().appliquerBrulure();
 				DEGATS = (int)(DEGATS * (int)(1.0 - (double)equipeEnnemi()[i]->pourcentageReduction() / 100.0));
 			}
@@ -54,7 +54,7 @@ void Dragon::attaqueEnnemis(sf::RenderWindow* window)
 		DEGATS = degats(1.0, 2.0);
 		for (int i = equipeEnnemi().taille()-1;i >=0;i--) {
 			if (equipeEnnemi()[i]->estEnVie()) {
-				Attaque(DEGATS * (int)mult, equipeEnnemi()[i],window);
+				Attaque(DEGATS * (int)mult, equipeEnnemi()[i],window,allSounds);
 				DEGATS = (int)(DEGATS *(int)(1.2 + (double)equipeEnnemi()[i]->pourcentageReduction() / 100.0));
 			}
 		}
@@ -73,10 +73,10 @@ void Dragon::attaqueEnnemis(sf::RenderWindow* window)
 	}
 }
 
-void Dragon::passif(int tour, sf::RenderWindow* window)
+void Dragon::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 }
 
-void Dragon::passifDefensif(sf::RenderWindow* window)
+void Dragon::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 }

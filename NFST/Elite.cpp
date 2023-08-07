@@ -21,7 +21,7 @@ Elite::Elite(int LVL, std::string nom, int difficulte, int animal, int rareteAni
 }
 
 
-void Elite::attaqueEnnemis(sf::RenderWindow* window)
+void Elite::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -33,20 +33,20 @@ void Elite::attaqueEnnemis(sf::RenderWindow* window)
 		Affichage().dessinerTexte(nom() + " Mitraillette alien",window);
 		for (int i = 0;i < 10 && equipeEnnemi().estEnVie();i++) {
 			DEGATS = degats(0.2, 0.3);
-			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 			if (attaqueDouble() && equipeEnnemi().estEnVie()) {
 				DEGATS = degats(0.2, 0.3 );
-				Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+				Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 				
 			}
 		}
 		if (attaqueDouble()) {
 			for (int i = 0;i < 10 && equipeEnnemi().estEnVie();i++) {
 				DEGATS = degats(0.2, 0.3);
-				Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+				Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 				if (attaqueDouble() && equipeEnnemi().estEnVie()) {
 					DEGATS = degats(0.2, 0.3);
-					Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+					Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 
 				}
 			}
@@ -56,10 +56,10 @@ void Elite::attaqueEnnemis(sf::RenderWindow* window)
 	case 1:
 		Affichage().dessinerTexte(nom() + " coup épée ",window);
 		DEGATS = degats(2.0, 4.0);
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		if (attaqueDouble() && equipeEnnemi().estEnVie()) {
 			DEGATS = degats(1.5, 3.0);
-			Attaque(DEGATS, equipeEnnemi().plusFaible(),window);
+			Attaque(DEGATS, equipeEnnemi().plusFaible(),window,allSounds);
 
 		}
 		ajouterMana(-1);
@@ -79,7 +79,7 @@ void Elite::attaqueEnnemis(sf::RenderWindow* window)
 	}
 }
 
-void Elite::passif(int tour, sf::RenderWindow* window)
+void Elite::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	if ((pause + 1) % 4 == 0) {
 		bouclier(bouclierMax(), this,window);
@@ -88,7 +88,7 @@ void Elite::passif(int tour, sf::RenderWindow* window)
 	pause++;
 }
 
-void Elite::passifDefensif(sf::RenderWindow* window)
+void Elite::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 	pause = 0;
 }

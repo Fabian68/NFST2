@@ -16,7 +16,7 @@ Sanglier::Sanglier(int LVL, std::string nom, int difficulte, int animal, int rar
 
 
 
-void Sanglier::attaqueEnnemis(sf::RenderWindow* window)
+void Sanglier::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -27,7 +27,7 @@ void Sanglier::attaqueEnnemis(sf::RenderWindow* window)
 	case 0:
 		DEGATS = degats(0.9, 1.3);
 		Affichage().dessinerTexte(nom() + " charge ",window);
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 
 		ajouterMana(1);
 		break;
@@ -59,14 +59,14 @@ void Sanglier::attaqueEnnemis(sf::RenderWindow* window)
 		Affichage().dessinerTexte(nom() + " charge dans tout les sens ! ",window);
 		for (int i = 1,j=1; i <= 5 && equipeEnnemi().estEnVie(); i++,j*=2) {
 			DEGATS = degats(j/10.0, j/5.0);
-			Attaque(DEGATS, equipeEnnemi().aleatoireEnVie(),window);
+			Attaque(DEGATS, equipeEnnemi().aleatoireEnVie(),window,allSounds);
 		}
 		ajouterMana(-3);
 		break;
 	}
 }
 
-void Sanglier::passif(int tour, sf::RenderWindow* window)
+void Sanglier::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int SOINS;
 	if ((tour + 1) % 5 == 0) {
@@ -79,7 +79,7 @@ void Sanglier::passif(int tour, sf::RenderWindow* window)
 	}
 }
 
-void Sanglier::passifDefensif(sf::RenderWindow* window)
+void Sanglier::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 	int SOINS;
 	if (Aleatoire(0, 101).entier() <= 10) {

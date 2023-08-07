@@ -10,7 +10,7 @@ Magicien::Magicien(int LVL, std::string nom, int difficulte, int animal, int rar
 	status().setAdducteur(2*niveau());
 }
 
-void Magicien::attaqueEnnemis(sf::RenderWindow* window)
+void Magicien::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -25,20 +25,20 @@ void Magicien::attaqueEnnemis(sf::RenderWindow* window)
 		if (stade <= 3) {
 			DEGATS = degats(0.6, 0.6 + 0.1 * stade * 2);
 			Affichage().dessinerTexte(nom() + " boule de feu ",window);
-			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		}
 		else if (stade == 4) {
 			Affichage().dessinerTexte(nom() + " 3 boule de feu ",window);
 			for (int i = 0;i < 3;i++) {
 				DEGATS = degats(0.9, 1.6);
-				Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+				Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 			}
 		}
 		else if (stade == 5) {
 			Affichage().dessinerTexte(nom() + " météores ! ",window);
 			for (int i = 0;i < 5;i++) {
 				DEGATS = degats(2.6, 5.2);
-				Attaque(DEGATS, equipeEnnemi().aleatoireEnVie(),window);
+				Attaque(DEGATS, equipeEnnemi().aleatoireEnVie(),window,allSounds);
 			}
 		}
 		ajouterMana(1);
@@ -49,7 +49,7 @@ void Magicien::attaqueEnnemis(sf::RenderWindow* window)
 			equipeEnnemi().plusProcheVivant()->ajouterReduction(-stade);
 			DEGATS = degats(0.8, 1.0 + 0.1 * stade * 2);
 			Affichage().dessinerTexte(nom() + " pique de glace ",window);
-			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		}
 		else if (stade == 4) {
 			Affichage().dessinerTexte(nom() + " 3 pique de glace ",window);
@@ -60,13 +60,13 @@ void Magicien::attaqueEnnemis(sf::RenderWindow* window)
 			equipeEnnemi().plusLoinVivant()->ajouterReduction(-2 * stade);
 			
 			DEGATS = degats(1.2, 1.9);
-			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 
 			DEGATS = degats(1.4, 2.1);
-			Attaque(DEGATS, equipeEnnemi()[indice],window);
+			Attaque(DEGATS, equipeEnnemi()[indice],window,allSounds);
 
 			DEGATS = degats(1.7, 2.4);
-			Attaque(DEGATS, equipeEnnemi().plusLoinVivant(),window);
+			Attaque(DEGATS, equipeEnnemi().plusLoinVivant(),window,allSounds);
 			
 		}
 		else if (stade == 5) {
@@ -127,7 +127,7 @@ void Magicien::attaqueEnnemis(sf::RenderWindow* window)
 	}
 }
 
-void Magicien::passif(int tour, sf::RenderWindow* window)
+void Magicien::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	if (tour == 5) {
 		stade = 2;
@@ -177,12 +177,12 @@ void Magicien::passif(int tour, sf::RenderWindow* window)
 		AjouterBouclier((int)( (double)stade * (double)bouclierMax()/10.0),window);
 		status().ajouterCompteurProteger(5);
 		if (stade == 5) {
-			attaqueEnnemis(window);
+			attaqueEnnemis(window,allSounds);
 			status().ajouterCompteurProteger(10);
 		}
 	}
 }
 
-void Magicien::passifDefensif(sf::RenderWindow* window)
+void Magicien::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 }

@@ -325,10 +325,10 @@ Personnage* Equipes::plusGrosseAttaqueEnvoyer()
 	return _equipe[indice];
 }
 
-void Equipes::attaqueZone(int Degats,Personnage * Attaquant, sf::RenderWindow* window)
+void Equipes::attaqueZone(int Degats,Personnage * Attaquant, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	for (int i = 0; i < Attaquant->equipeEnnemi().taille(); i++) {
-		Attaquant->Attaque(Degats, Attaquant->equipeEnnemi()[i],window);
+		Attaquant->Attaque(Degats, Attaquant->equipeEnnemi()[i],window,allSounds);
 	}
 }
 

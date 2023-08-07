@@ -6,10 +6,11 @@
 Nicolas::Nicolas(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(1, E, O, A, Obj, "Niquola", 4, 3, 3, 10, 10, 50, 0, 50, 25, 0) {
 
 	status().devientEnmagasineur();
+ //ajouter Nicla
 }
 
 
-void Nicolas::attaqueEnnemis(sf::RenderWindow* window) {
+void Nicolas::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) {
 	int choix = choixAttaque();
 	int DEGATS;
 
@@ -24,7 +25,7 @@ void Nicolas::attaqueEnnemis(sf::RenderWindow* window) {
 		if (this->force() > equipeEnnemi().plusProcheVivant()->force()) {
 			DEGATS *= 2;
 		}
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		ajouterMana(1);
 		break;
 	case 1:
@@ -47,11 +48,11 @@ void Nicolas::attaqueEnnemis(sf::RenderWindow* window) {
 
 		Affichage().dessinerTexte(nom() + " Relachement ! ",window);
 		DEGATS = degats(0.20, 0.40) + status().enmagasination()*2;
-		Attaque(DEGATS, equipeEnnemi().plusFort(),window);
+		Attaque(DEGATS, equipeEnnemi().plusFort(),window,allSounds);
 
 		if (attaqueDouble() && equipeEnnemi().estEnVie()) {
 			DEGATS = degats(0.40, 0.80) + status().enmagasination();
-			Attaque(DEGATS, equipeEnnemi().plusFort(),window);
+			Attaque(DEGATS, equipeEnnemi().plusFort(),window,allSounds);
 
 		}
 		status().retirerEmagasination(status().enmagasination());
@@ -69,7 +70,7 @@ void Nicolas::attaqueEnnemis(sf::RenderWindow* window) {
 	}
 }
 
-void Nicolas::passif(int tour, sf::RenderWindow* window)
+void Nicolas::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	if (status().estBruler()) {
 		status().soignerBrulure();
@@ -81,11 +82,11 @@ void Nicolas::passif(int tour, sf::RenderWindow* window)
 	}
 }
 
-void Nicolas::passifDefensif(sf::RenderWindow* window)
+void Nicolas::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degatss, Personnage* P)
 {
 	if (Aleatoire(0, 101).entier() <= 10) {
 		int Degats = degats(0.15, 0.30)+status().enmagasination()/10;
 		Affichage().dessinerTexte(this->nom() + " VENDETTA ",window);
-		Attaque(Degats, equipeEnnemi().plusProcheVivant(),window);
+		Attaque(Degats, equipeEnnemi().plusProcheVivant(),window,allSounds);
 	}
 }

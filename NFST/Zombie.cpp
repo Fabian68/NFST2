@@ -20,7 +20,7 @@ Zombie::Zombie(int LVL, std::string nom, int difficulte, int animal, int rareteA
 }
 
 
-void Zombie::attaqueEnnemis(sf::RenderWindow* window)
+void Zombie::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -54,7 +54,7 @@ void Zombie::attaqueEnnemis(sf::RenderWindow* window)
 			DEGATS = degats(0.5, 2.5);
 			Affichage().dessinerTexte(nom() + " mords ",window);
 			cible1 = equipeEnnemi().plusProcheVivant()->indiceEquipe();
-			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 			if (equipeEnnemi().estEnVie()) {
 				cible2 = equipeEnnemi().plusProcheVivant()->indiceEquipe();
 				if (cible1 != cible2 && equipeAllier().taille() < 10) {
@@ -78,7 +78,7 @@ void Zombie::attaqueEnnemis(sf::RenderWindow* window)
 		ajouterMana(1);
 }
 
-void Zombie::passif(int tour, sf::RenderWindow* window)
+void Zombie::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int dernier;
 	for (int i = 0;i < equipeEnnemi().taille();i++) {
@@ -96,7 +96,7 @@ void Zombie::passif(int tour, sf::RenderWindow* window)
 	for (int i = 0; i < equipeAllier().taille()&&equipeEnnemi().estEnVie(); i++) {
 		if (equipeAllier()[i] != this) {
 			if (equipeAllier()[i]->id() == -2) {
-				equipeAllier()[i]->attaqueEnnemis(window);
+				equipeAllier()[i]->attaqueEnnemis(window,allSounds);
 			}
 		}
 	}
@@ -112,7 +112,7 @@ void Zombie::passif(int tour, sf::RenderWindow* window)
 	}
 }
 
-void Zombie::passifDefensif(sf::RenderWindow* window)
+void Zombie::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 	ajouterForce(1);
 	int SOINS = soins(0.02, 0.06);

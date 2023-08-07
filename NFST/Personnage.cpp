@@ -403,7 +403,7 @@ Equipes & Personnage::equipeEnnemi()
 bool Personnage::habile()const {
 	return Aleatoire(0, 101).entier() <= _chanceHabilete;
 }
-void Personnage::traitementAnimaux(sf::RenderWindow* window) {
+void Personnage::traitementAnimaux(sf::RenderWindow* window, std::vector< sf::Sound > &allSounds) {
 	if (_animal.indice() < 0) {
 
 	}
@@ -422,13 +422,13 @@ void Personnage::traitementAnimaux(sf::RenderWindow* window) {
 				soigner(Soins, _A.aleatoireEnVie(),window);
 			break;
 		case 3:
-				Attaque(Degats, _E.plusFaible(),window);
+				Attaque(Degats, _E.plusFaible(),window, allSounds);
 			break;
 		case 4:
-				_E.attaqueZone(Degats, this,window);
+				_E.attaqueZone(Degats, this,window,allSounds);
 			break;
 		case 5:
-				Attaque(Degats, _E.aleatoireEnVie(),window);
+				Attaque(Degats, _E.aleatoireEnVie(),window, allSounds);
 			break;
 		case 6:
 				_A.bouclierZone(Soins, this,window);
@@ -446,7 +446,7 @@ void Personnage::traitementAnimaux(sf::RenderWindow* window) {
 		}
 	}
 }
-void  Personnage::Attaque(int Degat, Personnage * Defenseur, sf::RenderWindow* window)
+void  Personnage::Attaque(int Degat, Personnage * Defenseur, sf::RenderWindow* window, std::vector< sf::Sound > &allSounds)
 {
 
 	bool redirection = false;
@@ -581,7 +581,7 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, sf::RenderWindow* w
 				Degat = (int)((double)Degat * 1.5);
 				std::cout << " OBJ9 ";
 			}
-			Defenseur->Attaque(Degat, this,window);
+			Defenseur->Attaque(Degat, this,window,allSounds);
 			
 		}
 		else if (Defenseur->possedeObjetNumero(10) && Aleatoire(0, 101).entier() < 10) {
@@ -592,17 +592,13 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, sf::RenderWindow* w
 			for (int i = 0;i < Defenseur->equipeAllier().taille()&&!redirection;i++) {
 				if (Defenseur->equipeAllier()[i]->possedeObjetNumero(11) && Aleatoire(0, 101).entier() < 25) {
 					redirection = true;
-					Attaque(Degat, Defenseur->equipeAllier()[i],window);
+					Attaque(Degat, Defenseur->equipeAllier()[i],window,allSounds);
 					//std::cout << " OBJ11 ";
 				}
 			}
 			if (!redirection) {
-				Defenseur->passifDefensif(window);
-				Defenseur->traitementAnimaux(window);
-				this->traitementAnimaux(window);
 				
-				
-
+			
 			//	std::cout << _nom<<indiceEquipe() << " attaque " << Defenseur->indiceEquipe() << Defenseur->nom() << " " << FRAGILISER << " " << PROTEGER;
 				//std::cout << " " << Degat << std::endl;
 				if (Defenseur->possedeObjetNumero(25)) {
@@ -627,6 +623,9 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, sf::RenderWindow* w
 				}
 				//fin modif dégats
 				degatEffectif = Degat;
+				Defenseur->passifDefensif(window, allSounds, degatEffectif,this);
+				Defenseur->traitementAnimaux(window, allSounds);
+				this->traitementAnimaux(window, allSounds);
 				_S.incrementerNbAttaques();
 				Defenseur->stats().incrementerNbAttaquesRecues();
 				_S.ajouterDegatsProvoquer(Degat);
@@ -678,9 +677,9 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, sf::RenderWindow* w
 			if (possedeObjetNumero(27)) {
 				Degat = (int)((double)Degat*1.3);
 			}
-			Attaque(Degat, _E.aleatoireEnVie(),window);
+			Attaque(Degat, _E.aleatoireEnVie(),window,allSounds);
 			if (possedeObjetNumero(40)) {
-				Attaque(Degat, _E.aleatoireEnVie(),window);
+				Attaque(Degat, _E.aleatoireEnVie(),window,allSounds);
 			}
 		}
 	}
@@ -703,15 +702,15 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, sf::RenderWindow* w
 		Degat = degats(1.0, 10.0);
 		if (Aleatoire(0, 1001).entier() == 1) {
 			Degat = degats(1.0, 10.0);
-			Attaque(Degat, _E.plusProcheVivant(),window);
+			Attaque(Degat, _E.plusProcheVivant(),window,allSounds);
 		}
 		if (Aleatoire(0, 101).entier() == 1 &&_E.estEnVie()) {
 			Degat = degats(0.1, 1.0);
-			Attaque(Degat, _E.plusProcheVivant(),window);
+			Attaque(Degat, _E.plusProcheVivant(),window, allSounds);
 		}
 		if (Aleatoire(0, 11).entier() == 1 && _E.estEnVie()) {
 			Degat = degats(0.01, 0.10);
-			Attaque(Degat, _E.plusProcheVivant(),window);
+			Attaque(Degat, _E.plusProcheVivant(),window, allSounds);
 		}
 	//	std::cout << " OBJ31 ";
 	}

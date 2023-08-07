@@ -42,9 +42,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Orbes.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="Affichage.cpp">
       <Filter>Fichiers sources\Affichages</Filter>
     </ClCompile>
@@ -209,6 +206,9 @@
     </ClCompile>
     <ClCompile Include="AffichageCombat.cpp">
       <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Orbes.cpp">
+      <Filter>Fichiers sources\Fonctionnalites</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
