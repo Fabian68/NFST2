@@ -91,7 +91,7 @@ bool Orbes::orbeDebloquer(int indiceJoueur, int rareter) const
 	return _orbesLVL[indiceJoueur][rareter-1] != 0;
 }
 
-void Orbes::deblocageOrbe(int indiceJoueur, int rareter, std::string perso, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void Orbes::deblocageOrbe(int indiceJoueur, int rareter, std::string perso, sf::RenderWindow* window, std::vector< sf::Sound>& allSounds)
 {
 	std::string txt = "";
 	txt+= perso +" a débloquer une orbe ";

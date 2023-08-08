@@ -38,7 +38,7 @@ public:
 	int pourcentageBouclier() const;
 	virtual void attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound > &allSounds)=0;
 	virtual void passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound > &allSounds) = 0 ;
-	virtual void passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound > &allSounds,int degats,Personnage * P) = 0;
+	virtual void passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound> &allSounds,int degats,Personnage * P) = 0;
 	bool estEnVie() const;
 	int force() const;
 	int vitesse()const;

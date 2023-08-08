@@ -30,7 +30,9 @@
 #include "Conseils.h"
 #include <SFML/Audio.hpp>
 #include"AffichageCombat.h"
+#include "Succes.h"
 #define PI 3.14159265
+#include<memory>
 
 
 void reinitListeEquipe(Equipes& Liste) {
@@ -65,21 +67,47 @@ void reinitEquipe(Equipes& monEquipe, Equipes& ListePerso) {
 	
 
 }
-void loadSongs(sf::SoundBuffer& buffer, std::vector< sf::Sound>& sounds) {	
-	buffer.loadFromFile("giga-chad.ogg");
+void loadSongs(std::vector< sf::SoundBuffer*> & allBuffers,std::vector< sf::Sound*>& sounds) {
+	sf::SoundBuffer buffer;
+	buffer.loadFromFile("song/giga-chad.ogg");
 	sf::Sound sound1;	
 	sound1.setBuffer(buffer);
-	sounds.push_back(sound1);
+	allBuffers.push_back(&buffer);
+	sounds.push_back(&sound1);
 
-	buffer.loadFromFile("vine-boom.ogg");
+	sf::SoundBuffer buffer2;
+	buffer2.loadFromFile("song/vine-boom.ogg");
 	sf::Sound sound2;
-	sound2.setBuffer(buffer);
-	sounds.push_back(sound2);
+	sound2.setBuffer(buffer2);
+	allBuffers.push_back(&buffer2);
+	sounds.push_back(&sound2);
 
-	buffer.loadFromFile("./song/bow_shoot.ogg");
+	sf::SoundBuffer buffer3;
+	buffer3.loadFromFile("song/bow_shoot.ogg");
 	sf::Sound sound3;
-	sound3.setBuffer(buffer);
-	sounds.push_back(sound3);
+	sound3.setBuffer(buffer3);
+	allBuffers.push_back(&buffer3);
+	sounds.push_back(&sound3);
+}
+
+void loadSongs2(std::vector<std::shared_ptr<sf::SoundBuffer>>& allBuffers, std::vector<sf::Sound>& sounds) {
+	// Charger les buffers et les stocker dans allBuffers
+	std::shared_ptr<sf::SoundBuffer> buffer1 = std::make_shared<sf::SoundBuffer>();
+	buffer1->loadFromFile("./song/giga-chad.ogg");
+	allBuffers.push_back(buffer1);
+
+	std::shared_ptr<sf::SoundBuffer> buffer2 = std::make_shared<sf::SoundBuffer>();
+	buffer2->loadFromFile("./song/vine-boom.ogg");
+	allBuffers.push_back(buffer2);
+
+	std::shared_ptr<sf::SoundBuffer> buffer3 = std::make_shared<sf::SoundBuffer>();
+	buffer3->loadFromFile("./song/bow_shoot.ogg");
+	allBuffers.push_back(buffer3);
+
+	// Créer les objets sf::Sound en utilisant les buffers stockés dans allBuffers
+	sounds.push_back(sf::Sound(*buffer1));
+	sounds.push_back(sf::Sound(*buffer2));
+	sounds.push_back(sf::Sound(*buffer3));
 }
 int main()
 {
@@ -87,11 +115,12 @@ int main()
 
 	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1200, 800), "My window");
 
-	sf::SoundBuffer buffer;
-	std::vector< sf::Sound> allSounds;
-	allSounds.reserve(100);
-	loadSongs(buffer, allSounds);
-	
+	std::vector<std::shared_ptr<sf::SoundBuffer>> allBuffers2;
+	std::vector<sf::Sound> allSounds;
+
+	loadSongs2(allBuffers2, allSounds);
+	//sounds2.at(0).play();
+	//allSounds2->at(1).play();
 	
 	(*window).setActive(true);
 	//(*window).setVerticalSyncEnabled(true);
@@ -123,6 +152,7 @@ int main()
 		Orbes O;
 		Animaux A;
 		Objets Obj;
+		Succes S;
 		
 		H.dessinerTexte("Version 4.0 ", window);
 
@@ -220,6 +250,10 @@ int main()
 				}
 				else if (Secret.comprendLesCoord(x, y,allSounds)) {
 					H.afficherTexte(Aleatoire(20, 1100).entier(), Aleatoire(20, 700).entier(), "BOING", sf::Color::Red, window);
+					if (!S.estDebloque(0)) {
+						S.debloquerSucces(0);
+						S.affichageDeblocageSucces(0, allSounds);
+					}
 				}
 			}
 		}

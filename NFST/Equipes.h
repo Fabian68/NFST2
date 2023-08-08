@@ -37,7 +37,7 @@ public:
 	Personnage* meilleurNombresAttaquesRecues();
 	Personnage* plusGrosseAttaqueRecue();
 	Personnage* plusGrosseAttaqueEnvoyer();
-	void attaqueZone(int Degats,Personnage*Attaquant, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds);
+	void attaqueZone(int Degats,Personnage*Attaquant, sf::RenderWindow* window, std::vector< sf::Sound>& allSounds);
 	void soignerZone(int soins, Personnage* Soigneur, sf::RenderWindow* window);
 	void bouclierZone(int bouclier, Personnage* bouclierMan, sf::RenderWindow* window);
 	void vider();
