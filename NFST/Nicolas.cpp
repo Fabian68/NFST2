@@ -3,7 +3,7 @@
 #include "Affichage.h"
 
 
-Nicolas::Nicolas(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(1, E, O, A, Obj, "Niquola", 4, 3, 3, 10, 10, 50, 0, 50, 25, 0) {
+Nicolas::Nicolas(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(1, E, O, A, Obj, "Niquola", 4, 4, 4, 10, 10, 20, 0, 25, 10, 0) {
 
 	status().devientEnmagasineur();
  //ajouter Nicla
@@ -20,7 +20,7 @@ void Nicolas::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >&
 	switch (choix) {
 
 	case 0:
-		DEGATS = degats(0.8, 1.2);
+		DEGATS = degats(0.2, 0.8);
 		Affichage().dessinerTexte(nom() + " Bras de fer ",window);
 		if (this->force() > equipeEnnemi().plusProcheVivant()->force()) {
 			DEGATS *= 2;
@@ -84,9 +84,4 @@ void Nicolas::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound 
 
 void Nicolas::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degatss, Personnage* P)
 {
-	if (Aleatoire(0, 101).entier() <= 10) {
-		int Degats = degats(0.15, 0.30)+status().enmagasination()/10;
-		Affichage().dessinerTexte(this->nom() + " VENDETTA ",window);
-		Attaque(Degats, equipeEnnemi().plusProcheVivant(),window,allSounds);
-	}
 }

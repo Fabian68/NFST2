@@ -345,23 +345,24 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 	std::string str;
 	sf::Color couleurFond = sf::Color::Black;
 	sf::Color couleurTexte = sf::Color::White;
+	sf::Color couleurTexteG = sf::Color::Green;
 
 	str = "Pseudo : " + Liste[indice]->nom();
-	afficherTexte(x, y, str, couleurTexte, window);
+	afficherTexte(x+100.f, y, str, couleurTexte, window);
 
 	str = "Passif ";
-	afficherTexte(x, y + 20.f, str, couleurTexte, window);
+	afficherTexte(x, y + 10.f, str, couleurTexteG, window);
 	switch (indice) {
 		case 0:
-			str = "Gagne force/(7/5/3/2) + niveau de dégats à chaque attaque. Niveau (1/10/100/1000) Valeur actuelle : " + std::to_string(Liste[indice]->status().adducteur());
+			str = "Gagne force/(7/5/3/2) + niveau de dégats supplémentaires. Niveau (1/10/100/1000) Valeur actuelle : " + std::to_string(Liste[indice]->status().adducteur());
 			str = str + "\n" + "Recois niveaux dégats en moins, Valeur actuel : "+ std::to_string(Liste[indice]->niveau());
 			
 		break;
 	}
-	afficherTexte(x, y + 40.f, str, couleurTexte, window);
+	afficherTexte(x, y + 30.f, str, couleurTexte, window);
 
 	str = "Passif par tour";
-	afficherTexte(x, y + 80.f, str, couleurTexte, window);
+	afficherTexte(x, y + 90.f, str, couleurTexteG, window);
 	switch (indice) {
 	case 0:
 		str = "Tout les 17 tours vous gagnez 7% de réduction de dégats";
@@ -369,21 +370,81 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		
 		break;
 	}
-	afficherTexte(x, y + 100.f, str, couleurTexte, window);
+	afficherTexte(x, y + 110.f, str, couleurTexte, window);
 
 	str = "Passif defensif";
-	afficherTexte(x, y + 140.f, str, couleurTexte, window);
+	afficherTexte(x, y + 160.f, str, couleurTexteG, window);
 	switch (indice) {
 	case 0:
 		str = "Vous augmenter votre reduction de dégats de 1";
 		break;
 	}
-	afficherTexte(x, y + 160.f, str, couleurTexte, window);
-
-	str = "Compétence 1 ";
 	afficherTexte(x, y + 180.f, str, couleurTexte, window);
 
+	str = "Compétence 1 ";
+	afficherTexte(x, y + 230.f, str, couleurTexteG, window);
+	switch (indice) {
+	case 0:
+		str = "Attaque l'ennemi le plus proche avec un ratio de 20-40% de votre attaque + 10-30% de votre vitesse , +1 mana";
+		int DEGATS = Liste[indice]->degats(0.2, 0.4);
+		DEGATS += Liste[indice]->degats(0.1, 0.3, CHOIXVITESSE);
+		str = str + "\n" + "Dégats potentiels : " + std::to_string(DEGATS);
+		break;
+	}
+	afficherTexte(x, y + 250.f, str, couleurTexte, window);
 
+	str = "Compétence 2 ";
+	afficherTexte(x, y + 320.f, str, couleurTexteG, window);
+	switch (indice) {
+	case 0:
+		str = "Attaque plusieurs fois l'ennemi le plus fort, le nombre de coup = 3 + vitesse/niveau, compteur d'attaque = 0 et augmente de 1 à chaque attaque (CA), -1 mana ";
+		str = str + "\n" + " ratio = (1,7% + 1,7% x CA) - (17% + 3,4% x CA) : " ;
+		int DEGATS = 0;
+		for (int i = 0; i <= (3 + Liste[indice]->vitesse() / Liste[indice]->niveau()); i++) {
+			DEGATS += Liste[indice]->degats(0.017 + i * 0.017, 0.17 + i * 0.034);
+		}
+		str = str + "Dégats potentiels : " + std::to_string(DEGATS);
+		str = str + "\n" + " Double attaque ratio = (17% + 1,7% x CA) - (17% + 7,0% x CA) : ";
+		DEGATS = 0;
+		for (int i = 0; i <= (3 + Liste[indice]->vitesse() / Liste[indice]->niveau()); i++) {
+			if (Liste[indice]->attaqueDouble()) {
+				DEGATS += Liste[indice]->degats(0.17 + i * 0.017, 0.17 + i * 0.07);
+			}
+		}
+		str = str + "Dégats potentiels : " + std::to_string(DEGATS);
+		str = str + "\n" + " Si habile attaque brut sur l'ennemi le plus proche egalement = (1,7% + 1,7% x CA) - (7% + 7,0% x CA) : ";
+		DEGATS = 0;
+		for (int i = 0; i <= (3 + Liste[indice]->vitesse() / Liste[indice]->niveau()); i++) {
+			if (Liste[indice]->habile()) {
+				DEGATS += Liste[indice]->degats(0.017 + i * 0.017, 0.07 + i * 0.07);
+			}
+		}
+		str = str + "Dégats potentiels brut : " + std::to_string(DEGATS);
+		break;
+	}
+	afficherTexte(x, y + 340.f, str, couleurTexte, window);
+
+	str = "Compétence 3 ";
+	afficherTexte(x, y + 410.f, str, couleurTexteG, window);
+	switch (indice) {
+	case 0:
+		str = "Augmente les chances de coup critique de 2% et les dégats critiques de 7%, -1 mana";
+		break;
+	}
+	afficherTexte(x, y + 430.f, str, couleurTexte, window);
+
+	str = "Compétence 4 ";
+	afficherTexte(x, y + 500.f, str, couleurTexteG, window);
+	switch (indice) {
+	case 0:
+		str = "Si vous avez pas toute votre vie et tout votre bouclier, vous soigne et bouclier intégralement - 3 Mana";
+		str = str + "\n" + "Sinon attaque la cible la plus faible pour 50-150% de votre force + 75-125% de votre vitesse, -2 mana";
+		int DEGATS = Liste[indice]->degats(0.5, 1.5);
+		DEGATS += Liste[indice]->degats(0.75, 1.25, CHOIXVITESSE);
+		str = str + " Dégats potentiels : " + std::to_string(DEGATS);
+		break;
+	}
+	afficherTexte(x, y + 520.f, str, couleurTexte, window);
 
 	Bouton Retour(300.f, 700.f, "RETOUR");
 	Retour.afficher(window);
@@ -391,7 +452,6 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 	Precedent.afficher(window);
 	Bouton Suivant(600.f, 700.f, "Suivant");
 	Suivant.afficher(window);
-
 
 	float  xc = 0.f, yc = 0.f;
 	(*window).display();
@@ -440,45 +500,45 @@ void Affichage::afficherMecaniques(sf::RenderWindow* window, std::vector<sf::Sou
 	afficherTexte(x, y, str, couleurTexte, window);
 
 	str = "Double attaque : Permet d'attaquer deux fois sur certaines attaques, certains effets sur certains personnages.";
-	afficherTexte(x, y+60.f, str, couleurTexte, window);
+	afficherTexte(x, y+60.f, str, sf::Color::Green, window);
 
 	str = "Coup habile : Permet d'avoir les dégats et soins multiplié par deux";
-	afficherTexte(x, y + 80.f, str, couleurTexte, window);
+	afficherTexte(x, y + 80.f, str, sf::Color::Yellow, window);
 	
 	str = "Coup critique : Un coup critique permet de faire des dégats/soins critiques, de base 5% de chances de faire 50% de dégats/soins supplémentaires";
-	afficherTexte(x, y + 100.f, str, couleurTexte, window);
+	afficherTexte(x, y + 100.f, str, sf::Color::Red, window);
 
 	str = "Pourcentage de reduction de dégats : Reduit les dégats reçu en pourcentage, ne fonctionne pas avec les dégats brut";
-	afficherTexte(x, y + 120.f, str, couleurTexte, window);
+	afficherTexte(x, y + 120.f, str, sf::Color::Green, window);
 
 	str = "Pourcentage de déviation : Renvoie une attaque après le calcul des dégats, ne fonctionne pas avec les attaques brut,le passif défensif ne s'applique pas";
-	afficherTexte(x, y + 140.f, str, couleurTexte, window);
+	afficherTexte(x, y + 140.f, str, sf::Color::Magenta, window);
 
 	str = "Pourcentage de blocage : Une attaque bloqué bloque 50% des dégats, ne fonctionne pas avec les attaques brut";
-	afficherTexte(x, y + 160.f, str, couleurTexte, window);
+	afficherTexte(x, y + 160.f, str, sf::Color::Cyan, window);
 	
 	str = "Pourcentage d'esquive : Une attaque esquivé ne fait aucun dégats, le passif défensif n'est pas appliqué";
-	afficherTexte(x, y + 180.f, str, couleurTexte, window);
+	afficherTexte(x, y + 180.f, str, sf::Color::Yellow, window);
 
 	str = "Pourcentage de ricochet : Permet de relancer une attaque sur une cible aléatoire après calcul des dégats";
-	afficherTexte(x, y + 200.f, str, couleurTexte, window);
+	afficherTexte(x, y + 200.f, str, sf::Color::Magenta, window);
 
 	str = "Le bouclier : Le bouclier est la barre en dessous des points de vie, le bouclier est réduit avant les points de vies.";
 	str = str + "\n" + "Montant de bouclier maximum : (Force * 10 + vie_max)/4";
-	afficherTexte(x, y + 220.f, str, couleurTexte, window);
+	afficherTexte(x, y + 220.f, str, sf::Color::Magenta, window);
 
 	str = "Compteur de protection : Prochaine attaque à des dégats diviser par 2, le compteur décrémente.";
 	str = str + "\n" + "Compteur de fragilisation : Prochaine attaque à des dégats multiplié par 2, le compteur décrémente.";
-	afficherTexte(x, y + 250.f, str, couleurTexte, window);
+	afficherTexte(x, y + 250.f, str, sf::Color::Green, window);
 
 	str = "Attaque brut : Une attaque brut n'active pas les passif et animaux, les dégats ne sont pas réduits";
-	afficherTexte(x, y + 280.f, str, couleurTexte, window);
+	afficherTexte(x, y + 280.f, str, sf::Color::Red, window);
 
 	str = "Status brulé : Reduit de 1 à 10% des pv max par tour du personnage brulé, augmente de 1% chaque tour";
-	afficherTexte(x, y + 300.f, str, couleurTexte, window);
+	afficherTexte(x, y + 300.f, str, sf::Color::Red, window);
 
 	str = "Status empoisonné : Incurable, dégats très très faible au départ mais finit mais les dégats augmente de manière exponentiel";
-	afficherTexte(x, y + 320.f, str, couleurTexte, window);
+	afficherTexte(x, y + 320.f, str, sf::Color::Magenta, window);
 
 
 	Bouton Retour(300.f, 700.f, "RETOUR");
@@ -884,7 +944,7 @@ void Affichage::afficherObjetsDeblocableNiveau(Objets obj, int niveau, sf::Rende
 	afficherTexte(300.f, 460.f, "LOOT", sf::Color::White, window);
 	afficherTexte(50.f, 490.f, txt, sf::Color::White, window);
 }
-void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix, int max, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) const
+void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix,Zones & Z, int max, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) const
 {
 	//(*window).clear();
 	Objets O = Objets();
@@ -900,11 +960,11 @@ void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix, int max, sf::
 			Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau())).afficher(window);
 		}
 		for (int i = 14; i < choix.taille(); i++) {
-			if (i == 14 && !O.estDebloquer(O.objetNumero(44))) {
+			if (i == 14 && !O.estDebloquer(O.objetNumero(OBJET_OEUF_TORTUE))) {
 
 			}
 			else {
-				if (i == 16 && !O.estDebloquer(O.objetNumero(45))) {
+				if (i == 16 && !O.estDebloquer(O.objetNumero(OBJET_CENDRE_PHENIX))) {
 
 				}
 				else {

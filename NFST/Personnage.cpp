@@ -240,11 +240,11 @@ void Personnage::soigner(int soins,Personnage * P, sf::RenderWindow* window)
 			soins *= (_degatCritique / 100.0 + 1);
 		}
 		if (Aleatoire().entier() <= _chanceHabilete) {
-			if (possedeObjetNumero(6)) {
-				if (Aleatoire(0, 101).entier() < 5) {
+			if (possedeObjetNumero(OBJET_CAPE_HABILETE)) {
+				if (Aleatoire(0, 101).entier() < 3) {
 					soins *= 4;
 				}
-				else if (Aleatoire(0, 101).entier() < 10) {
+				else if (Aleatoire(0, 101).entier() < 6) {
 					soins *= 3;
 				}
 				else {
@@ -263,7 +263,7 @@ void Personnage::soigner(int soins,Personnage * P, sf::RenderWindow* window)
 		}
 		P->stats().ajouterSoinsDonner(soins);
 		P->AjouterVie(soins,window);
-		if (possedeObjetNumero(4)) {
+		if (possedeObjetNumero(OBJET_SCEPTRE_DRUIDE)) {
 			if (Aleatoire(0, 101).entier() < 20) {
 				P->bouclier(soins, P,window);
 			}
@@ -305,11 +305,11 @@ void Personnage::bouclier(int soins, Personnage* P, sf::RenderWindow* window)
 			soins *= (_degatCritique / 100.0 + 1);
 		}
 		if (Aleatoire().entier() <= _chanceHabilete) {
-			if (possedeObjetNumero(6)) {
-				if (Aleatoire(0, 101).entier() < 5) {
+			if (possedeObjetNumero(OBJET_CAPE_HABILETE)) {
+				if (Aleatoire(0, 101).entier() < 3) {
 					soins *= 4;
 				}
-				else if (Aleatoire(0, 101).entier() < 10) {
+				else if (Aleatoire(0, 101).entier() < 6) {
 					soins *= 3;
 				}
 				else {
@@ -328,7 +328,7 @@ void Personnage::bouclier(int soins, Personnage* P, sf::RenderWindow* window)
 		}
 		P->stats().ajouterBouclierDonner(soins);
 		P->AjouterBouclier(soins,window);
-		if (possedeObjetNumero(4)) {
+		if (possedeObjetNumero(OBJET_SCEPTRE_DRUIDE)) {
 			if (Aleatoire(0, 101).entier() < 10) {
 				P->status().ajouterCompteurProteger(1);
 			}
@@ -456,26 +456,36 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, sf::RenderWindow* w
 	int degatEffectif;
 	if (Defenseur->estAttaquable()) {
 
-		if (Defenseur->possedeObjetNumero(42)) {
-			Degat -= Defenseur->vieMax() / 100;
+		if (possedeObjetNumero(OBJET_OEIL_AIGLE)) {
+			Degat += Defenseur->vie() / 100;
 		}
-		if (!this->estEnVie() && possedeObjetNumero(46)) {
-			Degat *= 3;
+		if (possedeObjetNumero(OBJET_FLEAU_SADIQUE)) {
+			Degat += stats().nbAttaques() * (1 + _niveau / 100);
+			//std::cout << " OBJ29 ";
 		}
-		if (possedeObjetNumero(48)) {
+		if (this->estEnVie() && possedeObjetNumero(OBJET_ESPRIT_GUERRIER)) {
+			double ratio = 1.0 - ((vie() * 1.0) / (vieMax() * 1.0));
+			Degat += (int)((Degat * 1.0) * ratio);
+		}
+		
+		if (possedeObjetNumero(OBJET_SPARTAN_ARMOR)) {
 			if (bouclier() >= 1) {
 				Degat = (int)(Degat * (1.0 + (bouclier() * 1.0) / (bouclierMax() * 1.0)));
 			}
+		}
+
+		if (!this->estEnVie() && possedeObjetNumero(OBJET_HANTISE)) {
+			Degat *= 3;
 		}
 		if (Aleatoire().entier() <= _pourcentageCritique) {
 			Degat *= (_degatCritique / 100.0 + 1);
 		}
 		if (Aleatoire().entier() <= _chanceHabilete) {
-			if (possedeObjetNumero(6)) {
-				if (Aleatoire(0, 101).entier() < 5) {
+			if (possedeObjetNumero(OBJET_CAPE_HABILETE)) {
+				if (Aleatoire(0, 101).entier() < 3) {
 					Degat *= 4;
 				}
-				else if (Aleatoire(0, 101).entier() < 10) {
+				else if (Aleatoire(0, 101).entier() < 6) {
 					Degat *= 3;
 				}
 				else {
@@ -488,25 +498,22 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, sf::RenderWindow* w
 			}
 
 		}
-		if (possedeObjetNumero(29)) {
-			Degat += stats().nbAttaques()*(1+_niveau/100);
-			//std::cout << " OBJ29 ";
-		}
-		if (possedeObjetNumero(35)) {
+		
+		if (possedeObjetNumero(OBJET_LAME_MALEFIQUE)) {
 			Degat += Degat/2;
 			//std::cout << " OBJ35 ";
 		}
-		if (Defenseur->possedeObjetNumero(35) ) {
+		if (Defenseur->possedeObjetNumero(OBJET_LAME_MALEFIQUE) ) {
 			Degat *= 2;
 		}
 
-		if (possedeObjetNumero(37)) {
+		if (possedeObjetNumero(OBJET_NEMESIS)) {
 			if (indiceEquipe() == Defenseur->indiceEquipe()) {
 				Degat += Degat / 2;
 			}
 		}
 
-		if (possedeObjetNumero(38)) {
+		if (possedeObjetNumero(OBJET_CASSE_NOIX)) {
 			if (Defenseur->possedeBouclier()) {
 				if (Defenseur->bouclier() == Defenseur->bouclierMax()) {
 					Degat *= 2;
@@ -516,16 +523,8 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, sf::RenderWindow* w
 				}
 			}
 		}
-		if (possedeObjetNumero(39)) {
-			double ratio = 1.0-((vie() * 1.0) / (vieMax() * 1.0));
-			Degat += (int)((Degat * 1.0) * ratio);
-		}
-		if (Defenseur->possedeObjetNumero(37)) {
-			if (indiceEquipe() == Defenseur->indiceEquipe()) {
-				Degat /=2;
-			}
-		}
-		if (Defenseur->possedeObjetNumero(36)) {
+		
+		if (Defenseur->possedeObjetNumero(OBJET_MEGAMORPH)) {
 			if (Defenseur->vie() > Defenseur->vieMax() / 2) {
 				Degat *= 2;
 			}
@@ -534,63 +533,41 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, sf::RenderWindow* w
 			}
 		}
 		
-		if (possedeObjetNumero(5)) {
+		if (possedeObjetNumero(OBJET_MALEDICTION)) {
 			Degat = (int)((double)Degat*2.5);
 			//std::cout << " OBJ5 ";
 		}
-		if (possedeObjetNumero(16)) {
-			Degat = (int)((double)Degat * 1.2);
-			//std::cout << " OBJ16 ";
-		}
-		if (possedeObjetNumero(12) && _S.nbAttaques()%3==0) {
-			Degat = (int)((double)Degat * 1.3);
+		
+		if (possedeObjetNumero(OBJET_KUNAI) && _S.nbAttaques()%3==0) {
+			Degat = (int)((double)Degat * 1.30);
 			//std::cout << " OBJ12 ";
 		}
-		if (Defenseur->bloque()&&!possedeObjetNumero(43)) {
-			Degat /= 2;
-		}
-		if (Defenseur->status().estProteger()) {
-			Degat /= 2;
-			PROTEGER = "PROTEGER";
-		}
+	
 		if (Defenseur->status().estFragiliser()) {
 			Degat *= 2;
 			FRAGILISER = "FRAGILISER";
 		}
 
-		if (possedeObjetNumero(41)) {
-			Degat += Defenseur->vie() / 100;
-		}
-		
-		Defenseur->status().decrementerCompteur();
-
-		if (Defenseur->status().estEnMagasineur()) {
-			Defenseur->status().ajoutEnmagasination(Degat/10);
-		}
-		Degat -= Defenseur->status().reducteur();
 		Degat += status().adducteur();
-		if (!possedeObjetNumero(43)) {
-			Degat = Defenseur->reductionDesDegats(Degat);
-		}
 		
 		if (Degat < 0) {
-			Degat = 0;
+			Degat = 1;
 		}
 		if (Defenseur->devie()) {
-			if (Defenseur->possedeObjetNumero(9)) {
+			if (Defenseur->possedeObjetNumero(OBJET_VOILE_MIROIR)) {
 				Degat = (int)((double)Degat * 1.5);
 				std::cout << " OBJ9 ";
 			}
 			Defenseur->Attaque(Degat, this,window,allSounds);
 			
 		}
-		else if (Defenseur->possedeObjetNumero(10) && Aleatoire(0, 101).entier() < 10) {
+		else if (Defenseur->possedeObjetNumero(OBJET_MARHSMALLOW) && Aleatoire(0, 101).entier() < 10) {
 			Defenseur->AjouterBouclier(Degat / 10,window);
 		}
 		else {
 
 			for (int i = 0;i < Defenseur->equipeAllier().taille()&&!redirection;i++) {
-				if (Defenseur->equipeAllier()[i]->possedeObjetNumero(11) && Aleatoire(0, 101).entier() < 25) {
+				if (Defenseur->equipeAllier()[i]->possedeObjetNumero(OBJET_ARMURE_PROTECTEUR) && Aleatoire(0, 101).entier() < 25) {
 					redirection = true;
 					Attaque(Degat, Defenseur->equipeAllier()[i],window,allSounds);
 					//std::cout << " OBJ11 ";
@@ -601,26 +578,57 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, sf::RenderWindow* w
 			
 			//	std::cout << _nom<<indiceEquipe() << " attaque " << Defenseur->indiceEquipe() << Defenseur->nom() << " " << FRAGILISER << " " << PROTEGER;
 				//std::cout << " " << Degat << std::endl;
-				if (Defenseur->possedeObjetNumero(25)) {
+				if (Defenseur->possedeObjetNumero(OBJET_GILET_PARBALLE)) {
 					Degat -= Defenseur->niveau();
 					//std::cout << " OBJ25 ";
 				}
-				if (possedeObjetNumero(28)) {
+				if (possedeObjetNumero(OBJET_COTE_SADO)) {
 					Degat -= Defenseur->stats().nbAttaquesRecues() * (1 + Defenseur->niveau() / 100);
 					//std::cout << " OBJ28 ";
 				}
+				if (Defenseur->possedeObjetNumero(OBJET_PEAU_EPAISSE)) {
+					Degat -= Defenseur->vieMax() / 100;
+				}
+				Defenseur->status().decrementerCompteur();
+
+				if (Defenseur->status().estEnMagasineur()) {
+					Defenseur->status().ajoutEnmagasination(Degat / 10);
+				}
+				Degat -= Defenseur->status().reducteur();
+				
+				if (!possedeObjetNumero(OBJET_DILDO)) {
+					Degat = Defenseur->reductionDesDegats(Degat);
+				}
+				if (Defenseur->bloque() && !possedeObjetNumero(OBJET_DILDO)) {
+					Degat /= 2;
+				}
+				if (Defenseur->status().estProteger()) {
+					Degat /= 2;
+					PROTEGER = "PROTEGER";
+				}
+				if (Defenseur->possedeObjetNumero(OBJET_NEMESIS)) {
+					if (indiceEquipe() == Defenseur->indiceEquipe()) {
+						Degat /= 2;
+					}
+				}
+
 				if (Degat < 0) {
 					Degat = 1;
 				}
-				if (Defenseur->possedeObjetNumero(14) && _A.estEnVie()) {
+				if (Defenseur->possedeObjetNumero(OBJET_ARMURE_SAKERATSU) && _A.estEnVie()) {
 					Defenseur->AttaqueBrut(Degat / 10, _A.plusProcheVivant(),window);
 					//std::cout << " OBJ14 ";
 				}	
-				if (possedeObjetNumero(24)) {
-					if (Aleatoire(0, 5000).entier() == 1) {
+				if (possedeObjetNumero(OBJET_CHAUSSETTES_FLO)) {
+					if (Aleatoire(0, 10000).entier() == 1) {
 						Defenseur->status().appliquerPoison();
 					}
+					Defenseur->Attaque(Defenseur->niveau()/2, this, window,allSounds);
 				}
+				if (possedeObjetNumero(OBJET_DEBARDEUR_NICOLAS)) {
+					Defenseur->Attaque(Defenseur->niveau() / 2, this, window, allSounds);
+				}
+				
 				//fin modif dégats
 				degatEffectif = Degat;
 				Defenseur->passifDefensif(window, allSounds, degatEffectif,this);
@@ -652,7 +660,7 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, sf::RenderWindow* w
 						AttaqueBrut(status().adducteurbrut(), Defenseur,window);
 					}
 				}
-				if (!Defenseur->estEnVie()&&Defenseur->possedeObjetNumero(30)) {
+				if (!Defenseur->estEnVie()&&Defenseur->possedeObjetNumero(OBJET_TOTEM_IMMUNITE)) {
 					if (Defenseur->status().peutRevivre()) {
 						Defenseur->status().revivre();
 						Defenseur->AjouterVie(Defenseur->vieMax(),window);
@@ -674,31 +682,33 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, sf::RenderWindow* w
 			}
 		}
 		if (ricoche()&&_E.estEnVie()&&!redirection) {
-			if (possedeObjetNumero(27)) {
-				Degat = (int)((double)Degat*1.3);
+			if (possedeObjetNumero(OBJET_FLECHES_TRANCHANTES)) {
+				Degat = (int)((double)Degat*1.37);
 			}
 			Attaque(Degat, _E.aleatoireEnVie(),window,allSounds);
-			if (possedeObjetNumero(40)) {
+			if (possedeObjetNumero(OBJET_TWINS)) {
 				Attaque(Degat, _E.aleatoireEnVie(),window,allSounds);
 			}
 		}
 	}
 	else{
-		if (Defenseur->possedeObjetNumero(15)) {
+		if (Defenseur->possedeObjetNumero(OBJET_CAPE_NINJA)) {
 			Defenseur->ajouterDegatsCritique(5);
 			//std::cout << " OBJ15 ";
 		}
-		if (Defenseur->possedeObjetNumero(16)) {
-			Defenseur->AttaqueBrut(degats(0.2,0.4),_A.plusFaible(),window);
+		if (Defenseur->possedeObjetNumero(OBJET_DAGUE_NINJA)) {
+			int deg = degats(0.05, 0.2);
+			deg *= (_degatCritique / 100.0 + 1);
+			Defenseur->AttaqueBrut(deg,_A.plusFaible(),window);
 			//std::cout << " OBJ16 ";
 		}
 	}
-	if (possedeObjetNumero(13) && _E.estEnVie()) {
+	if (possedeObjetNumero(OBJET_FLECHE_TRANSPERCANTE) && _E.estEnVie()) {
 		Degat = degats(0.05, 0.10);
 		AttaqueBrut(Degat, _E.plusFaible(),window);
 		//std::cout << " OBJ13 ";
 	}
-	if (possedeObjetNumero(31) && _A.estEnVie()) {
+	if (possedeObjetNumero(OBJET_MEMEMTOM) && _A.estEnVie()) {
 		Degat = degats(1.0, 10.0);
 		if (Aleatoire(0, 1001).entier() == 1) {
 			Degat = degats(1.0, 10.0);
@@ -728,21 +738,7 @@ void  Personnage::AttaqueBrut(int Degat, Personnage* Defenseur, sf::RenderWindow
 					Degat *= (_degatCritique / 100.0 + 1);
 				}
 				if (Aleatoire().entier() <= _chanceHabilete) {
-					if (possedeObjetNumero(6)) {
-						if (Aleatoire(0, 101).entier() < 5) {
-							Degat *= 4;
-						}
-						else if (Aleatoire(0, 101).entier() < 10) {
-							Degat *= 3;
-						}
-						else {
-							Degat *= 2;
-						}
-						//std::cout << " OBJ6 ";
-					}
-					else {
-						Degat *= 2;
-					}
+					Degat *= 2;
 
 				}
 				if (Degat > Defenseur->vie()) {
@@ -759,7 +755,7 @@ void  Personnage::AttaqueBrut(int Degat, Personnage* Defenseur, sf::RenderWindow
 				Defenseur->stats().incrementerNbAttaquesRecues();
 				Defenseur->reduireVie(Degat);
 			}
-			if (!Defenseur->estEnVie() && Defenseur->possedeObjetNumero(30)) {
+			if (!Defenseur->estEnVie() && Defenseur->possedeObjetNumero(OBJET_TOTEM_IMMUNITE)) {
 				if (Defenseur->status().peutRevivre()) {
 					Defenseur->status().revivre();
 					Defenseur->AjouterVie(Defenseur->vieMax(),window);

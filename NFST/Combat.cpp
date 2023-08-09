@@ -28,11 +28,11 @@ Combat::Combat(Equipes  & Joueur, Equipes  & Ia,Zones & Z,Animaux & A,Orbes & O,
 	
 	for (int i = 0;i < _joueur.taille();i++) {
 		somme += _joueur.perso(i)->vitesse();
-		if (_joueur.perso(i)->possedeObjetNumero(33)) {
+		if (_joueur.perso(i)->possedeObjetNumero(OBJET_SABLIER)) {
 			del = std::min(25, del);
 		}
-		if (_joueur.perso(i)->possedeObjetNumero(34)) {
-			del = std::min(0, del);
+		if (_joueur.perso(i)->possedeObjetNumero(OBJET_TARDIS)) {
+			del = std::min(1, del);
 		}
 	}
 	delais.setDelais(del);
@@ -90,13 +90,13 @@ Combat::Combat(Equipes  & Joueur, Equipes  & Ia,Zones & Z,Animaux & A,Orbes & O,
 							for (int i = 0; i < _joueur.taille(); i++) {
 								if (_joueur[i]->estEnVie()) {
 									_joueur[i]->passif(_tour,window,allSounds);
-									if (_joueur[i]->possedeObjetNumero(1)) {
+									if (_joueur[i]->possedeObjetNumero(OBJET_ANTIDOTE)) {
 										_joueur[i]->status().soignerPoison();
 									}
-									if (_joueur[i]->possedeObjetNumero(2)) {
+									if (_joueur[i]->possedeObjetNumero(OBJET_VOILE_FEU)) {
 										_joueur[i]->status().soignerBrulure();
 									}
-									if (_joueur[i]->possedeObjetNumero(5)) {
+									if (_joueur[i]->possedeObjetNumero(OBJET_MALEDICTION)) {
 										_joueur[i]->reduireVie(_joueur[i]->vieMax() /10);
 										_joueur[i]->reduireBouclier(_joueur[i]->bouclierMax());
 									}
@@ -113,10 +113,10 @@ Combat::Combat(Equipes  & Joueur, Equipes  & Ia,Zones & Z,Animaux & A,Orbes & O,
 							for (int i = 0; i < _ia.taille(); i++) {
 								if (_ia[i]->estEnVie()) {
 									_ia[i]->passif(_tour,window,allSounds);
-									if (_ia[i]->possedeObjetNumero(1)) {
+									if (_ia[i]->possedeObjetNumero(OBJET_ANTIDOTE)) {
 										_ia[i]->status().soignerPoison();
 									}
-									if (_ia[i]->possedeObjetNumero(2)) {
+									if (_ia[i]->possedeObjetNumero(OBJET_VOILE_FEU)) {
 										_ia[i]->status().soignerBrulure();
 									}
 									_ia[i]->status().effetBrulure();

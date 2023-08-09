@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "Personnage.h"
+
+const int SUCCES_BOING = 1;
 class Succes
 {
 public:

@@ -51,75 +51,73 @@ std::string Objet::rareterTexte() {
 void Objet::appliquerEffet(Personnage* P) {
 	switch (_numero)
 	{
-	case 3:
+	case OBJET_BENEDICTION:
 		P->ajouterVie(P->vieMax() / 2);
 		break;
-	case 6:
+	case OBJET_CAPE_HABILETE:
 		P->ajouterChanceHabileter(10);
 		break;
-	case 7:
+	case OBJET_PATTE_LAPIN:
 		P->ajouterVitesse(P->vitesse()/3);
 		break;
-	case 8:
+	case OBJET_BEUH:
 		P->ajouterVitesse((int)(-0.80 * (double)P->vitesse()));
 		break;
-	case 9:
+	case OBJET_VOILE_MIROIR:
 		P->ajouterDeviation(6);
 		break;
-	case 11:
+	case OBJET_ARMURE_PROTECTEUR:
 		P->ajouterReduction(10);
 		break;
-	case 14:
+	case OBJET_ARMURE_SAKERATSU:
 		P->ajouterReduction(10);
 		break;
-	case 15:
-		P->ajouterCoupCritique(5);
+	case OBJET_CAPE_NINJA:
+		P->ajouterCoupCritique(3);
 		P->ajouterEsquive(10);
 		break;
-	case 17:
+	case OBJET_DAGUE_NINJA:
+		P->ajouterDegatsCritique(20);
+		break;
+	case OBJET_SOIE_LAPIN:
 		P->ajouterVitesse(P->vitesse()/10);
 		break;
-	case 18:
+	case OBJET_SAUCIFLAR:
 		P->ajouterCoupCritique(5);
 		break;
-	case 19:
+	case OBJET_J_B:
 		P->ajouterForce(10);
 		P->ajouterVie(100);
 		P->ajouterVitesse(10);
 		break;
-	case 20:
+	case OBJET_COLERE_FLORIAN:
 		P->ajouterForce(100);
 		P->ajouterVie(1000);
 		P->ajouterVitesse(100);
 		break;
-	case 21:
+	case OBJET_TRINITE:
 		P->ajouterForce(1000);
 		P->ajouterVie(10000);
 		P->ajouterVitesse(1000);
 		break;
-	case 22:
+	case OBJET_DEBARDEUR_NICOLAS:
 		P->ajouterForce( P->force()/20);
 		break;
-	case 23:
+	case OBJET_JUS_POMME:
 		P->ajouterVie( P->vieMax()/20);
 		break;
-	case 24:
-		P->ajouterForce( P->force()/10);
-		P->ajouterCoupCritique(5);
-		P->ajouterDegatsCritique(10);
-		break;
-	case 26:
+	case OBJET_EXCALIBUER:
 		P->ajouterForce(10000);
 		P->ajouterVie(100000);
 		P->ajouterVitesse(10000);
 		break;
-	case 27:
+	case OBJET_FLECHES_TRANCHANTES:
 		P->ajouterChanceRicochet(7);
 		break;
-	case 30:
+	case OBJET_TOTEM_IMMUNITE:
 		P->status().ajouterCompteurRessurections();
 		break;
-	case 47:
+	case OBJET_HUIT_BALL:
 		P->ajouterForce((int)(0.08*P->force()));
 		P->ajouterVie((int)(0.08*P->vieMax()));
 		P->ajouterVitesse((int)(0.08*P->vitesse()));

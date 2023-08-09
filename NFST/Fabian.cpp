@@ -69,6 +69,7 @@ void Fabian::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& 
 			DEGATS = degats(0.5, 1.5);
 			DEGATS += degats(0.75, 1.25, CHOIXVITESSE);
 			Attaque(DEGATS, equipeEnnemi().plusFaible(), window,allSounds);
+			ajouterMana(-2);
 		}
 		else {
 			soigner((int)vieMax(), this,window);

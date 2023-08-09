@@ -31,6 +31,7 @@
 #include <SFML/Audio.hpp>
 #include"AffichageCombat.h"
 #include "Succes.h"
+#include "Phenix.h"
 #define PI 3.14159265
 #include<memory>
 
@@ -59,6 +60,7 @@ void reinitListeEquipe(Equipes& Liste) {
 	Liste.ajouterPerso(new Maelle(E, O, A, Obj));
 	Liste.ajouterPerso(new Tortue(E, O, A, Obj));
 	Liste.ajouterPerso(new Salim(E, O, A, Obj));
+	Liste.ajouterPerso(new Phenix(E, O, A, Obj));
 }
 
 void reinitEquipe(Equipes& monEquipe, Equipes& ListePerso) {
@@ -108,6 +110,49 @@ void loadSongs2(std::vector<std::shared_ptr<sf::SoundBuffer>>& allBuffers, std::
 	sounds.push_back(sf::Sound(*buffer1));
 	sounds.push_back(sf::Sound(*buffer2));
 	sounds.push_back(sf::Sound(*buffer3));
+}
+
+void jouer(sf::RenderWindow* window,Zones & Z,Objets Obj, std::vector<sf::Sound>& allSounds, Affichage & H, Equipes & Meuchant, Equipes & Gentil,Equipes & choix) {
+	(*window).clear();
+	int niveauChoisit = Z.niveauActuel();
+	int repetition = 1;
+	H.choixNiveau(Z, Obj, niveauChoisit, repetition, window, allSounds);
+	Z.choixNiveau(niveauChoisit);
+
+	for (int i = 0; i < repetition; i++) {
+		Orbes O;
+		Animaux A;
+		Meuchant.liberer();
+		reinitListeEquipe(choix);
+		reinitEquipe(Gentil, choix);
+		Z.equipeEnZone(Z.niveauActuel(), Meuchant);
+		Gentil.setAllierEtEnnemis(Meuchant);
+		Meuchant.setAllierEtEnnemis(Gentil);
+		Combat C(Gentil, Meuchant, Z, A, O, window, allSounds);
+		(*window).display();
+		(*window).clear();
+	}
+	
+	Bouton Continuer(500, 700, "Continuer");
+	Continuer.afficher(window);
+	AffichageCombat H2;
+	H2.afficherStats(Gentil, window);
+	(*window).display();
+	sf::Event event;
+	float x=0.0, y=0.0;
+	do {
+		while ((*window).pollEvent(event))
+		{
+			if (event.type == sf::Event::MouseButtonPressed) {
+				sf::Vector2i position = sf::Mouse::getPosition((*window));
+				x = (float)position.x;
+				y = (float)position.y;
+				std::cout << '(' << x << ',' << y << ')' << std::endl;
+			}
+		}
+	} while (!Continuer.comprendLesCoord(x, y, allSounds));
+	(*window).display();
+	(*window).clear();
 }
 int main()
 {
@@ -199,53 +244,11 @@ int main()
 					H.afficherAnimaux(A, window,allSounds);
 				}
 				else if (Jouer.comprendLesCoord(x, y,allSounds) && Gentil.taille() > 0) {
-					(*window).clear();
-					int niveauChoisit = Z.niveauActuel();
-					int repetition = 1;
-					H.choixNiveau(Z, Obj, niveauChoisit, repetition, window,allSounds);
-					Z.choixNiveau(niveauChoisit);
-				
-					for (int i = 0; i < repetition; i++) {
-						Orbes O;
-						Animaux A;
-						Meuchant.liberer();
-						reinitListeEquipe(choix);
-						reinitEquipe(Gentil, choix);
-						Z.equipeEnZone(Z.niveauActuel(), Meuchant);
-						Gentil.setAllierEtEnnemis(Meuchant);
-						Meuchant.setAllierEtEnnemis(Gentil);
-						Combat C(Gentil, Meuchant, Z, A, O, window,allSounds);
-						//(*window).display();
-						//(*window).clear();
-					}	
-					(*window).display();
-					(*window).clear();
-					Bouton Continuer(500, 700, "Continuer");
-					Continuer.afficher(window);
-					AffichageCombat H2;
-					H2.afficherStats(Gentil, window);
-				
-					(*window).display();
-					do {
-						while ((*window).pollEvent(event))
-						{
-							if (event.type == sf::Event::MouseButtonPressed) {
-								sf::Vector2i position = sf::Mouse::getPosition((*window));
-								x = (float)position.x;
-								y = (float)position.y;
-								std::cout << '(' << x << ',' << y << ')' << std::endl;
-							}
-						}
-					} while (!Continuer.comprendLesCoord(x, y,allSounds));
-
-					(*window).display();
-					(*window).clear();
-				
-					//afficherstats
+					jouer(window, Z, Obj, allSounds, H, Meuchant, Gentil, choix);
 				}
 				else if (modifierEquipe.comprendLesCoord(x, y,allSounds)) {
 					(*window).clear();
-					H.menuModifierEquipe(Gentil, choix, Z.nbPersoJouable() - Gentil.taille(), window,allSounds);
+					H.menuModifierEquipe(Gentil, choix,Z, Z.nbPersoJouable() - Gentil.taille(), window,allSounds);
 					
 				}
 				else if (Secret.comprendLesCoord(x, y,allSounds)) {

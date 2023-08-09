@@ -367,11 +367,11 @@ void Equipes::ajouterExperience(int xp, Experiences E) {
 	if (xp <= 0) { xp = 1; }
 	std::cout << "Les joueurs gagnent " << xp << " d experiences." << std::endl;
 	for (int i = 0; i < (int)_equipe.size(); i++) {
-		if (_equipe[i]->possedeObjetNumero(7)) {
+		if (_equipe[i]->possedeObjetNumero(OBJET_PATTE_LAPIN)) {
 			E.ajouterXP(_equipe[i]->id(), xp/3);
 			std::cout << " OBJ7 ";
 		}
-		if (_equipe[i]->possedeObjetNumero(8)) {
+		if (_equipe[i]->possedeObjetNumero(OBJET_BEUH)) {
 			E.ajouterXP(_equipe[i]->id(), xp);
 			std::cout << " OBJ8 ";
 		}

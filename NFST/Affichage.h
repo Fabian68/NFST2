@@ -28,7 +28,7 @@ public:
 
 	void choixNiveau(Zones Z, Objets obj,int & niveau,int & repetition, sf::RenderWindow * window, std::vector< sf::Sound >& allSounds)const;
 	void afficherObjetsDeblocableNiveau(Objets obj, int niveau, sf::RenderWindow * window)const;
-	void menuModifierEquipe(Equipes& Gentil, Equipes choix,int max, sf::RenderWindow * window, std::vector< sf::Sound >& allSounds)const;
+	void menuModifierEquipe(Equipes& Gentil, Equipes choix, Zones& Z,int max, sf::RenderWindow * window, std::vector< sf::Sound >& allSounds)const;
 
 	~Affichage();
 private:
