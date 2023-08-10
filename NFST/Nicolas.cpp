@@ -3,9 +3,10 @@
 #include "Affichage.h"
 
 
-Nicolas::Nicolas(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(1, E, O, A, Obj, "Niquola", 4, 4, 4, 10, 10, 20, 0, 25, 10, 0) {
+Nicolas::Nicolas(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(1, E, O, A, Obj, "Niquola", 4, 4, 4, 10, 0, 20, 0, 25, 0, 0) {
 
 	status().devientEnmagasineur();
+	_compteur_tour_joue = 0;
  //ajouter Nicla
 }
 
@@ -35,9 +36,9 @@ void Nicolas::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >&
 			equipeAllier()[i]->ajouterReduction(1);
 			if (habile()) {
 				equipeAllier()[i]->ajouterReduction(1);
-				if (attaqueDouble()) {
-					equipeAllier()[i]->ajouterReduction(1);
-				}
+			}
+			if (attaqueDouble()) {
+				equipeAllier()[i]->ajouterReduction(1);
 			}
 		}
 		
@@ -62,12 +63,13 @@ void Nicolas::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >&
 		Affichage().dessinerTexte(nom() + " partage Equipement Minecraft !",window);
 		for (int i = 0; i < equipeAllier().taille(); i++) {
 			if (equipeAllier()[i] != this && equipeAllier()[i]->estEnVie()) {
-				equipeAllier()[i]->ajouterForce((equipeAllier()[i]->force() / 5));
+				equipeAllier()[i]->ajouterForce((equipeAllier()[i]->force() / 20));
 			}
 		}
 		ajouterMana(-2);
 		break;
 	}
+	_compteur_tour_joue += 1;
 }
 
 void Nicolas::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
@@ -84,4 +86,7 @@ void Nicolas::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound 
 
 void Nicolas::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degatss, Personnage* P)
 {
+	Affichage().dessinerTexte(nom() + " La transpiration fait des défats ! ", window);
+	int DEGATS = vieMax() / 100 + (int)((double)vieMax() * ((double)_compteur_tour_joue / 1000.0));
+	Attaque(DEGATS,P, window, allSounds);
 }

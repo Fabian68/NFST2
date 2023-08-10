@@ -347,6 +347,8 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 	sf::Color couleurTexte = sf::Color::White;
 	sf::Color couleurTexteG = sf::Color::Green;
 
+	int DEGATS;
+	int SOINS;
 	str = "Pseudo : " + Liste[indice]->nom();
 	afficherTexte(x+100.f, y, str, couleurTexte, window);
 
@@ -356,8 +358,10 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		case 0:
 			str = "Gagne force/(7/5/3/2) + niveau de dégats supplémentaires. Niveau (1/10/100/1000) Valeur actuelle : " + std::to_string(Liste[indice]->status().adducteur());
 			str = str + "\n" + "Recois niveaux dégats en moins, Valeur actuel : "+ std::to_string(Liste[indice]->niveau());
-			
-		break;
+			break;
+		case 1:
+			str = "Emmagasine 10% des dégats reçu, insensible au brulures, possède un compteur de tour qui est augmenté de 1 à chaque tour joué (CT) ";
+			break;
 	}
 	afficherTexte(x, y + 30.f, str, couleurTexte, window);
 
@@ -367,7 +371,10 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 	case 0:
 		str = "Tout les 17 tours vous gagnez 7% de réduction de dégats";
 		str = str + "\n" + "Tout les 70 tours vous gagnez 17% de force ";
-		
+		break;
+	case 1:
+		str = "Tout les 5 tours emmagasine 2% de ses points de vie maximum, val potentiel :" + std::to_string((int)Liste[indice]->vieMax()/50);
+		str = str + "\n" + "Se bouclier également pour 20% de sa vie max, Valeur actuel : " + std::to_string((int)Liste[indice]->vieMax()/5);
 		break;
 	}
 	afficherTexte(x, y + 110.f, str, couleurTexte, window);
@@ -378,6 +385,9 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 	case 0:
 		str = "Vous augmenter votre reduction de dégats de 1";
 		break;
+	case 1:
+		str = "Attaque l'attaquant pour (1% 0,1% x CT)+ des pv max, valeur sans compteur : " + std::to_string((int)Liste[indice]->vieMax() / 100);
+		break;
 	}
 	afficherTexte(x, y + 180.f, str, couleurTexte, window);
 
@@ -386,9 +396,13 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 	switch (indice) {
 	case 0:
 		str = "Attaque l'ennemi le plus proche avec un ratio de 20-40% de votre attaque + 10-30% de votre vitesse , +1 mana";
-		int DEGATS = Liste[indice]->degats(0.2, 0.4);
+		DEGATS = Liste[indice]->degats(0.2, 0.4);
 		DEGATS += Liste[indice]->degats(0.1, 0.3, CHOIXVITESSE);
 		str = str + "\n" + "Dégats potentiels : " + std::to_string(DEGATS);
+		break;
+	case 1:
+		DEGATS = Liste[indice]->degats(0.2, 0.8);
+		str = "Attaque l'ennemi le plus proche avec un ratio de 20-80% de votre attaque, dégats x 2 si l'ennemi à moins de force que vous, + 1 mana, dégats possibles : " + std::to_string(DEGATS) + " ou " + std::to_string(DEGATS*2);
 		break;
 	}
 	afficherTexte(x, y + 250.f, str, couleurTexte, window);
@@ -399,7 +413,7 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 	case 0:
 		str = "Attaque plusieurs fois l'ennemi le plus fort, le nombre de coup = 3 + vitesse/niveau, compteur d'attaque = 0 et augmente de 1 à chaque attaque (CA), -1 mana ";
 		str = str + "\n" + " ratio = (1,7% + 1,7% x CA) - (17% + 3,4% x CA) : " ;
-		int DEGATS = 0;
+		DEGATS = 0;
 		for (int i = 0; i <= (3 + Liste[indice]->vitesse() / Liste[indice]->niveau()); i++) {
 			DEGATS += Liste[indice]->degats(0.017 + i * 0.017, 0.17 + i * 0.034);
 		}
@@ -421,6 +435,9 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		}
 		str = str + "Dégats potentiels brut : " + std::to_string(DEGATS);
 		break;
+	case 1:
+		str = "Ajoute + 1 reduction de dégats à chaque membre de l'équipe, + 1 si double attaque, + 1 si habile, - 1 mana";
+		break;
 	}
 	afficherTexte(x, y + 340.f, str, couleurTexte, window);
 
@@ -429,6 +446,10 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 	switch (indice) {
 	case 0:
 		str = "Augmente les chances de coup critique de 2% et les dégats critiques de 7%, -1 mana";
+		break;
+	case 1:
+		str = "Attaque l'ennemi le plus fort pour 20-40% de la force +200% de l'emmagasination, -2 mana -100% emmagasination";
+		str = str + "\n" + "Si double attaque : Attaque l'ennemi le plus fort pour 40-80% de la force +100% de l'emmagasination ";
 		break;
 	}
 	afficherTexte(x, y + 430.f, str, couleurTexte, window);
@@ -439,9 +460,12 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 	case 0:
 		str = "Si vous avez pas toute votre vie et tout votre bouclier, vous soigne et bouclier intégralement - 3 Mana";
 		str = str + "\n" + "Sinon attaque la cible la plus faible pour 50-150% de votre force + 75-125% de votre vitesse, -2 mana";
-		int DEGATS = Liste[indice]->degats(0.5, 1.5);
+		DEGATS = Liste[indice]->degats(0.5, 1.5);
 		DEGATS += Liste[indice]->degats(0.75, 1.25, CHOIXVITESSE);
 		str = str + " Dégats potentiels : " + std::to_string(DEGATS);
+		break;
+	case 1:
+		str = "Augmente la force de tout les alliers de 5%";
 		break;
 	}
 	afficherTexte(x, y + 520.f, str, couleurTexte, window);
@@ -953,12 +977,33 @@ void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix,Zones & Z, int
 	for (int i = 0; i < Gentil.taille(); i++) {
 		Bouton(100.f, (float)(i + 1) * 50.f, std::to_string(i) + Gentil[i]->nom()).afficher(window);
 	}
+	std::vector<Bouton>* les_boutons = new std::vector<Bouton>;
+	les_boutons->reserve(15);
+
+	int i = 0;
+	if (!Gentil.comprendPersonnage(choix[i]->id())) {
+		Bouton Bouton_Fabian = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
+		les_boutons->push_back(Bouton_Fabian);
+	}
+	
+	i++;
+	if (!Gentil.comprendPersonnage(choix[i]->id())) {
+		Bouton Bouton_Nicolas = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
+		les_boutons->push_back(Bouton_Nicolas);
+	}
+
+	i++;
+	if (Z.niveauMax() >= 5 && !Gentil.comprendPersonnage(choix[i]->id())) {
+		Bouton Bouton_Thomas = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
+		les_boutons->push_back(Bouton_Thomas);
+	}
 
 	if (max > 0) {
 		afficherTexte(400.f, 10.f, "Personnages selectionnable", sf::Color::White, window);
-		for (int i = 0; i < 14; i++) {
-			Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau())).afficher(window);
+		for (Bouton& bouton : *les_boutons) {
+			bouton.afficher(window);
 		}
+		/*
 		for (int i = 14; i < choix.taille(); i++) {
 			if (i == 14 && !O.estDebloquer(O.objetNumero(OBJET_OEUF_TORTUE))) {
 
@@ -973,7 +1018,7 @@ void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix,Zones & Z, int
 
 			}
 
-		}
+		}*/
 	}
 	else {
 		afficherTexte(400.f, 20.f, "Maximum de personnages selectionnable atteintes", sf::Color::White, window);
@@ -1004,48 +1049,16 @@ void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix,Zones & Z, int
 				yc = (float)position.y;
 
 				if (max > 0) {
-					for (int i = 0; i < 14; i++) {
-						if (Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + choix[i]->nom()).comprendLesCoord(xc, yc,allSounds)) {
-							if (Gentil.comprendPersonnage(choix[i]->id())) {
-								afficherTexte(400.f, 20.f, "Personnage déja selectionner", sf::Color::White, window);
-							}
-							else {
-
-								Gentil.ajouterPerso(choix[i]);
-								--max;
-							}
-
+					for (Bouton & bouton: *les_boutons ) {
+						if (bouton.comprendLesCoord(xc, yc,allSounds)) {
+							
+							Gentil.ajouterPerso(choix[i]);
+							--max;
 							boutonSelectionnerPerso = true;
 							(*window).clear();
-							menuModifierEquipe(Gentil, choix, max, window,allSounds);
+							les_boutons->~vector();
+							menuModifierEquipe(Gentil, choix,Z, max, window,allSounds);
 						}
-					}
-					for (int i = 14; i < choix.taille(); i++) {
-						if (i == 14 && !O.estDebloquer(O.objetNumero(44))) {
-
-						}
-						else {
-							if (i == 16 && !O.estDebloquer(O.objetNumero(45))) {
-
-							}
-							else {
-								if (Bouton(600.f, (float)(i - 13) * 45.f, std::to_string(i) + choix[i]->nom()).comprendLesCoord(xc, yc,allSounds)) {
-									if (Gentil.comprendPersonnage(choix[i]->id())) {
-										afficherTexte(400, 20, "Personnage déja selectionner", sf::Color::White, window);
-									}
-									else {
-
-										Gentil.ajouterPerso(choix[i]);
-										--max;
-									}
-
-									boutonSelectionnerPerso = true;
-									(*window).clear();
-									menuModifierEquipe(Gentil, choix, max, window,allSounds);
-								}
-							}
-						}
-
 					}
 				}
 				if (Gentil.taille() > 0) {
@@ -1053,14 +1066,16 @@ void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix,Zones & Z, int
 						boutonSelectionnerAutre = true;
 						Gentil.retirerDernierPerso();
 						(*window).clear();
-						menuModifierEquipe(Gentil, choix, ++max, window,allSounds);
+						les_boutons->~vector();
+						menuModifierEquipe(Gentil, choix,Z, ++max, window,allSounds);
 					}
 				}
 				if (Sauvegarder.comprendLesCoord(xc, yc,allSounds)) {
 					Gentil.sauvegarderEquipe();
 					boutonSelectionnerAutre = true;
 					(*window).clear();
-					menuModifierEquipe(Gentil, choix, max, window,allSounds);
+					les_boutons->~vector();
+					menuModifierEquipe(Gentil, choix,Z, max, window,allSounds);
 				}
 				else if (Retour.comprendLesCoord(xc, yc,allSounds)) {
 
