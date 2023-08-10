@@ -183,16 +183,16 @@ int main()
 	Bouton AfficherCompetences(500.f, 150.f, "AfficherCompetences");
 	Bouton AfficherAnimaux(500.f, 200.f, "AfficherAnimaux");
 	Bouton AfficherMecaniques(500.f, 250.f, "AfficherMecaniques");
-	Bouton Jouer(500.f, 300.f, "Jouer");
+	Bouton AfficherSucces(500.f, 300.f, "Succes");
+	Bouton Jouer(500.f, 350.f, "Jouer");
 	Bouton Secret(900.f, 700.f, "Boing");
-	Bouton Conseil(100.f, 400.f, C.conseilAleatoire());
+	Bouton Conseil(150.f, 500.f, C.conseilAleatoire());
 	
 	float x, y;
 	sf::Color couleurTexte = sf::Color::White;
 	sf::Color couleurFond = sf::Color::Black;
 	Affichage H;
 	while ((* window).isOpen()) {
-		
 		Zones Z;
 		Orbes O;
 		Animaux A;
@@ -209,6 +209,7 @@ int main()
 		AfficherCompetences.afficher(window);
 		AfficherAnimaux.afficher(window);
 		AfficherMecaniques.afficher(window);
+		AfficherSucces.afficher(window);
 		Conseil.afficher(window);
 
 		if (Gentil.taille() > 0) {
@@ -242,6 +243,10 @@ int main()
 				else if (AfficherAnimaux.comprendLesCoord(x, y,allSounds)) {
 					(*window).clear();
 					H.afficherAnimaux(A, window,allSounds);
+				}
+				else if (AfficherSucces.comprendLesCoord(x, y, allSounds)) {
+					(*window).clear();
+					H.afficherSucces(1, S, window,allSounds);
 				}
 				else if (Jouer.comprendLesCoord(x, y,allSounds) && Gentil.taille() > 0) {
 					jouer(window, Z, Obj, allSounds, H, Meuchant, Gentil, choix);

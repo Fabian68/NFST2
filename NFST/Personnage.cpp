@@ -4,6 +4,7 @@
 #include "AffichageCombat.h"
 #include <iostream>
 #include <limits> 
+#include "Succes.h"
 
 Personnage::Personnage(int LVL, std::string nom, int vieLVL, int forceLVL, int vitesseLVL, int chanceDoubleAttaque, int chanceHabilete, int pourcentageReduction, int pourcentageDeviation, int pourcentageBlocage, int pourcentageEsquive, int pourcentageRicochet, int indiceAnimal, int rareteAnimal) :
 	_vieMax{ (long long int)vieLVL * LVL * 10 }, _vie{ (long long int)vieLVL * LVL * 10 }, _nom{ nom }, _id{ -1 }, _niveau{ LVL }, _force{ forceLVL * LVL }, _vitesse{ vitesseLVL * LVL }, _chanceDoubleAttaque{ chanceDoubleAttaque },
@@ -40,6 +41,7 @@ Personnage::Personnage(int id,Experiences E,Orbes O,Animaux A, Objets Obj, std::
 	//std::cout << _indiceAnimal << " " << _rareteAnimal;
 	_animal = Animal(_indiceAnimal);
 	_statusPerso = Status(this);
+	Succes().appliquerBonus(this);
 	Obj.objetsDuPersonnage(_id, _objets.first, _objets.second);
 	Obj.objetsDuPersonnage2(_id, _objets2.first, _objets2.second);
 	appliquerEffets();

@@ -8,6 +8,7 @@ class Equipes;
 class Zones;
 class Animaux;
 class Objets;
+class Succes;
 
 class Affichage
 {
@@ -22,6 +23,7 @@ public:
 	void afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) const;
 	void afficherMecaniques( sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) const;
 	void choixObjets(int page, Objets  obj, bool premierObjet, int indicePersonnage, Equipes & Liste, sf::RenderWindow * window, std::vector< sf::Sound >& allSounds,int set =1)const;
+	void afficherSucces(int page, Succes succes, sf::RenderWindow* window, std::vector<sf::Sound>& allSounds) const;
 	void afficherAnimaux(Animaux A, sf::RenderWindow * window, std::vector< sf::Sound >& allSounds)const;
 	
 	void dessinerTexte(std::string texte, sf::RenderWindow * window)const;

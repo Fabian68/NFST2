@@ -6,6 +6,7 @@
 #include  <iostream>
 #include "Delais.h"
 #include "Objets.h"
+#include "Succes.h"
 
 Affichage::Affichage()
 {
@@ -593,26 +594,127 @@ void Affichage::choixObjets(int page, Objets  obj, bool premierObjet, int indice
 	int maxPage = (int)(obj.nombreObjets() / 15) + 1;
 	std::cout << obj.nombreObjets() << " " << maxPage << " ";
 	float y = 20.f;
+std::string txt = "";
+sf::Color couleurTexte = sf::Color::White;
+
+for (int i = (page - 1) * 15 + 1; i <= std::min(obj.nombreObjets(), page * 15); i++) {
+	if (obj.estDebloquer(obj.objetNumero(i))) {
+		txt = obj.objetNumero(i).nom() + "     " + obj.objetNumero(i).rareterTexte();
+		afficherTexte(50.f, y + 20.f, txt, couleurTexte, window);
+		txt = obj.objetNumero(i).effet();
+		afficherTexte(50.f, y + 40.f, txt, couleurTexte, window);
+		Bouton(1000.f, y + 25.f, "Equiper").afficher(window);
+	}
+	else {
+		txt = "???     " + obj.objetNumero(i).rareterTexte();
+		afficherTexte(50.f, y + 20.f, txt, couleurTexte, window);
+		txt = "???";
+		afficherTexte(50.f, y + 40.f, txt, couleurTexte, window);
+		//Bouton(1000, y + 25, "Equiper").afficher();
+	}
+	y += 50.f;
+}
+
+y = 20.f;
+bool choix = false;
+
+Bouton Precedent(10.f, -5.f, "Page precedente");
+Precedent.afficher(window);
+
+Bouton Retour(525.f, -5.f, "Retour");
+Retour.afficher(window);
+
+Bouton Suivant(1065.f, -5.f, "Page suivante");
+Suivant.afficher(window);
+
+float  xc = 0.f, yc = 0.f;
+(*window).display();
+sf::Event event;
+do {
+	while ((*window).pollEvent(event))
+	{
+		if (event.type == sf::Event::MouseButtonPressed) {
+			sf::Vector2i position = sf::Mouse::getPosition((*window));
+			xc = (float)position.x;
+			yc = (float)position.y;
+
+			for (int i = (page - 1) * 15 + 1; i <= std::min(obj.nombreObjets(), page * 15); i++) {
+				if (obj.estDebloquer(obj.objetNumero(i)) && Bouton(1000.f, y + 25.f, "Equiper").comprendLesCoord(xc, yc,allSounds)) {
+					if (set == 2) {
+						Liste[indicePersonnage]->equiperObjet2(obj.objetNumero(i), premierObjet);
+						obj.equiperObjetDuPersonnage2(indicePersonnage, obj.objetNumero(i), premierObjet);
+					}
+					else {
+						Liste[indicePersonnage]->equiperObjet(obj.objetNumero(i), premierObjet);
+						obj.equiperObjetDuPersonnage(indicePersonnage, obj.objetNumero(i), premierObjet);
+					}
+
+					choix = true;
+				}
+				y += 50.f;
+			}
+			if (choix != true) {
+				if (Precedent.comprendLesCoord(xc, yc, allSounds)) {
+					page--;
+					if (page <= 0) {
+						page = maxPage;
+					}
+					choix = true;
+					(*window).clear();
+					choixObjets(page, obj, premierObjet, indicePersonnage, Liste, window, allSounds, set);
+				}
+				else if (Suivant.comprendLesCoord(xc, yc, allSounds)) {
+					page++;
+					if (page > maxPage) {
+						page = 1;
+					}
+					choix = true;
+					(*window).clear();
+					choixObjets(page, obj, premierObjet, indicePersonnage, Liste, window, allSounds, set);
+				}
+				else if (Retour.comprendLesCoord(xc, yc, allSounds)) {
+					choix = true;
+				}
+			}
+		}
+	}
+} while (!choix);
+(*window).display();
+(*window).clear();
+afficherJoueurs(indicePersonnage, Liste, window, allSounds);
+}
+
+
+void Affichage::afficherSucces(int page, Succes succes, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)const {
+	int maxPage = (int)(succes.nombres() / 15) + 1;
+	float y = 20.f;
 	std::string txt = "";
 	sf::Color couleurTexte = sf::Color::White;
 
-	for (int i = (page - 1) * 15 + 1; i <= std::min(obj.nombreObjets(), page * 15); i++) {
-		if (obj.estDebloquer(obj.objetNumero(i))) {
-			txt = obj.objetNumero(i).nom() + "     " + obj.objetNumero(i).rareterTexte();
+	for (int i = (page - 1) * 15; i < std::min(succes.nombres(), page * 15); i++) {
+
+		if (succes.estDebloque(i) || !succes.estCache(i)) {
+			if ( !succes.estCache(i) && !succes.estDebloque(i)){
+				couleurTexte = sf::Color::Red;
+			}
+			else {
+				couleurTexte = sf::Color::Green;
+			}
+			txt = succes.nom(i);
 			afficherTexte(50.f, y + 20.f, txt, couleurTexte, window);
-			txt = obj.objetNumero(i).effet();
+			txt = succes.description(i);
 			afficherTexte(50.f, y + 40.f, txt, couleurTexte, window);
-			Bouton(1000.f, y + 25.f, "Equiper").afficher(window);
 		}
 		else {
-			txt = "???     " + obj.objetNumero(i).rareterTexte();
+			couleurTexte = sf::Color::Red;
+			txt = "???";
 			afficherTexte(50.f, y + 20.f, txt, couleurTexte, window);
 			txt = "???";
 			afficherTexte(50.f, y + 40.f, txt, couleurTexte, window);
-			//Bouton(1000, y + 25, "Equiper").afficher();
 		}
 		y += 50.f;
 	}
+	couleurTexte = sf::Color::White;
 
 	y = 20.f;
 	bool choix = false;
@@ -637,41 +739,26 @@ void Affichage::choixObjets(int page, Objets  obj, bool premierObjet, int indice
 				xc = (float)position.x;
 				yc = (float)position.y;
 
-				for (int i = (page - 1) * 15 + 1; i <= std::min(obj.nombreObjets(), page * 15); i++) {
-					if (obj.estDebloquer(obj.objetNumero(i)) && Bouton(1000.f, y + 25.f, "Equiper").comprendLesCoord(xc, yc,allSounds)) {
-						if (set == 2) {
-							Liste[indicePersonnage]->equiperObjet2(obj.objetNumero(i), premierObjet);
-							obj.equiperObjetDuPersonnage2(indicePersonnage, obj.objetNumero(i), premierObjet);
-						}
-						else {
-							Liste[indicePersonnage]->equiperObjet(obj.objetNumero(i), premierObjet);
-							obj.equiperObjetDuPersonnage(indicePersonnage, obj.objetNumero(i), premierObjet);
-						}
-
-						choix = true;
-					}
-					y += 50.f;
-				}
 				if (choix != true) {
-					if (Precedent.comprendLesCoord(xc, yc,allSounds)) {
+					if (Precedent.comprendLesCoord(xc, yc, allSounds)) {
 						page--;
 						if (page <= 0) {
 							page = maxPage;
 						}
 						choix = true;
 						(*window).clear();
-						choixObjets(page, obj, premierObjet, indicePersonnage, Liste, window,allSounds, set);
+						afficherSucces(page, succes, window, allSounds);
 					}
-					else if (Suivant.comprendLesCoord(xc, yc,allSounds)) {
+					else if (Suivant.comprendLesCoord(xc, yc, allSounds)) {
 						page++;
 						if (page > maxPage) {
 							page = 1;
 						}
 						choix = true;
 						(*window).clear();
-						choixObjets(page, obj, premierObjet, indicePersonnage, Liste, window,allSounds, set);
+						afficherSucces(page, succes, window, allSounds);
 					}
-					else if (Retour.comprendLesCoord(xc, yc,allSounds)) {
+					else if (Retour.comprendLesCoord(xc, yc, allSounds)) {
 						choix = true;
 					}
 				}
@@ -680,7 +767,6 @@ void Affichage::choixObjets(int page, Objets  obj, bool premierObjet, int indice
 	} while (!choix);
 	(*window).display();
 	(*window).clear();
-	afficherJoueurs(indicePersonnage, Liste, window,allSounds);
 }
 void Affichage::afficherAnimaux(Animaux A, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) const
 {
@@ -979,23 +1065,27 @@ void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix,Zones & Z, int
 	}
 	std::vector<Bouton>* les_boutons = new std::vector<Bouton>;
 	les_boutons->reserve(15);
-
+	std::vector<int> ids;
+	ids.reserve(15);
 	int i = 0;
 	if (!Gentil.comprendPersonnage(choix[i]->id())) {
 		Bouton Bouton_Fabian = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
 		les_boutons->push_back(Bouton_Fabian);
+		ids.push_back(i);
 	}
 	
 	i++;
 	if (!Gentil.comprendPersonnage(choix[i]->id())) {
 		Bouton Bouton_Nicolas = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
 		les_boutons->push_back(Bouton_Nicolas);
+		ids.push_back(i);
 	}
 
 	i++;
 	if (Z.niveauMax() >= 5 && !Gentil.comprendPersonnage(choix[i]->id())) {
 		Bouton Bouton_Thomas = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
 		les_boutons->push_back(Bouton_Thomas);
+		ids.push_back(i);
 	}
 
 	if (max > 0) {
@@ -1032,7 +1122,6 @@ void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix,Zones & Z, int
 	Sauvegarder.afficher(window);
 	Bouton Retour(800.f, 700.f, "Retour");
 	Retour.afficher(window);
-
 	bool boutonSelectionnerPerso = false;
 	bool boutonSelectionnerAutre = false;
 	(*window).display();
@@ -1049,24 +1138,22 @@ void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix,Zones & Z, int
 				yc = (float)position.y;
 
 				if (max > 0) {
-					for (Bouton & bouton: *les_boutons ) {
-						if (bouton.comprendLesCoord(xc, yc,allSounds)) {
+					for (int i = 0;i < ids.size(); i++) {
+						if (les_boutons->at(i).comprendLesCoord(xc, yc, allSounds)) {
 							
-							Gentil.ajouterPerso(choix[i]);
+							Gentil.ajouterPerso(choix[ids[i]]);
 							--max;
 							boutonSelectionnerPerso = true;
 							(*window).clear();
-							les_boutons->~vector();
 							menuModifierEquipe(Gentil, choix,Z, max, window,allSounds);
 						}
 					}
 				}
-				if (Gentil.taille() > 0) {
+				if ( Gentil.taille() > 0) {
 					if (retirer.comprendLesCoord(xc, yc,allSounds)) {
 						boutonSelectionnerAutre = true;
 						Gentil.retirerDernierPerso();
 						(*window).clear();
-						les_boutons->~vector();
 						menuModifierEquipe(Gentil, choix,Z, ++max, window,allSounds);
 					}
 				}
@@ -1074,7 +1161,6 @@ void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix,Zones & Z, int
 					Gentil.sauvegarderEquipe();
 					boutonSelectionnerAutre = true;
 					(*window).clear();
-					les_boutons->~vector();
 					menuModifierEquipe(Gentil, choix,Z, max, window,allSounds);
 				}
 				else if (Retour.comprendLesCoord(xc, yc,allSounds)) {
@@ -1086,6 +1172,7 @@ void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix,Zones & Z, int
 		}
 		(*window).clear();
 	} while (!boutonSelectionnerPerso && !boutonSelectionnerAutre);
+	les_boutons->~vector();
 	(*window).display();
 	(*window).clear();
 }

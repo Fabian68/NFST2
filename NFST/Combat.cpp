@@ -5,6 +5,7 @@
 #include "Aleatoire.h"
 #include "Delais.h"
 #include "AffichageCombat.h"
+#include "Succes.h"
 
 
 Combat::Combat(Equipes  & Joueur, Equipes  & Ia,Zones & Z,Animaux & A,Orbes & O, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) : _joueur{Joueur}, _ia{Ia},_tour{0}
@@ -136,6 +137,23 @@ Combat::Combat(Equipes  & Joueur, Equipes  & Ia,Zones & Z,Animaux & A,Orbes & O,
 		Experiences E;
 		
 		_joueur.ajouterExperience(xp, E);
+		Succes succes;
+		int niveau_actuel = Z.niveauActuel();
+		int succes_id = -1;
+		switch (niveau_actuel) {
+		case 1:
+			succes_id = SUCCES_NIV1;
+			break;
+		case 5:
+			succes_id = SUCCES_NIV5;
+			break;
+		};
+		if (succes_id >= 0) {
+			succes.debloquerSucces(succes_id);
+			succes.affichageDeblocageSucces(succes_id, allSounds);
+		}
+			
+
 		tirageRecompenses(Z, A, O, window,allSounds);
 	}
 	//Affichage().dessinerDeuxEquipes(_joueur, _ia,window);

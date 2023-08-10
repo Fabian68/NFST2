@@ -33,6 +33,8 @@ Succes::Succes()
 	_succesCache.push_back(true);
 	_listeSucces.push_back(std::make_pair("Finir le niveau 1", "Une médaille en chocolat"));
 	_succesCache.push_back(false);
+	_listeSucces.push_back(std::make_pair("Finir le niveau 5", "Nouveau personnage : Thomas"));
+	_succesCache.push_back(false);
 
 }
 
@@ -96,3 +98,23 @@ void Succes::afficherTexte(float x, float y, std::string texte, sf::Color couleu
 	text.setPosition(sf::Vector2f(x, y));
 	(*window).draw(text);
 }
+
+int Succes::nombres()const {
+	return _listeSucces.size();
+}
+
+bool Succes::estCache(int i) const
+{
+	return _succesCache[i];
+}
+
+std::string Succes::nom(int i) const
+{
+	return _listeSucces[i].first;
+}
+
+std::string Succes::description(int i) const
+{
+	return _listeSucces[i].second;
+}
+
