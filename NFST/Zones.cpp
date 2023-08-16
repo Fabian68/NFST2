@@ -163,15 +163,15 @@ void Zones::equipeEnZone(int i,Equipes & E)
 		E.ajouterPerso(new Cerf(99, "Cerf",0,3,2));
 		E.ajouterPerso(new Sanglier(92, "Sanglier",0,5,2));
 		E.ajouterPerso(new TortueE(99, ""));
-		E[0]->setObjets(obj.objetNumero(10), obj.objetNumero(11));
+		E.perso(0)->setObjets(obj.objetNumero(10), obj.objetNumero(11));
 		break;
 	case 21:
 		E.ajouterPerso(new Zombie(100, "Zombie"));
 		E.ajouterPerso(new Zombie(100, "Zombie"));
 		E.ajouterPerso(new Zombie(100, "Zombie"));
-		E[0]->setObjets(obj.objetNumero(28), obj.objetNumero(30));
-		E[1]->setObjets(obj.objetNumero(28), obj.objetNumero(30));
-		E[2]->setObjets(obj.objetNumero(28), obj.objetNumero(30));
+		E.perso(0)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
+		E.perso(1)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
+		E.perso(2)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		break;
 	case 22:
 		E.ajouterPerso(new Zombie(100, "Zombie"));
@@ -196,14 +196,14 @@ void Zones::equipeEnZone(int i,Equipes & E)
 		E.ajouterPerso(new SqueletteArcher(145, "Squelette archer"));
 		E.ajouterPerso(new SqueletteArcher(125, "Squelette archer"));
 		E.ajouterPerso(new Zombie(135, "Zombie",0,1,3));
-		E[3]->setObjets(obj.objetNumero(28), obj.objetNumero(30));
+		E.perso(3)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		break;
 	case 26:
 		E.ajouterPerso(new Zombie(150, "Zombie"));
 		E.ajouterPerso(new SqueletteArcher(145, "Squelette archer"));
 		E.ajouterPerso(new Creeper(150, "Cripeur"));
 		E.ajouterPerso(new Zombie(145, "Squelette archer", 0, 1, 3));
-		E[3]->setObjets(obj.objetNumero(12), obj.objetNumero(29));
+		E.perso(3)->setObjets(obj.objetNumero(12), obj.objetNumero(29));
 		break;
 	case 27:
 		E.ajouterPerso(new Zombie(160, "Zombie"));
@@ -222,28 +222,28 @@ void Zones::equipeEnZone(int i,Equipes & E)
 		E.ajouterPerso(new Creeper(180, "Creeper"));
 		E.ajouterPerso(new Lapin(199, "Lapin",0,1,5));
 		E.ajouterPerso(new Creeper(175, "Creeper"));
-		E[2]->setObjets(obj.objetNumero(15), obj.objetNumero(16));
+		E.perso(3)->setObjets(obj.objetNumero(15), obj.objetNumero(16));
 		break;
 	case 30:
 		E.ajouterPerso(new Zombie(200, "Zombie Cochon",0,1,3));
 		E.ajouterPerso(new Creeper(199, "Creeper",1));
 		E.ajouterPerso(new Ghast(200, "Ghast"));
 		E.ajouterPerso(new WitherSquelette(200, "Wither Squelette"));
-		E[0]->setObjets(obj.objetNumero(28), obj.objetNumero(30));
+		E.perso(0)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		break;
 	case 31:
 		E.ajouterPerso(new Zombie(210, "Zombie Cochon", 0, 1, 3));
 		E.ajouterPerso(new Ghast(215, "Ghast"));
 		E.ajouterPerso(new Ghast(210, "Ghast"));
 		E.ajouterPerso(new WitherSquelette(220, "Wither Squelette"));
-		E[0]->setObjets(obj.objetNumero(28), obj.objetNumero(30));
+		E.perso(0)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		break;
 	case 32:
 		E.ajouterPerso(new Zombie(220, "Zombie Cochon", 0, 1, 3));
 		E.ajouterPerso(new WitherSquelette(225, "Wither Squelette"));
 		E.ajouterPerso(new WitherSquelette(230, "Wither Squelette"));
 		E.ajouterPerso(new WitherSquelette(222, "Wither Squelette"));
-		E[0]->setObjets(obj.objetNumero(28), obj.objetNumero(30));
+		E.perso(0)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		break;
 	case 33:
 		E.ajouterPerso(new Wither(230, "Wither lvl 1"));
@@ -258,13 +258,15 @@ void Zones::equipeEnZone(int i,Equipes & E)
 		E.ajouterPerso(new Wither(250, "Super WITHER",1));
 		E.ajouterPerso(new WitherSquelette(245, "Wither Squelette"));
 		E.ajouterPerso(new WitherSquelette(240, "Wither Squelette"));
-		E[0]->setObjets(obj.objetNumero(28), obj.objetNumero(30));
-		E[2]->setObjets(obj.objetNumero(28), obj.objetNumero(30));
+		E.perso(0)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
+		E.perso(2)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		break;
 	case 35:
 		E.ajouterPerso(new Grognard(250, "Grognard"));
 		E.ajouterPerso(new Grognard(250, "Grognard"));
-		E.ajouterPerso(new Grognard(250, "Grognard"));
+		E.ajouterPerso(new Grognard(250, "Super Grognard",1,2,5));
+		E.perso(2)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
+		E.perso(2)->setObjets2(obj.objetNumero(29), obj.objetNumero(43));
 		E.ajouterPerso(new Grognard(250, "Grognard"));
 		E.ajouterPerso(new Grognard(250, "Grognard"));
 		break;
@@ -343,11 +345,11 @@ void Zones::equipeEnZone(int i,Equipes & E)
 		E.ajouterPerso(new Grognard(370, "Grognardmaggedon",1));
 		E.ajouterPerso(new Grognard(360, "Grognardmaggedon",1));
 		E.ajouterPerso(new Grognard(365, "Grognardmaggedon",1));
-		E[0]->setObjets(obj.objetNumero(29), obj.objetNumero(12));
-		E[1]->setObjets(obj.objetNumero(29), obj.objetNumero(12));
-		E[2]->setObjets(obj.objetNumero(29), obj.objetNumero(12));
-		E[3]->setObjets(obj.objetNumero(29), obj.objetNumero(12));
-		E[3]->setObjets(obj.objetNumero(29), obj.objetNumero(12));
+		E.perso(0)->setObjets(obj.objetNumero(29), obj.objetNumero(12));
+		E.perso(4)->setObjets(obj.objetNumero(29), obj.objetNumero(12));
+		E.perso(1)->setObjets(obj.objetNumero(29), obj.objetNumero(12));
+		E.perso(2)->setObjets(obj.objetNumero(29), obj.objetNumero(12));
+		E.perso(3)->setObjets(obj.objetNumero(29), obj.objetNumero(12));
 		break;
 	case 47:
 		E.ajouterPerso(new Elite(360, "Elite"));
@@ -362,7 +364,7 @@ void Zones::equipeEnZone(int i,Equipes & E)
 		E.ajouterPerso(new Brute(374, "Chef Brute (LTOUCA)",1));
 		E.ajouterPerso(new Brute(376, "Brute"));
 		E.ajouterPerso(new Brute(378, "Brute"));
-		E[2]->setObjets(obj.objetNumero(12), obj.objetNumero(35));
+		E.perso(2)->setObjets(obj.objetNumero(12), obj.objetNumero(35));
 		break;
 	case 49:
 		E.ajouterPerso(new Chasseur(380, "Chasseur"));
@@ -470,13 +472,13 @@ void Zones::equipeEnZone(int i,Equipes & E)
 		E.ajouterPerso(new Elite(635, "Elite"));
 		break;
 	case 64:
-		E.ajouterPerso(new Grognard(656, "Petit grognard", 0, 2, 5));
+		E.ajouterPerso(new Grognard(656, "La petite Ginette", 0, 2, 5));
 		E.ajouterPerso(new Grognard(639, "Petit grognard", 0, 2, 5));
 		E.ajouterPerso(new Grognard(676, "Petit grognard", 0, 2, 5));
 		E.ajouterPerso(new Grognard(654, "Petit grognard", 0, 2, 5));
 		E.ajouterPerso(new Grognard(665, "Petit grognard", 0, 2, 5));
 		E.ajouterPerso(new Grognard(649, "Petit grognard", 0, 2, 5));
-		E.ajouterPerso(new Grognard(653, "Petit grognard", 0, 2, 5));
+		E.ajouterPerso(new Grognard(653, "Le grand René", 0, 2, 5));
 		E.ajouterPerso(new Grognard(669, "Petit grognard", 0, 2, 5));
 		E.ajouterPerso(new Grognard(645, "Petit grognard", 0, 2, 5));
 		E.ajouterPerso(new Grognard(680, "Petit grognard", 0, 2, 5));
@@ -489,23 +491,23 @@ void Zones::equipeEnZone(int i,Equipes & E)
 		break;
 	case 66:
 		E.ajouterPerso(new Cerf(777, "Cerf d'acier LE RETOUR", 2, 8, 5));
-		E[0]->setObjets(obj.objetNumero(28), obj.objetNumero(30));
+		//E[0]->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		break;
 	case 67:
 		E.ajouterPerso(new Wither(692, "Wither"));
 		E.ajouterPerso(new Wither(706, "Wither"));
 		E.ajouterPerso(new Wither(727, "Wither"));
-		E[0]->setObjets(obj.objetNumero(28), obj.objetNumero(30));
-		E[1]->setObjets(obj.objetNumero(35), obj.objetNumero(5));
-		E[2]->setObjets(obj.objetNumero(6), obj.objetNumero(36));
+		//E[0]->setObjets(obj.objetNumero(28), obj.objetNumero(30));
+		//E[1]->setObjets(obj.objetNumero(35), obj.objetNumero(5));
+		//E[2]->setObjets(obj.objetNumero(6), obj.objetNumero(36));
 		break;
 	case 68:
 		E.ajouterPerso(new Wither(770, "SUPER Wither",1));
-		E[0]->setObjets(obj.objetNumero(28), obj.objetNumero(30));
+		//E[0]->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		break;
 	case 69:
 		E.ajouterPerso(new Dragon(797, "Dragon de l'END",1));
-		E[0]->setObjets(obj.objetNumero(28), obj.objetNumero(30));
+		//E[0]->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		break;
 	case 70:
 		E.ajouterPerso(new Sanglier(860, "Ancien Sanglier de la mise a jour"));
@@ -541,7 +543,7 @@ void Zones::equipeEnZone(int i,Equipes & E)
 		E.ajouterPerso(new Tellurique(850, "Telluriforce"));
 		E.ajouterPerso(new Tellurique(889, "Telluriforce"));
 		E.ajouterPerso(new TortueE(1002, ""));
-		E[8]->setObjets(obj.objetNumero(25), obj.objetNumero(28));
+		//E[8]->setObjets(obj.objetNumero(25), obj.objetNumero(28));
 
 		break;
 	case 75:

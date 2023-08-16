@@ -35,6 +35,41 @@ Succes::Succes()
 	_succesCache.push_back(false);
 	_listeSucces.push_back(std::make_pair("Finir le niveau 5", "Nouveau personnage : Thomas"));
 	_succesCache.push_back(false);
+	_listeSucces.push_back(std::make_pair("Finir le niveau 10", "Nouveau personnage : Moustick"));
+	_succesCache.push_back(false);
+	_listeSucces.push_back(std::make_pair("Finir le niveau 15", "Nouveau personnage : Jean Baptiste"));
+	_succesCache.push_back(false);
+	_listeSucces.push_back(std::make_pair("Finir le niveau 20", "Nouveau personnage : Salim"));
+	_succesCache.push_back(false);
+	_listeSucces.push_back(std::make_pair("Finir le niveau 25", "Nouveau personnage : A VENIR"));
+	_succesCache.push_back(false);
+	_listeSucces.push_back(std::make_pair("Finir le niveau 50", "???"));
+	_succesCache.push_back(false);
+	_listeSucces.push_back(std::make_pair("Obtenir un animal légendaire", "Nouveau personnage : Fiona"));
+	_succesCache.push_back(true);
+	_listeSucces.push_back(std::make_pair("Obtenir un objet légendaire", "Nouveau personnage : Bryan"));
+	_succesCache.push_back(true);
+	_listeSucces.push_back(std::make_pair("Obtenir une orbe légendaire", "Nouveau personnage : Salim"));
+	_succesCache.push_back(true);
+	_listeSucces.push_back(std::make_pair("Obtenir l'oeuf de tortue", "Nouveau personnage : Tortue"));
+	_succesCache.push_back(true);
+	_listeSucces.push_back(std::make_pair("Obtenir la cendre de Phénix", "Nouveau personnage : Phénix"));
+	_succesCache.push_back(true);
+	_listeSucces.push_back(std::make_pair("Monter Nicolas au niveau 25", "Nouveau personnage : Isidore"));
+	_succesCache.push_back(true);
+	_listeSucces.push_back(std::make_pair("Monter Fiona au niveau 25", "Nouveau personnage : David"));
+	_succesCache.push_back(true);
+	_listeSucces.push_back(std::make_pair("Monter deux perso niveau 10", "Nouveau personnage : Sebastien"));
+	_succesCache.push_back(true);
+	_listeSucces.push_back(std::make_pair("Monter Fabian et Fiona niveau 10", "Nouveau personnage : Cloe"));
+	_succesCache.push_back(true);
+	_listeSucces.push_back(std::make_pair("Monter 3 personnages niveau 25", "Nouveau personnage : Amine"));
+	_succesCache.push_back(true);
+	_listeSucces.push_back(std::make_pair("Monter Nicolas et Sebastien au niv 10", "Nouveau personnage : Florian"));
+	_succesCache.push_back(true);
+	_listeSucces.push_back(std::make_pair("Monter Fabian, Fiona et Cloe au niv 25", "Nouveau personnage : Maelle"));
+	_succesCache.push_back(true);
+
 
 }
 
@@ -67,6 +102,18 @@ void Succes::affichageDeblocageSucces(int succes, std::vector< sf::Sound> allSou
 	str = _listeSucces[succes].second;
 	afficherTexte(20, 100, str, couleurTexte, window);
 	(*window).display();
+	sf::Event event;
+	while (window->pollEvent(event))
+	{
+		// on regarde le type de l'évènement...
+		switch (event.type)
+		{
+			// fenêtre fermée
+		case sf::Event::Closed:
+			window->close();
+			break;
+		}
+	}
 }
 
 void Succes::debloquerSucces(int succes)
@@ -100,7 +147,7 @@ void Succes::afficherTexte(float x, float y, std::string texte, sf::Color couleu
 }
 
 int Succes::nombres()const {
-	return _listeSucces.size();
+	return _listeSucces.size() ;
 }
 
 bool Succes::estCache(int i) const

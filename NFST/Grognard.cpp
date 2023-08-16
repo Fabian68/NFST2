@@ -21,7 +21,7 @@ Grognard::Grognard(int LVL, std::string nom, int difficulte, int animal, int rar
 	}
 }
 
-void Grognard::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void Grognard::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -35,19 +35,19 @@ void Grognard::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >
 		Affichage().dessinerTexte(nom() + " needler !",window);
 		for (int i = 0;i < 10 && equipeEnnemi().estEnVie();i++) {
 			DEGATS = degats(0.1, 0.2);
-			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
+			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(), C, window, allSounds);
 			inc += 0.1;
 			if (attaqueDouble() && equipeEnnemi().estEnVie()) {
 				inc += 0.1;
 				DEGATS = degats(0.1, 0.2);
-				Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
+				Attaque(DEGATS, equipeEnnemi().plusProcheVivant(), C, window, allSounds);
 
 			}
 		}
 		if (equipeEnnemi().estEnVie()) {
 			Affichage().dessinerTexte(nom() + "Explosion",window);
 			DEGATS = degats(0.2+inc, 0.4+inc*2);
-			AttaqueBrut(DEGATS, equipeEnnemi().plusProcheVivant(),window);
+			AttaqueBrut(DEGATS, equipeEnnemi().plusProcheVivant(),C,window);
 		}
 		ajouterMana(1);
 		break;
@@ -72,17 +72,17 @@ void Grognard::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >
 
 		Affichage().dessinerTexte(nom() + " SUICIDE ",window);
 		DEGATS = degats(5.0, 10.0);
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
-		Attaque(DEGATS, this,window,allSounds);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(), C, window, allSounds);
+		Attaque(DEGATS, this, C, window, allSounds);
 		ajouterMana(-3);
 		break;
 	}
 }
 
-void Grognard::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void Grognard::passif(int tour, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 }
 
-void Grognard::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
+void Grognard::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, Combat & C, int degats, Personnage* P)
 {
 }

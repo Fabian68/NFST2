@@ -5,6 +5,7 @@
 
 class Personnage;
 class Experiences;
+class Combat;
 class Equipes
 {
 public:
@@ -37,9 +38,9 @@ public:
 	Personnage* meilleurNombresAttaquesRecues();
 	Personnage* plusGrosseAttaqueRecue();
 	Personnage* plusGrosseAttaqueEnvoyer();
-	void attaqueZone(int Degats,Personnage*Attaquant, sf::RenderWindow* window, std::vector< sf::Sound>& allSounds);
-	void soignerZone(int soins, Personnage* Soigneur, sf::RenderWindow* window);
-	void bouclierZone(int bouclier, Personnage* bouclierMan, sf::RenderWindow* window);
+	void attaqueZone(int Degats,Personnage*Attaquant, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound>& allSounds);
+	void soignerZone(int soins, Personnage* Soigneur, Combat & C, sf::RenderWindow* window);
+	void bouclierZone(int bouclier, Personnage* bouclierMan, Combat & C, sf::RenderWindow* window);
 	void vider();
 	void liberer();
 	void chargerEquipe(Equipes & Liste);
@@ -48,7 +49,7 @@ public:
 	void ajouterPerso(Personnage * P);
 	void retirerDernierPerso();
 	void ajouterExperience(int xp, Experiences E);
-	void setAllierEtEnnemis(Equipes E);
+	void setAllierEtEnnemis(Equipes & E);
 	bool estEnVie() const;
 	bool ia() const;
 	bool comprendPersonnage(int id) const;

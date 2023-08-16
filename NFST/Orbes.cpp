@@ -1,6 +1,7 @@
 #include "Orbes.h"
 #include <iostream>
 #include "Bouton.h"
+#include "Succes.h"
 
 Orbes::Orbes()
 {
@@ -113,6 +114,15 @@ void Orbes::deblocageOrbe(int indiceJoueur, int rareter, std::string perso, sf::
 		txt += " CHEATER ( 5 ";
 		break;
 	}
+
+	Succes S;
+	if (rareter == 4 || rareter == 5) {
+		Succes S;
+		if (!S.estDebloque(SUCCES_ORBE_LEGENDAIRE)) {
+			S.debloquerSucces(SUCCES_ORBE_LEGENDAIRE);
+			S.affichageDeblocageSucces(SUCCES_ORBE_LEGENDAIRE, allSounds);
+		}
+	}
 /*	std::cout << "points de stats par niveaux) ,vous dever choisir ou l'equiper, entrer ";
 	std::cout << std::endl;
 	std::cout << " 1 pour attaque ";
@@ -140,7 +150,7 @@ void Orbes::deblocageOrbe(int indiceJoueur, int rareter, std::string perso, sf::
 
 	sf::Time  DELAY = sf::milliseconds(50);
 	float xc, yc;
-
+	(*window).display();
 	do {
 		while (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			sf::sleep(DELAY);
@@ -162,6 +172,7 @@ void Orbes::deblocageOrbe(int indiceJoueur, int rareter, std::string perso, sf::
 			select = 3;
 		}
 	} while (!selectionner);
+	(*window).display();
 	(* window).clear();
 	
 	
