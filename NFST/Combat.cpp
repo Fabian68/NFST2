@@ -6,136 +6,116 @@
 #include "Delais.h"
 #include "AffichageCombat.h"
 #include "Succes.h"
+#include "Lapin.h"
+#include "Sanglier.h"
 
-
-Combat::Combat(Equipes  & Joueur, Equipes  & Ia,Zones & Z,Animaux & A,Orbes & O, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) : _joueur{Joueur}, _ia{Ia},_tour{0}
+Combat::Combat(Equipes & Joueur, Equipes & Ia, Zones& Z, Animaux& A, Orbes& O, std::vector< sf::Sound >& allSounds) : _joueur{ Joueur }, _ia{ Ia }, _tour{ 0 }
 {
+	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1200, 850), "Combat");
+	window->setActive();
+	window->setFramerateLimit(1);
 
-
-	/*for (int i = 0;i < _joueur.taille();i++) {
-		_joueur[i]->appliquerEffets();
-	}*/
-
-	int somme = 0;
-	int max = INT_MIN;
-	int nombrePersonnages = _joueur.taille() + _ia.taille();
-	std::cout << nombrePersonnages << " ";
 	int xp;
 	xp = _ia.xpDonner();
-	std::vector<int> nombreTourJoueur(_joueur.taille());
-	std::vector<int> nombreTourIa(_ia.taille());
+
 	Delais delais = Delais();
-	int del = 50;
-	
+	int del = 100;
+
 	for (int i = 0;i < _joueur.taille();i++) {
-		somme += _joueur.perso(i)->vitesse();
-		if (_joueur.perso(i)->possedeObjetNumero(OBJET_SABLIER)) {
+		if (_joueur[i]->possedeObjetNumero(OBJET_AVANCE_RAPIDE)) {
+			del = std::min(50, del);
+		}
+		if (_joueur[i]->possedeObjetNumero(OBJET_SABLIER)) {
 			del = std::min(25, del);
 		}
-		if (_joueur.perso(i)->possedeObjetNumero(OBJET_TARDIS)) {
+		if (_joueur[i]->possedeObjetNumero(OBJET_TARDIS)) {
 			del = std::min(1, del);
 		}
 	}
 	delais.setDelais(del);
 
-	for (int i = 0;i < _ia.taille();i++) {
-		somme += _ia.perso(i)->vitesse();
-	}
-	int moyenne = static_cast<int>(somme / (nombrePersonnages*1.0));
-	std::cout << moyenne << " ";
-	for (int i = 0;i < _joueur.taille();i++) {
-		nombreTourJoueur[i] = ceil(((double)_joueur.perso(i)->vitesse()) / ((double)moyenne));
-		if (nombreTourJoueur[i] > max) {
-			max = nombreTourJoueur[i];
-		}
-	}
-	
-	for (int i = 0;i < _ia.taille();i++) {
-		nombreTourIa[i] = ceil(((double)_ia.perso(i)->vitesse()) / ((double)moyenne));
-		if (nombreTourIa[i] > max) {
-			max = nombreTourIa[i];
-		}
-	}
-	std::cout << max << " ";
-	for (int j = max;j > 0;j--) {
-		for (int i = 0;i < _joueur.taille();i++) {
-			if (nombreTourJoueur[i] >= j) {
-				_quiJoue.push_back(_joueur.perso(i));
-			}
-		}
-		for (int i = 0;i < _ia.taille();i++) {
-			if (nombreTourIa[i] >= j) {
-				_quiJoue.push_back(_ia.perso(i));
-			}
-		}
-	}
-	AffichageCombat AC;
-	AC.dessinerDeuxEquipes(_joueur, _ia,window);
-	int nbFoisJouer = 0;
-	int nbJouerPourAugmenterTour = nombrePersonnages / 2;
+	modifierQuiJoue();
 
-	//AC.afficherTour quand dessiner deux equipes
-	//AC.mettreAjour tour
-	Affichage().affichageTexte(5, 5, "Tour : " + std::to_string(_tour + 1),sf::Color::Magenta,window);
+	AffichageCombat AC;
+	
+	int nbFoisJouer = 0;
+
+	AC.dessinerDeuxEquipes(_joueur, _ia, *this, window);
+	
 	while (_joueur.estEnVie() && _ia.estEnVie()) {
 		for (int i = 0;i < (int)_quiJoue.size();i++) {
+			_quiJoueIndex = i;
 			if ((_joueur.estEnVie() && _ia.estEnVie())) {
-					if (_quiJoue[i]->estEnVie()) {
-						nbFoisJouer++;
-						nombrePersonnages = _joueur.nbEnVie() + _ia.nbEnVie();
-						nbJouerPourAugmenterTour = nombrePersonnages / 2;
-						if (nbFoisJouer%nbJouerPourAugmenterTour == 0) {
-							_tour++;
-							//AC.mettreAjour tour
-							Affichage().affichageTexte(5, 3, "Tour : " + std::to_string(_tour+1),sf::Color::Magenta,window);
-							for (int i = 0; i < _joueur.taille(); i++) {
-								if (_joueur[i]->estEnVie()) {
-									_joueur[i]->passif(_tour,window,allSounds);
-									if (_joueur[i]->possedeObjetNumero(OBJET_ANTIDOTE)) {
-										_joueur[i]->status().soignerPoison();
-									}
-									if (_joueur[i]->possedeObjetNumero(OBJET_VOILE_FEU)) {
-										_joueur[i]->status().soignerBrulure();
-									}
-									if (_joueur[i]->possedeObjetNumero(OBJET_MALEDICTION)) {
-										_joueur[i]->reduireVie(_joueur[i]->vieMax() /10);
-										_joueur[i]->reduireBouclier(_joueur[i]->bouclierMax());
-									}
-									_joueur[i]->status().effetBrulure();
-									_joueur[i]->status().effetPoison();
+				if (_quiJoue[i]->estEnVie()) {
+					//
+					nbFoisJouer++;			
+					if (nbFoisJouer % _nbJouerPourAugmenterTour == 0) {
+						_tour++;
+						for (int t = 0; t < _joueur.taille(); t++) {
+							if (_joueur.perso(t)->estEnVie()) {
+								_joueur.perso(t)->passif(_tour,*this, window, allSounds);
+								if (_joueur.perso(t)->possedeObjetNumero(OBJET_ANTIDOTE)) {
+									_joueur.perso(t)->status().soignerPoison();
 								}
-								else if (_joueur[i]->id() == 16) {
-									int un = 1;
-									std::ifstream is("phstd.txt", std::ios::binary);
-									is.read((char*)&un, sizeof(un));
-									is.close();
+								if (_joueur.perso(t)->possedeObjetNumero(OBJET_VOILE_FEU)) {
+									_joueur.perso(t)->status().soignerBrulure();
 								}
+								if (_joueur.perso(t)->possedeObjetNumero(OBJET_MALEDICTION)) {
+									_joueur.perso(t)->reduireVie(_joueur.perso(t)->vieMax() / 10);
+									_joueur.perso(t)->reduireBouclier(_joueur.perso(t)->bouclierMax());
+								}
+								if (_joueur.perso(t)->possedeObjetNumero(OBJET_VASE_ANTIQUE_MAGIQUE)) {
+									_joueur.perso(t)->ajouterMana(1);
+								}
+								_joueur.perso(t)->status().effetBrulure();
+								_joueur.perso(t)->status().effetPoison();
 							}
-							for (int i = 0; i < _ia.taille(); i++) {
-								if (_ia[i]->estEnVie()) {
-									_ia[i]->passif(_tour,window,allSounds);
-									if (_ia[i]->possedeObjetNumero(OBJET_ANTIDOTE)) {
-										_ia[i]->status().soignerPoison();
-									}
-									if (_ia[i]->possedeObjetNumero(OBJET_VOILE_FEU)) {
-										_ia[i]->status().soignerBrulure();
-									}
-									_ia[i]->status().effetBrulure();
-									_ia[i]->status().effetPoison();
-								}
+							else if (_joueur.perso(t)->id() == 16) {
+								int un = 1;
+								std::ifstream is("phstd.txt", std::ios::binary);
+								is.read((char*)&un, sizeof(un));
+								is.close();
 							}
-							
-							//AffichageCombat().dessinerDeuxEquipes(_joueur, _ia,window);
+							if (_joueur.perso(t)->id() == 3 && _tour == 25) {
+								_joueur.ajouterPerso(new Lapin(_joueur.perso(t)->niveau(), "Perle", 0, 9, 5, 302));
+								_joueur.setAllierEtEnnemis(_ia);
+								_ia.setAllierEtEnnemis(_joueur);
+							}
+							if (_joueur.perso(t)->id() == 3 && _tour == 50) {
+								_joueur.ajouterPerso(new Sanglier(_joueur.perso(t)->niveau(), "Oxanne", 0, 9, 5, 303));
+								_joueur.setAllierEtEnnemis(_ia);
+								_ia.setAllierEtEnnemis(_joueur);
+							}
 						}
-						_quiJoue[i]->attaqueEnnemis(window,allSounds);
+						for (int k = 0; k < _ia.taille(); k++) {
+							if (_ia.perso(k)->estEnVie()) {
+								_ia.perso(k)->passif(_tour,*this, window, allSounds);
+								if (_ia.perso(k)->possedeObjetNumero(OBJET_ANTIDOTE)) {
+									_ia.perso(k)->status().soignerPoison();
+								}
+								if (_ia.perso(k)->possedeObjetNumero(OBJET_VOILE_FEU)) {
+									_ia.perso(k)->status().soignerBrulure();
+								}
+								if (_ia.perso(k)->possedeObjetNumero(OBJET_VASE_ANTIQUE_MAGIQUE)) {
+									_ia.perso(k)->ajouterMana(1);
+								}
+								_ia.perso(k)->status().effetBrulure();
+								_ia.perso(k)->status().effetPoison();
+							}
+						}
+
+						//AffichageCombat().dessinerDeuxEquipes(_joueur, _ia,window);
 					}
+					_quiJoue[i]->attaqueEnnemis(*this,window, allSounds);
+				}
 			}
 		}
+		modifierQuiJoue();
 	}
 	if (_joueur.estEnVie()) {
 		Z.niveauBattu();
 		Experiences E;
-		
+
 		_joueur.ajouterExperience(xp, E);
 		Succes succes;
 		int niveau_actuel = Z.niveauActuel();
@@ -147,20 +127,112 @@ Combat::Combat(Equipes  & Joueur, Equipes  & Ia,Zones & Z,Animaux & A,Orbes & O,
 		case 5:
 			succes_id = SUCCES_NIV5;
 			break;
+		case 10:
+			succes_id = SUCCES_NIV10;
+			break;
+		case 15:
+			succes_id = SUCCES_NIV15;
+			break;
+		case 20:
+			succes_id = SUCCES_NIV20;
+			break;
+		case 25:
+			succes_id = SUCCES_NIV25;
+			break;
 		};
-		if (succes_id >= 0) {
+		if (succes_id >= 0 && !succes.estDebloque(succes_id)) {
 			succes.debloquerSucces(succes_id);
 			succes.affichageDeblocageSucces(succes_id, allSounds);
 		}
-			
 
-		tirageRecompenses(Z, A, O, window,allSounds);
+
+		tirageRecompenses(Z, A, O, window, allSounds);
 	}
-	//Affichage().dessinerDeuxEquipes(_joueur, _ia,window);
-	
+	window->close();
 }
 
-void Combat::tirageRecompenses(Zones Z,Animaux A,Orbes O, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) {
+void Combat::modifierQuiJoue() {
+	_quiJoue.resize(0);
+	int somme = 0;
+	int nombrePersonnages = _joueur.taille() + _ia.taille();
+	int nombrePersoEnVie = _joueur.nbEnVie() + _ia.nbEnVie();
+	_nbJouerPourAugmenterTour = nombrePersonnages / 2;
+	_quiJoue.reserve(nombrePersoEnVie);
+	int max = INT_MIN;
+	std::vector<int> nombreTourJoueur(_joueur.taille());
+	std::vector<int> nombreTourIa(_ia.taille());
+
+	int somme_vitesses_joueur = 0;
+	for (int i = 0;i < _joueur.taille();i++) {
+		if (_joueur[i]->estEnVie()) {
+			somme_vitesses_joueur += _joueur[i]->vitesse();
+		}
+	}
+
+	int somme_vitesse_ia = 0;
+	for (int i = 0;i < _ia.taille();i++) {
+		if (_ia[i]->estEnVie()) {
+			somme_vitesse_ia += _ia[i]->vitesse();
+		}
+	}
+	somme = somme_vitesses_joueur + somme_vitesse_ia;
+	int moyenne = static_cast<int>(somme / (nombrePersoEnVie * 1.0));
+	for (int i = 0;i < _joueur.taille();i++) {
+		if (_joueur[i]->estEnVie()) {
+			nombreTourJoueur[i] = ceil(((double)_joueur[i]->vitesse()) / ((double)moyenne));
+			if (nombreTourJoueur[i] > max) {
+				max = nombreTourJoueur[i];
+			}
+		}
+	}
+
+	for (int i = 0;i < _ia.taille();i++) {
+		if (_ia[i]->estEnVie()) {
+			nombreTourIa[i] = ceil(((double)_ia[i]->vitesse()) / ((double)moyenne));
+			if (nombreTourIa[i] > max) {
+				max = nombreTourIa[i];
+			}
+		}
+	}
+	if (somme_vitesses_joueur > somme_vitesse_ia) {
+		for (int j = max;j > 0;j--) {
+			for (int i = 0;i < _joueur.taille();i++) {
+				if (_joueur[i]->estEnVie()) {
+					if (nombreTourJoueur[i] >= j) {
+						_quiJoue.push_back(_joueur[i]);
+					}
+				}
+			}
+			for (int i = 0;i < _ia.taille();i++) {
+				if (_ia[i]->estEnVie()) {
+					if (nombreTourIa[i] >= j) {
+						_quiJoue.push_back(_ia[i]);
+					}
+				}
+			}
+		}
+	}
+	else {
+		for (int j = max;j > 0;j--) {
+			for (int i = 0;i < _ia.taille();i++) {
+				if (_ia[i]->estEnVie()) {
+					if (nombreTourIa[i] >= j) {
+						_quiJoue.push_back(_ia[i]);
+					}
+				}
+			}
+
+			for (int i = 0;i < _joueur.taille();i++) {
+				if (_joueur[i]->estEnVie()) {
+					if (nombreTourJoueur[i] >= j) {
+						_quiJoue.push_back(_joueur[i]);
+					}
+				}
+			}
+		}
+	}
+}
+void Combat::tirageRecompenses(Zones Z, Animaux A, Orbes O, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) {
 	int indiceJoueur;
 
 	int chanceTirage;
@@ -170,61 +242,76 @@ void Combat::tirageRecompenses(Zones Z,Animaux A,Orbes O, sf::RenderWindow* wind
 		indiceJoueur = _joueur[i]->id();
 		for (int j = 0; j < 9; j++) {
 			//Pour chaque rarete animal
-			chanceTirage = 10000 +90000 - 900 * Z.niveauActuel() - 90 * Z.niveauMax();
+			chanceTirage = 10000 + 90000 - 900 * Z.niveauActuel() - 90 * Z.niveauMax();
 			for (int k = 1; k <= 5; k++) {
-				if (Aleatoire(0, chanceTirage).entier() ==1) {
+				if (Aleatoire(0, chanceTirage).entier() == 1) {
 					if (!A.animalDebloquer(indiceJoueur, j, k)) {
-						A.deblocageAnimal(indiceJoueur, j, k, _joueur[i]->nom(),window,allSounds);
+						A.deblocageAnimal(indiceJoueur, j, k, _joueur[i]->nom(), window, allSounds);
 					}
 				}
 				//detecting overflow
-				if (chanceTirage > (int)(INT_MAX / 10.0 -1)) {
+				if (chanceTirage > (int)(INT_MAX / 10.0 - 1)) {
 					chanceTirage = INT_MAX;
-				
+
 					//std::cout << "Overflow possible loot animal";
 				}
 				else {
 					chanceTirage *= 10;
 				}
-				std::cout << " " << chanceTirage;
+			
 				//chanceTirage = max(chanceTirage * 10,chanceTirage); nope
 			}
-			std::cout << std::endl;
+			
 		}
 		//Pour chaque rareter d'orbe
 
-		chanceTirage = 1000 + 9000 - 90 * Z.niveauActuel()-9*Z.niveauMax();
+		chanceTirage = 1000 + 9000 - 90 * Z.niveauActuel() - 9 * Z.niveauMax();
 		for (int j = 1; j <= 5; j++) {
 			if (Aleatoire(0, chanceTirage).entier() == 1) {
-				if (!O.orbeDebloquer(indiceJoueur,j)) {
-					O.deblocageOrbe(indiceJoueur, j, _joueur[i]->nom(),window,allSounds);
+				if (!O.orbeDebloquer(indiceJoueur, j)) {
+					O.deblocageOrbe(indiceJoueur, j, _joueur[i]->nom(), window, allSounds);
 				}
 			}
-			if (chanceTirage > (int)(INT_MAX / 10.0 -1)) {
+			if (chanceTirage > (int)(INT_MAX / 10.0 - 1)) {
 				//std::cout << "Overflow possible loot orbe" << std::endl;
 			}
-			chanceTirage *= 10; 
-			
+			chanceTirage *= 10;
+
 		}
 	}
-	
+
 	Objets obj;
-	std::vector<Objet> objets= obj.objetsDuNiveau(Z.niveauActuel());
-	for (int i = 0;i<(int)objets.size();i++) {
+	std::vector<Objet> objets = obj.objetsDuNiveau(Z.niveauActuel());
+	for (int i = 0;i < (int)objets.size();i++) {
 		if (!obj.estDebloquer(objets[i])) {
-			if (objets[i].numero() == 34 ) {
+			if (objets[i].numero() == 34) {
 				if (_joueur.comprendPersonnage(1) && Aleatoire(0, objets[i].rareter() + 1).entier() == 1) {
-					obj.deblocageObjet(objets[i].numero(),window,allSounds);
+					obj.deblocageObjet(objets[i].numero(), window, allSounds);
 				}
 			}
-			else if (Aleatoire(0, objets[i].rareter() + 1).entier()==1) {
-				obj.deblocageObjet(objets[i].numero(),window,allSounds);
+			else if (Aleatoire(0, objets[i].rareter() + 1).entier() == 1) {
+				obj.deblocageObjet(objets[i].numero(), window, allSounds);
 			}
 		}
 	}
 }
 Combat::~Combat()
 {
+}
+
+int Combat::tour() const
+{
+	return _tour;
+}
+
+std::vector<Personnage*> Combat::quiJoue() const
+{
+	return _quiJoue;
+}
+
+int Combat::quiJoueIndex() const
+{
+	return _quiJoueIndex;
 }
 
 
