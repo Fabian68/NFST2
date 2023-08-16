@@ -53,6 +53,8 @@ const int OBJET_CENDRE_PHENIX = 45;
 const int OBJET_HANTISE = 46;
 const int OBJET_HUIT_BALL = 47;
 const int OBJET_SPARTAN_ARMOR = 48;
+const int OBJET_AVANCE_RAPIDE = 49;
+const int OBJET_VASE_ANTIQUE_MAGIQUE = 50;
 
 
 class Objets

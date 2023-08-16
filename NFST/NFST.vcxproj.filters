@@ -210,6 +210,9 @@
     <ClCompile Include="Orbes.cpp">
       <Filter>Fichiers sources\Fonctionnalites</Filter>
     </ClCompile>
+    <ClCompile Include="Succes.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Affichage.h">
@@ -378,6 +381,9 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="AffichageCombat.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Succes.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
