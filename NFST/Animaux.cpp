@@ -1,6 +1,7 @@
 #include "Animaux.h"
 #include <iostream>
 #include "Bouton.h"
+#include "Succes.h"
 
 Animaux::Animaux()
 {
@@ -125,6 +126,13 @@ void Animaux::deblocageAnimal(int indicePersonnage, int indiceAnimal, int rarete
 	case 5:
 		txt += " CHEATER ";
 		break;
+	}
+	if (rareteAnimal == 4 || rareteAnimal == 5) {
+		Succes S;
+		if (!S.estDebloque(SUCCES_ANIMAL_LEGENDAIRE)) {
+			S.debloquerSucces(SUCCES_ANIMAL_LEGENDAIRE);
+			S.affichageDeblocageSucces(SUCCES_ANIMAL_LEGENDAIRE, allSounds);	
+		}
 	}
 	/*std::cout << ", voulez voul l'equiper ? Entrer le chiffre 0 si oui ";
 	int entrer;
