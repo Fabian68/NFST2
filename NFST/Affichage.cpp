@@ -7,6 +7,7 @@
 #include "Delais.h"
 #include "Objets.h"
 #include "Succes.h"
+#include "Aleatoire.h"
 
 Affichage::Affichage()
 {
@@ -363,6 +364,51 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		case 1:
 			str = "Emmagasine 10% des dégats reçu, insensible au brulures, possède un compteur de tour qui est augmenté de 1 à chaque tour joué (CT) ";
 			break;
+		case 2:
+			str = "Aucun";
+			break;
+		case 3:
+			str = "Aucun";
+			break;
+		case 4:
+			str = "Reduction de dégats du personnage = 100 x ( 1 - vie actuel/ vie maximum) %";
+			str = str + "\n" + "Ratio attaque (RA) = vie maximum / vie actuel, maximum 30";
+			break;
+		case 5:
+			str = "Commence avec 5% de chance de coup critique bonus et 25% de dégats critique bonus, à chaque tour attaque l'ennemi le plus faible pour 5-25% de votre force x dégats critiques";
+			str = str + "\n" + "Insensible au poison";
+			break;
+		case 6:
+			str = "Ratio attaque RA = vitesse/force ";
+			break;
+		case 7:
+			str = "Lors de son tour augmente sa vie maximum à hauteur de son niveau";
+			break;
+		case 8:
+			str = "Aucun";
+			break;
+		case 9:
+			str = "Aucun";
+			break;
+		case 10:
+			str = "Aucun";
+			break;
+		case 11:
+			str = "Aucun";
+			break;
+		case 12:
+			str = "Possede 10 fois plus de points de vies";
+			break;
+		case 13:
+			str = "Ne joue son tour que si un tirage habile est concluant";
+			break;
+		case 14:
+			str = "Les statistiques sont améliorés au niveau 9/99/999, réduit les dégats à hauteur de 2 x sont niveau, emmagasine les dégats";
+			break;
+		case 15:
+			str = "Aucun";
+			break;
+
 	}
 	afficherTexte(x, y + 30.f, str, couleurTexte, window);
 
@@ -375,7 +421,60 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		break;
 	case 1:
 		str = "Tout les 5 tours emmagasine 2% de ses points de vie maximum, val potentiel :" + std::to_string((int)Liste[indice]->vieMax()/50);
-		str = str + "\n" + "Se bouclier également pour 20% de sa vie max, Valeur actuel : " + std::to_string((int)Liste[indice]->vieMax()/5);
+		str = str + "\n" + "Se bouclier également pour 10% de sa vie max, Valeur actuel : " + std::to_string((int)Liste[indice]->vieMax()/5);
+		break;
+	case 2:
+		str = "Tout les 5 tours se soigne pour 30-60% de votre force, soins potentiel :" + std::to_string(Liste[indice]->soins(0.2, 0.4));
+		break;
+	case 3:
+		str = "A 25 tour ajoute un lapin dans l'équipe avec un animal qui soigne et bouclier de zone, a 50 tour un sanglier, les animaux attaquent lorsque Fiona ce fait attaquer et quand Fiona attaque";
+		str = str + "\n" + "Tout les 17 tours ajoute 7% chance de coup critique, si habile ajoute également 7% de dégats critique";
+		str = str + "\n" + "Tout les 70 tours ajoute 17% de dégats critique et attaque l'ennemi le plus fort 17 fois pour 17%-(18%+1,7% x numéro coup)force, somme dégats potentiel => ";
+		DEGATS = 0;
+		for (size_t i = 0; i < 17; i++)
+		{
+			DEGATS += Liste[indice]->degats(0.17, 0.18 + 0.017 * i);
+		}
+		str = str + std::to_string(DEGATS);
+		break;
+	case 4:
+		str = "Aucun";
+		break;
+	case 5:
+		str = "Tout les 10 tours ajoute 1% chance de coup critique et 2% de dégats critiques";
+		break;
+	case 6:
+		str = "Se soigne à hauteur de 5,9% de sa vie maximum, ou bouclier si sa vie est au maximum";
+		break;
+	case 7:
+		str = "Tout les 5 tours ajoute force equivalent à niveau/10 et vie maxmimum à hauteur de niveau (x10 si habile et double attaque)";
+		str = str + "\n" + "Tout les 30 tours se soigne et bouclier intégralement";
+		break;
+	case 8:
+		str = "Si le personnage n'a pas été attaqué pendant 4 tours, recharge son bouclier à son maximum";
+		break;
+	case 9:
+		str = "Tout les 5 tours reduit sa vie actuel de 10% et ajoute 1% de reduction aux dégats";
+		break;
+	case 10:
+		str = "Tout les 8 tours attaque brut l'ennemi le plus proche avec ratio = reduction de dégats de l'ennemi/50, dégats = (ratio)-(ratio*3+1)% de votre force";
+		break;
+	case 11:
+		str = "Tout les 10 tours augmente les chance d'habilete,double attaque et de coup critique de 2% ainsi que 6% de dégats critique en plus à tout les alliers, x 2 si habile";
+		break;
+	case 12:
+		str = "Tout les 10 tours permet de faire gagner de l'xp selon son niveau : 1/7/70/700/7000 au niveau 1/70/700/7000, les alliers ko bénéficient aussi de l'xp";
+		str = str + "\n" + "Au tour 10/20/30/60/80/100/130/160/200 partage 2/2/2/4/4/4/10/10/10% de sa vie max à un allier aléatoire et perd 10/10/10/5/5/5/3/3/3% de sa vie max";
+		break;
+	case 13:
+		str = "Tout les 10 tours se soigne à hauteur de 20% de ses points de vie actuel";
+		break;
+	case 14:
+		str = "Tout les tours soigne 10% de ses pv manquent et bouclier 10% du bouclier manquent";
+		break;
+	case 15:
+		str = "Tout les tours augmente la vie max à hauteur de 10% de sa force, puis 10% si habile puis une seconde fois 10% si habile";
+		str = str + "\n" + "Tout les 100 tours attaque l'ennemi à hauteur de 111-211% de votre force, si tirage habile l'attaque est brut";
 		break;
 	}
 	afficherTexte(x, y + 110.f, str, couleurTexte, window);
@@ -388,6 +487,50 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		break;
 	case 1:
 		str = "Attaque l'attaquant pour (1% 0,1% x CT)+ des pv max, valeur sans compteur : " + std::to_string((int)Liste[indice]->vieMax() / 100);
+		break;
+	case 2:
+		str = "Lance un jet d'habilete, si concluant ajoute 1% de reduction de dégats au coéquipier le plus faible et un compteur de protection";
+		str = str + " puis vous ajouter un bouclier à vous même équivalent à 4% de votre vie actuel, bouclier potentiel : " + std::to_string((double)Liste[indice]->vie() * 0.04);
+		break;
+	case 3:
+		str = "Déclanche les compéteces des animaux";
+		break;
+	case 4:
+		str = "Emmagasine 10% des dégats reçu";
+		break;
+	case 5:
+		str = "Peut se bouclier selon son pourcentage d'esquive à hauteur de 25% de sa vitesse";
+		break;
+	case 6:
+		str = "Aucun";
+		break;
+	case 7:
+		str = "Aucun";
+		break;
+	case 8:
+		str = "Ajoute 1% chance de double attaque";
+		break;
+	case 9:
+		str = "Aucun";
+		break;
+	case 10:
+		str = "Augmente votre bouclier à hauteur de votre niveau";
+		break;
+	case 11:
+		str = "Vous vous soiigner à hauteur de 20-80% de votre force";
+		break;
+	case 12:
+		str = "Aucun";
+		break;
+	case 13:
+		str = "Se bouclier à hauteur de 1% de vos points de vie maximum + niveau";
+		break;
+	case 14:
+		str = "Si tirage habile, attaque l'ennemi le plus proche à hauteur de 1% de ses pv max";
+		str = str + "\n" + "et ajoute 1% de reduction de dégats à l'allier le moins résistant ainsi qu'un compteur de protection";
+		break;
+	case 15:
+		str = "augmente la vie max à hauteur de 10% de sa force, puis 10% si habile puis une seconde fois 10% si habile";
 		break;
 	}
 	afficherTexte(x, y + 180.f, str, couleurTexte, window);
@@ -402,8 +545,57 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		str = str + "\n" + "Dégats potentiels : " + std::to_string(DEGATS);
 		break;
 	case 1:
-		DEGATS = Liste[indice]->degats(0.2, 0.8);
-		str = "Attaque l'ennemi le plus proche avec un ratio de 20-80% de votre attaque, dégats x 2 si l'ennemi à moins de force que vous, + 1 mana, dégats possibles : " + std::to_string(DEGATS) + " ou " + std::to_string(DEGATS*2);
+		DEGATS = Liste[indice]->degats(0.2, 0.6);
+		str = "Attaque l'ennemi le plus proche avec un ratio de 20-60% de votre attaque, dégats x 2 si l'ennemi à moins de force que vous, + 1 mana, dégats possibles : " + std::to_string(DEGATS) + " ou " + std::to_string(DEGATS*2);
+		break;
+	case 2:
+		DEGATS = Liste[indice]->degats(0.1, 0.30);
+		DEGATS += (int)(0.03 * (double)Liste[indice]->vie() + 0.01 * (double)Liste[indice]->vieMax());
+		str = "Attaque l'ennemi le plus proche pour 10-30% de votre force +3% de vos point de vie actuel + 1% de vos point de vie maximum, + 1 mana, dégats potentiel : " + std::to_string(DEGATS);
+		DEGATS = (int)(Aleatoire(0.01, 0.05).decimal() * ((double)Liste[indice]->vie() + (double)Liste[indice]->bouclier()));
+		str = str + "\n" + "Lance un jet d'habileté, si concluant attaque l'équipe ennemi pour 1-5% de votr vie actuel + bouclier actuel,+1 mana, dégats potentiel :" + std::to_string(DEGATS);
+		break;
+	case 3:
+		str = "Attaque l'ennemi le plus proche pour 40-80% de votre force, double attaque re attaque l'ennemi le plus proche pour 25-95% de votre force, + 1 mana, degats potentiels :  " + std::to_string(Liste[indice]->degats(0.4, 0.80)) + " et " + std::to_string(Liste[indice]->degats(0.25, 0.95));
+		break;
+	case 4:
+		str = "Attaque l'ennemi le plus proche (1 + RA/2) fois pour (RA/30)-(RA/15)% de votre force pour chaque attaque, +(1+RA/10) mana";
+		break;
+	case 5:
+		str = "Attaque l'ennemi le plus proche pour 45-75% de votre force, si attaque double : attaque brut l'ennemi le plus faible pour 12-24% de votre force, +2 mana";
+		break;
+	case 6:
+		str = "Ataque jusqu'a 7 fois l'ennemi le plus faible pour 15-35% de sa vitesse si tirage habile, + 1 mana";
+		break;
+	case 7:
+		str = "Attaque un ennemi aléatoire à hauteur de 0,1-1% de sa force puis 100-150% si tirage habile, si tirage habile + 2 mana sinon + 1";
+		break;
+	case 8:
+		str = "CA = compteur attaque, Attaque (vitesse x 5)/force fois l'ennemi le plus proche pour (1+CA/100)-(2+CA/50)% de votre force, compteur attaque augmente de 1 ";
+		str = str + "\n" + "Chaque attaque peut attaquer une seconde fois si attaque double et la rafalle d'attaque aussi peut être affecté, + 1 mana";
+		break;
+	case 9:
+		str = "Bouclier chaque allier à hauteur de 10-30% de votre force, bouclier une seconde fois si double attaque, + 1 mana";
+		break;
+	case 10:
+		str = "Attaque l'ennemi le plus proche à hauteur de 80-120% de votre force, +1 mana";
+		break;
+	case 11:
+		str = "Se bouclier à hauteur de 25-75% de votre bouclier puis si double attaquue ou vie au maximum vous attaquer l'ennemi le plus proche à hauteur de 37-97% de votre force, + 1 mana";
+		break;
+	case 12:
+		str = "Attaque l'ennemi le plus proche à hauteur de 20-40% de votre force, + 1 mana";
+		break;
+	case 13:
+		str = "Enchaine jusqu'à 6 attaques(ennemi plus proche), chaque attaque se délanche si habile et incrémente un compteur K qui commence à 1 et multiplié par deux par attaque lancé";
+		str = str + "\n" + " si double attaque compteur/2 et re-enchaine jusqu'a 6 attaques, Dégats pour chaque coups : (5 + 0,25 x K) - (5 + 2,5 x K)% de votre force dégats, + 1 mana";
+		break;
+	case 14:
+		str = "Attaque l'ennemi le plus proche à hauteur de 21-52% de sa force + 10% de son emmagasination, retire l'emmagasination, + 1 mana";
+		break;
+	case 15:
+		str = "Attaque l'ennemi le plus proche à hauteur de 1-2% de votre vie max + 10-20% de votre force, + 1 mana";
+		str = str + "\n" + "Si tirage habile attaque brut l'ennemi le plus proche à hauteur de 0,5-1% de votre vie max + 5-10% de votre force, + 1 mana";
 		break;
 	}
 	afficherTexte(x, y + 250.f, str, couleurTexte, window);
@@ -439,6 +631,51 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 	case 1:
 		str = "Ajoute + 1 reduction de dégats à chaque membre de l'équipe, + 1 si double attaque, + 1 si habile, - 1 mana";
 		break;
+	case 2:
+		str = "Attaque l'equipe ennemi pour 10-20% de votre attaque à 60%-120% par ennemis selon sa position plus au centre et selon le nombre d'ennemis, ennemi au centre prend deux coups,-1 mana, dégats potentiel :" + std::to_string(Liste[indice]->degats(0.10, 20)) + " à " + std::to_string(Liste[indice]->degats(0.60, 120));
+		break;
+	case 3:
+		str = "Soigne 7 fois un allier aléatoire pour 10-25% de votre force si tirage habile, si double attaque 5-50% soins potentiels, + 1 mana";
+		break;
+	case 4:
+		str = "Attaque l'ennemi le plus proche pour (RA/8)-(RA/4)% de votre force + l'emmegasination + 20% du bouclier actel si bouclier > 50% bouclier max et retire 50% du bouclier max, - 1 mana";
+		break;
+	case 5:
+		str = "Attaque l'ennemi le plus faible à hauteur de 15-45% de votre force x le ratio (vie/vie max) de l'adversaire (max 20), -1 mana";
+		break;
+	case 6:
+		str = "Attaque l'equipe ennemi pour (RA/14)-(RA/10)% de votre force - 1 mana ";
+		str = str + "\n" + "Si habile à la place : Soigne l'équipe pour (RA/16)-(RA/12)% de votre force et bouclier pour (RA/32)-(RA/24)% de votre force, +1 mana";
+		break;
+	case 7:
+		str = "Se soigne 1 à 100 fois (si habile pour chaque coups) avec compteur numero du soins NS, soins = (NS/1 000)-(NS/1 000 + 1)% de votre force et ajoute vie maximal à hauteur de vie max/1 000 pour chaque soins, + 1 mana";
+		break;
+	case 8:
+		str = "Attaque l'ennemi le plus faible pour 25-50% de votre force, si attaque double reattaque pour 50-100%, si double attaque reattaque pour 75-150% de votre force, -1 mana";
+		break;
+	case 9:
+		str = "Ajoute 3 compteur de protection, 3% de reduction de dégats et niveau/20 de Force à un allier, bonus x 2 si habile, + 1 mana";
+		break;
+	case 10:
+		str = "Se soigne à hauteur de 20-60% de votre force et bouclier à hauteur de 10-30% de votre force, si vie et bouclier au maximum utilie une autre attaque à la place, + 1 mana";
+		break;
+	case 11:
+		str = " Se soigne à hauteur de 45-85% de sa force puis si habile et vie au maximum attaque l'équipe adverse à hauteur de 15-25% de votre force + 1-3% vie max + 3-9% vie actuel, - 1 mana ";
+		break;
+	case 12:
+		str = "Se soigne à hauteur de 0,5% de sa vie max + 3% de sa vie actuel puis augmente ses points de vie maximum à hauteur de niveau * 10, + 1 mana";
+		break;
+	case 13:
+		str = "Lance un compteur K de 1 à 25 et qui s'incrémente de 1, pour chaque itération elle s'attaque pour (K/100)-(K/50)% de votre force";
+		str = str + "\n" + "puis se soigne pour (K/200)-(K100)% de sa force et augmente sa vie max à hauteur de son niveau/100, -1 mana";
+		break;
+	case 14:
+		str = "Remplie 20% du bouclier maximum, + 0 mana";
+		str = str + "\n" + " Si le bouclier était au maximum : Emmagasine le bouclier et le réduit à zero, - 1 mana";
+		break;
+	case 15:
+		str = "Nombre d'alliés en vie = NA, soigne toute l'équipe à hauteur de (1/NA)-(4/NA)% de votre force et bouclier pour (0,5/NA)-(2/NA)% de votre force, -1 mana ";
+		break;
 	}
 	afficherTexte(x, y + 340.f, str, couleurTexte, window);
 
@@ -451,6 +688,48 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 	case 1:
 		str = "Attaque l'ennemi le plus fort pour 20-40% de la force +200% de l'emmagasination, -2 mana -100% emmagasination";
 		str = str + "\n" + "Si double attaque : Attaque l'ennemi le plus fort pour 40-80% de la force +100% de l'emmagasination ";
+		break;
+	case 2:
+		str = "Soigne l'équipe pour 8%-32% de votre force, + 1 mana, soins potentiel : " + std::to_string(Liste[indice]->soins(0.08, 0.32));
+		break;
+	case 3:
+		str = " - 1% de reduction de dégats à l'énnemi le plus proche, attaque 3 fois successivement l'ennemi le plus fort pour (20/40/60)-(30/60/90)% de votre force, -2 mana";
+		str = str + "\n" + "Double attaque : - 1% de reduction de dégats à l'énnemi le plus proche, attaque 3 fois successivement l'ennemi le plus fort pour (30/60/90)-(40/80/120)% de votre force";
+		break;
+	case 4:
+		str = "Attaque l'ennemi le plus proche RA fois pour (RA/10)-(RA/5)% de votre force pour chaque attaque, - 2 mana";
+		break;
+	case 5:
+		str = "Attaque l'ennemi le plus éloigné pour 75-175% de votre force, attaque double : attaque l'ennemi le plus faible pour 50-150% de votre vitesse, -2 mana";
+		break;
+	case 6:
+		str = "Déclenche le passif par tour et ajoute 1 mana";
+		break;
+	case 7:
+		str = "Réduit la reduction de dégats de toute l'équipe adverse de 2%";
+		break;
+	case 8:
+		str = "Attaque l'ennemi le plus proche pour 150-250% de votre force, -2 mana";
+		break;
+	case 9:
+		str = "Soigne le premier coéquipier à hauteur de 10-20% de votre et chaque nouvelle allier avec un soins deux fois plus fort jusqu'a l'allier au fond, - 2 mana";
+	case 10:
+		str = "Ajoute 1% chance de coup critique et 5% de dégats critique, +1 mana";
+		break;
+	case 11:
+		str = "Soigne l'équipe à hauteur de 25-50% de votre force puis si habile, double attaque et vie au maximum attaque l'équipe adverse à hauteur de 20-60% de votre force + 60-180% de votre vitesse, -2 mana";
+		break;
+	case 12:
+		str = "Soigne l'équipe à hauteur de 22-72% de votre force, + 1 mana";
+		break;
+	case 13:
+		str = "S'ajoute 3% de chance de coup critique et 6% de dégats critique, x 2 si habile, -2 mana";
+		break;
+	case 14:
+		str = "Soigne ses brulures, et empoisonnement ainsi que 10% de sa vie maximum, -2 mana";
+		break;
+	case 15:
+		str = "Se bouclier à hauteur de 25-75% de votre force puis soigne à hauteur de 50-150% de votre force, puis ajoute 5% reduction de dégats,-2 mana";
 		break;
 	}
 	afficherTexte(x, y + 430.f, str, couleurTexte, window);
@@ -467,6 +746,51 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		break;
 	case 1:
 		str = "Augmente la force de tout les alliers de 5%";
+		break;
+	case 2:
+		str = "Attaque l'ennemi le plus fort pour 8% de votre vie actuel + 2% de vos pv max + 8% de votre bouclier + 40% de votre force, - 3 mana, dégats potentiel : " + std::to_string((int)(0.08 * (double)Liste[indice]->vie() + 0.02 * (double)Liste[indice]->vieMax() + 0.08 * (double)Liste[indice]->bouclier() + 0.40 * (double)Liste[indice]->force()));
+		break;
+	case 3:
+		str = "Ajoute 3% de chance de coup habileter, reduit la résistance de l'ennemi le plus proche de 7%, puis attaque pour 70-170% de votre force, -3 mana, double attaque 117/177%";
+	case 4:
+		str = " Augmente l'emmagasination à hauteur de 10% de votre vie, ajout 10 compteur de protection et reduisier vos points de vies actuels de moitié,-3 mana";
+		break;
+	case 5:
+		str = "Ajoute 1% chance coup critique et 5% de dégats critiques, si habile bonus x 2,et se soigne à hauteur de 50-250% de votre force, ou bouclier à hauteur de 25-125% si vie au maximum, -3 mana ";
+		break;
+	case 6:
+		str = "Attaque chaque ennemis de l'équipe adverse en commencent par le personnage du début, compteur j= 1 et multiplié par deux pour chaque nouvelle ennemi attaqué";
+		str = str + "\n" + "Degats = (j+20)% de votre vitesse, -3 mana";
+		break;
+	case 7:
+		str = "Attaque un ennemi aléatoire à hauteur de 100-200% de votre force + 50-100% de votre vitesse";
+		break;
+	case 8:
+		str = "Attaque l'equipe ennemi pour 10-40% de votre attaque à 50%-200% par ennemis selon sa position plus au centre et selon le nombre d'ennemis, ennemi au centre prend deux coups,-3 mana, dégats potentiel :";
+		break;
+	case 9:
+		str = "Attaque l'equipe adverse à hauteur de 100-200% de votre force, -3 mana";
+		break;
+	case 10:
+		str = "Point de mana du personnage = PM, attaque l'ennemi le plus proche à hauteur de (PM/3)-(PM/2)% de votre force + 50-100% de votre bouclier,reduit le bouclier à 0 et le mana à 0";
+		break;
+	case 11:
+		str = "Attaque un ennemi aléatoire à hauteur de 5-350% de votre force,-3 mana";
+		break;
+	case 12:
+		str = "Ajoute 15% de reduction de dégats au coéquipier le moins résistant et un compteur de protection, -3 mana";
+		break;
+	case 13:
+		str = "Double sa force et sa vitesse,mutliplie sa vie par 10,augmente ses chances de coup habile de 20%,- 3 mana";
+		str = str + "\n" + "Si déja transformé ajoute 3 points de mana";
+		break;
+	case 14:
+		str = "Attaque l'équipe adverse à hauteur de 1,5% de sa vie actuel + 0,5% de ses points de vie max + 50% de sa force + 100% de sa force, -3 mana";
+		break;
+	case 15:
+		str = "Première transformation : Reduit de 90% sa vie maximum et double sa force, +10% reduction de dégats, - 3 mana";
+		str = str + "\n" + "Deuxième transformation (si première transformation et mana superieur à 9) : Reduit de 90% la vie maximum, double la force et +20% reduction de dégats";
+		str = str + "\n" + "Si les deux transformations on étés faites : Augmente vie max à hauteur de niveau/10 et soigne pour 20-120% de votre force et bouclier pour 10-60% de votre force";
 		break;
 	}
 	afficherTexte(x, y + 520.f, str, couleurTexte, window);
@@ -1054,11 +1378,11 @@ void Affichage::afficherObjetsDeblocableNiveau(Objets obj, int niveau, sf::Rende
 	afficherTexte(300.f, 460.f, "LOOT", sf::Color::White, window);
 	afficherTexte(50.f, 490.f, txt, sf::Color::White, window);
 }
-void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix,Zones & Z, int max, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) const
+void Affichage::menuModifierEquipe(Equipes & Gentil, Equipes choix,Zones & Z, int max, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) const
 {
 	//(*window).clear();
 	Objets O = Objets();
-
+	Succes S;
 	afficherTexte(100, 20, "Equipe actuel", sf::Color::White, window);
 	for (int i = 0; i < Gentil.taille(); i++) {
 		Bouton(100.f, (float)(i + 1) * 50.f, std::to_string(i) + Gentil[i]->nom()).afficher(window);
@@ -1082,9 +1406,106 @@ void Affichage::menuModifierEquipe(Equipes& Gentil, Equipes choix,Zones & Z, int
 	}
 
 	i++;
-	if (Z.niveauMax() >= 5 && !Gentil.comprendPersonnage(choix[i]->id())) {
+	if (Z.niveauMax() >= 6 && !Gentil.comprendPersonnage(choix[i]->id())) {
 		Bouton Bouton_Thomas = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
 		les_boutons->push_back(Bouton_Thomas);
+		ids.push_back(i);
+	}
+
+	i++;
+	if (S.estDebloque(SUCCES_ANIMAL_LEGENDAIRE) && !Gentil.comprendPersonnage(choix[i]->id())) {
+		Bouton Bouton_Fiona = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
+		les_boutons->push_back(Bouton_Fiona);
+		ids.push_back(i);
+	}
+
+	i++;
+	if (Z.niveauMax() >= 11 && !Gentil.comprendPersonnage(choix[i]->id())) {
+		Bouton Bouton_Moustick = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
+		les_boutons->push_back(Bouton_Moustick);
+		ids.push_back(i);
+	}
+
+	i++;
+	if (S.estDebloque(SUCCES_OBJET_LEGENDAIRE) && !Gentil.comprendPersonnage(choix[i]->id())) {
+		Bouton Bouton_Bryan = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
+		les_boutons->push_back(Bouton_Bryan);
+		ids.push_back(i);
+	}
+
+	i++;
+	if (S.estDebloque(SUCCES_NIV25_FIONA) && !Gentil.comprendPersonnage(choix[i]->id())) {
+		Bouton Bouton_David = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
+		les_boutons->push_back(Bouton_David);
+		ids.push_back(i);
+	}
+
+	i++;
+	if (S.estDebloque(SUCCES_NIV25_NICOLAS) && !Gentil.comprendPersonnage(choix[i]->id())) {
+		Bouton Bouton_Isidore = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
+		les_boutons->push_back(Bouton_Isidore);
+		ids.push_back(i);
+	}
+	i++;
+	if (S.estDebloque(SUCCES_NIV10_2PERSOS) && !Gentil.comprendPersonnage(choix[i]->id())) {
+		Bouton Bouton_Sebastien = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
+		les_boutons->push_back(Bouton_Sebastien);
+		ids.push_back(i);
+	}
+
+	i++;
+	if (S.estDebloque(SUCCES_NIV10_FABIAN_FIONA) && !Gentil.comprendPersonnage(choix[i]->id())) {
+		Bouton Bouton_Cloe = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
+		les_boutons->push_back(Bouton_Cloe);
+		ids.push_back(i);
+	}
+
+	i++;
+	if (S.estDebloque(SUCCES_NIV25_3PERSOS) && !Gentil.comprendPersonnage(choix[i]->id())) {
+		Bouton Bouton_Amine = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
+		les_boutons->push_back(Bouton_Amine);
+		ids.push_back(i);
+	}
+
+	i++;
+	if (S.estDebloque(SUCCES_NIV10_NICOLAS_SEBASTIEN) && !Gentil.comprendPersonnage(choix[i]->id())) {
+		Bouton Bouton_Florian = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
+		les_boutons->push_back(Bouton_Florian);
+		ids.push_back(i);
+	}
+
+	i++;
+	if (S.estDebloque(SUCCES_NIV15) && !Gentil.comprendPersonnage(choix[i]->id())) {
+		Bouton Bouton_JB = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
+		les_boutons->push_back(Bouton_JB);
+		ids.push_back(i);
+	}
+
+	i++;
+	if (S.estDebloque(SUCCES_NIV25_FABIAN_FIONA_CLOE) && !Gentil.comprendPersonnage(choix[i]->id())) {
+		Bouton Bouton_Maelle = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
+		les_boutons->push_back(Bouton_Maelle);
+		ids.push_back(i);
+	}
+	
+	i++;
+	if (O.estDebloquer(O.objetNumero(OBJET_OEUF_TORTUE)) && !Gentil.comprendPersonnage(choix[i]->id())) {
+		Bouton Bouton_Tortue = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
+		les_boutons->push_back(Bouton_Tortue);
+		ids.push_back(i);
+	}
+
+	i++;
+	if (S.estDebloque(SUCCES_NIV20) && !Gentil.comprendPersonnage(choix[i]->id())) {
+		Bouton Bouton_Salim = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
+		les_boutons->push_back(Bouton_Salim);
+		ids.push_back(i);
+	}
+
+	i++;
+	if (O.estDebloquer(O.objetNumero(OBJET_CENDRE_PHENIX)) && !Gentil.comprendPersonnage(choix[i]->id())) {
+		Bouton Bouton_Phenix = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
+		les_boutons->push_back(Bouton_Phenix);
 		ids.push_back(i);
 	}
 
