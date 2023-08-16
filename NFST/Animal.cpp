@@ -68,8 +68,8 @@ Animal::Animal(int numero)
 		}
 		break;
 	case 5:
-		_ratioMin[0] = 0.03;
-		_ratioMax[0] = 0.045;
+		_ratioMin[0] = 0.015;
+		_ratioMax[0] = 0.030;
 		_pourcentagesActivations[0] = 5;
 		for (int i = 1; i < 5; i++) {
 			_pourcentagesActivations[i] = _pourcentagesActivations[i-1]+5;
