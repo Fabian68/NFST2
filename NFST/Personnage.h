@@ -9,7 +9,6 @@
 #include "Statistiques.h"
 #include "Objets.h"
 #include <SFML/Audio.hpp>
-class Combat;
 const int CHOIXFORCE = 0;
 const int CHOIXVIEMAX = 1;
 const int CHOIXVITESSE = 2;
@@ -37,9 +36,9 @@ public:
 	int reduireBouclier(int nb);
 	int pourcentageVie()const;
 	int pourcentageBouclier() const;
-	virtual void attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)=0;
-	virtual void passif(int tour, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound > &allSounds) = 0 ;
-	virtual void passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound> &allSounds, Combat & C, int degats, Personnage * P) = 0;
+	virtual void attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound > &allSounds)=0;
+	virtual void passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound > &allSounds) = 0 ;
+	virtual void passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound> &allSounds,int degats,Personnage * P) = 0;
 	bool estEnVie() const;
 	int force() const;
 	int vitesse()const;
@@ -51,10 +50,10 @@ public:
 	int soins(double RatioMin, double RatioMax,int choix=0) const;
 	Statistiques& stats();
 	int degats(double RatioMin, double RatioMax,int choix=0) const;
-	void soigner(int soins, Combat & C, Personnage * P, sf::RenderWindow* window);
-	void AjouterVie(long long int montant, Combat & C, sf::RenderWindow* window);
-	void bouclier(int soins, Combat & C, Personnage* P, sf::RenderWindow* window);
-	void AjouterBouclier(int montant, Combat & C, sf::RenderWindow* window);
+	void soigner(int soins,Personnage * P, sf::RenderWindow* window);
+	void AjouterVie(long long int montant, sf::RenderWindow* window);
+	void bouclier(int soins, Personnage* P, sf::RenderWindow* window);
+	void AjouterBouclier(int montant, sf::RenderWindow* window);
 	void ajouterBouclier(int montant);
 	int bouclierMax()const;
 	bool estAttaquable() const;
@@ -63,9 +62,9 @@ public:
 	Equipes& equipeAllier();
 	Equipes& equipeEnnemi();
 	bool habile() const;
-	void traitementAnimaux(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound > &allSounds);
-    void   Attaque(int Degat, Personnage * Defenseur, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound > &allSounds) ;
-	void AttaqueBrut(int Degat, Personnage* Defenseur, Combat & C, sf::RenderWindow* window);
+	void traitementAnimaux(sf::RenderWindow* window, std::vector< sf::Sound > &allSounds);
+    void   Attaque(int Degat, Personnage * Defenseur, sf::RenderWindow* window, std::vector< sf::Sound > &allSounds) ;
+	void AttaqueBrut(int Degat, Personnage* Defenseur, sf::RenderWindow* window);
 	int degatsCritiques() const;
 	void setReduction(int montant);
 	void ajouterChanceDoubleAttaque(int montant);

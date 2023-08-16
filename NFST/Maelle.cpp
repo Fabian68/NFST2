@@ -1,50 +1,52 @@
 #include "Maelle.h"
 #include "Affichage.h"
 
-Maelle::Maelle(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(13, E, O, A, Obj, "Maelle", 3, 3, 1, 30, 30, -20, 0, 20, 0, 0)
+Maelle::Maelle(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(13, E, O, A, Obj, "Maelle", 1, 8, 1, 30, 30, 20, 0, 0, 0, 0)
 {
 	estTransformer = false;
 }
 
-void Maelle::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void Maelle::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
 	int SOINS;
 
 	int compteur;
-	double k = 1.0;
+	double k = 0.5;
 	if (habile()) {
 		switch (choix) {
 
 		case 0:
+			DEGATS = degats(0.01, 0.10);
 			compteur = 1;
 			Affichage().dessinerTexte(nom() + " s'enerve ! ",window);
+			Attaque(DEGATS+force()/5, equipeEnnemi().plusProcheVivant(),window,allSounds);
 			while (habile() && equipeEnnemi().estEnVie()&&compteur<=6) {
-				DEGATS = degats(0.0025 * k, 0.025 * k);
-				Attaque(DEGATS + force() / 20, equipeEnnemi().plusProcheVivant(), C, window, allSounds);
+				Attaque(DEGATS + force() / 5, equipeEnnemi().plusProcheVivant(),window,allSounds);
+				DEGATS = degats(0.01*k, 0.10*k*2);
 				k *= 2;
 				compteur++;
 			}
 			if (attaqueDouble()) {
 				compteur = 1;
-				k =k/2.0;
+				k =1.0;
 				while (habile() && equipeEnnemi().estEnVie() && compteur <= 6) {
-					DEGATS = degats(0.0025 * k, 0.025 * k);
-					Attaque(DEGATS + force() / 20, equipeEnnemi().plusProcheVivant(), C, window, allSounds);
+					Attaque(DEGATS + force() / 5, equipeEnnemi().plusProcheVivant(),window,allSounds);
+					DEGATS = degats(0.01*k,0.10* k * 2);
 					k *= 2;
 					compteur++;
 				}
 			}
-			ajouterMana(1);
+			
 			break;
 		case 1:
 			Affichage().dessinerTexte(nom() + " fait du tapis roulant !  ",window);
 			for (double i = 1.0;i <= 25.0&&this->estEnVie();i += 1.0) {
-				DEGATS = degats(i/100.0, i/50.0);
-				Attaque(DEGATS,this, C, window, allSounds);
-				SOINS = soins(i / 200.0, i / 100.0);
-				soigner(SOINS, C, this, window);
+				DEGATS = degats(i/100, i/50);
+				Attaque(DEGATS,this,window,allSounds);
+				SOINS = soins(i / 200, i / 100);
+				soigner(SOINS, this,window);
 				ajouterVieMax(niveau() / 100);
 			}
 			ajouterMana(-1);
@@ -54,12 +56,12 @@ void Maelle::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< s
 			Affichage().dessinerTexte(nom() + " joue a la tablette !  ",window);
 			
 			if (habile()) {
-				ajouterCoupCritique(6);
-				ajouterDegatsCritique(12);
+				ajouterCoupCritique(8);
+				ajouterDegatsCritique(20);
 			}
 			else {
-				ajouterCoupCritique(3);
-				ajouterDegatsCritique(6);
+				ajouterCoupCritique(5);
+				ajouterDegatsCritique(10);
 			}
 			ajouterMana(-2);
 			break;
@@ -74,9 +76,6 @@ void Maelle::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< s
 				ajouterMana(-3);
 				estTransformer = true;
 			}
-			else {
-				ajouterMana(3);
-			}
 			break;
 		}
 	}
@@ -86,15 +85,15 @@ void Maelle::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< s
 	}
 }
 
-void Maelle::passif(int tour, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void Maelle::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	if ((tour + 1) % 10 == 0) {
 		Affichage().dessinerTexte(nom() + " Les graisses de Maelle la guerrissent ! ",window);
-		soigner((int)vie()/5, C, this, window);
+		soigner((int)vie()/10, this,window);
 	}
 }
 
-void Maelle::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, Combat & C, int degats, Personnage* P)
+void Maelle::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
-	bouclier((int)vieMax()/100+niveau(), C, this, window);
+	bouclier((int)vieMax()/100+niveau(), this,window);
 }

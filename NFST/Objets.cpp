@@ -2,7 +2,6 @@
 #include <fstream>
 #include "Affichage.h"
 #include "Bouton.h"
-#include "Succes.h"
 
 Objets::Objets()
 {
@@ -121,7 +120,7 @@ Objets::Objets()
 	_listeObjets.push_back(Objet("Totem immunitée", 30, 100000, "Permet de revivre avec toute sa vie une fois."));
 	_listeObjets.push_back(Objet("MEMEMTOM", 31, 10000, "A chaque attaque vous avez : 1/10 de lancer une nouvelle attaque 1-10% de vos dégats attaque, 1/100 => 10-100%,1/1000 => 100-1000%"));
 	_listeObjets.push_back(Objet("Jeu NES", 32, 1000, "Un jeux vidéo Nes, The Legend Of Zelda"));
-	_listeObjets.push_back(Objet("Sablier", 33, 10000, "Reduit le temps des combats par 4"));
+	_listeObjets.push_back(Objet("Sablier", 33, 10000, "Reduit le temps des combats de moitié"));
 	_listeObjets.push_back(Objet("Tardis", 34, 100000, "Reduit considérablement le temps des combats"));
 	_listeObjets.push_back(Objet("Lame maléfique", 35, 1000, "+50% de dégats, reçois deux fois plus de dégats"));
 	_listeObjets.push_back(Objet("Mégamorph", 36, 1000, "Recever deux fois plus de dégats quand vie superieur a 50% de votre vie maximum sinon deux fois moins"));
@@ -137,8 +136,6 @@ Objets::Objets()
 	_listeObjets.push_back(Objet("Hantise", 46, 1000, "Le personnage equiper fais 3 fois plus de dégats s'il est KO"));
 	_listeObjets.push_back(Objet("Magic 8 ball", 47, 100000, "+8% Force Vie et Vitesse et +8 dans les stats fixes"));
 	_listeObjets.push_back(Objet("Spartan armor", 48, 10000, "Vous faites plus de dégats en fonction du montant d'armure actuelle jusqu'a +100%"));
-	_listeObjets.push_back(Objet("Avance rapide", 49, 1000, "Les combats vont deux fois plus vite"));
-	_listeObjets.push_back(Objet("Vase antique magique", 50, 100000, "+1 mana par tour, +3% de dégats par points de mana"));
 
 
 	//_listeObjets.push_back(Objet("Antidote", 18, 100000, "Rend insensible au poison"));
@@ -162,12 +159,6 @@ Objets::Objets()
 	for (int i = 1;i <= 8;i++) {
 		_tableLoot[88].push_back(_listeObjets[47]);
 	}
-
-	_tableLoot[10].push_back(_listeObjets[50]);
-	_tableLoot[20].push_back(_listeObjets[50]);
-	_tableLoot[30].push_back(_listeObjets[50]);
-	_tableLoot[40].push_back(_listeObjets[50]);
-	_tableLoot[50].push_back(_listeObjets[50]);
 
 	_tableLoot[19].push_back(_listeObjets[48]);
 	_tableLoot[38].push_back(_listeObjets[48]);
@@ -272,7 +263,6 @@ Objets::Objets()
 	_tableLoot[10].push_back(_listeObjets[14]);
 	_tableLoot[10].push_back(_listeObjets[28]);
 	_tableLoot[10].push_back(_listeObjets[29]);
-	_tableLoot[10].push_back(_listeObjets[49]);
 
 	_tableLoot[11].push_back(_listeObjets[23]);
 	_tableLoot[12].push_back(_listeObjets[23]);
@@ -428,25 +418,6 @@ void Objets::deblocageObjet(int indiceObjet, sf::RenderWindow* window, std::vect
 
 	txt = _listeObjets[indiceObjet].effet();
 
-	Succes S;
-	int rareter = _listeObjets[indiceObjet].rareter();
-	if (rareter == 4 || rareter == 5) {
-		Succes S;
-		if (!S.estDebloque(SUCCES_OBJET_LEGENDAIRE)) {
-			S.debloquerSucces(SUCCES_OBJET_LEGENDAIRE);
-			S.affichageDeblocageSucces(SUCCES_OBJET_LEGENDAIRE, allSounds);
-		}
-	}
-	if (indiceObjet == OBJET_OEUF_TORTUE) {
-		Succes S;
-		S.debloquerSucces(SUCCES_OEUF_TORTUE);
-		S.affichageDeblocageSucces(SUCCES_OEUF_TORTUE, allSounds);
-	}
-	else if (indiceObjet == OBJET_CENDRE_PHENIX) {
-		Succes S;
-		S.debloquerSucces(SUCCES_CENDRE_PHENIX);
-		S.affichageDeblocageSucces(SUCCES_CENDRE_PHENIX, allSounds);
-	}
 	Bouton(300.f, 450.f, txt, sf::Color::Black, sf::Color::Green, sf::Color::Green).afficher(window);
 
 

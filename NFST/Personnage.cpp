@@ -233,7 +233,7 @@ int Personnage::degats(double RatioMin, double RatioMax,int choixStats) const
 	return (int)(degat);
 }
 
-void Personnage::soigner(int soins, Combat & C, Personnage * P, sf::RenderWindow* window)
+void Personnage::soigner(int soins,Personnage * P, sf::RenderWindow* window)
 {	if (P->estEnVie()) {
 		if (soins < 0) {
 			soins = 0;
@@ -264,17 +264,17 @@ void Personnage::soigner(int soins, Combat & C, Personnage * P, sf::RenderWindow
 			
 		}
 		P->stats().ajouterSoinsDonner(soins);
-		P->AjouterVie(soins, C, window);
+		P->AjouterVie(soins,window);
 		if (possedeObjetNumero(OBJET_SCEPTRE_DRUIDE)) {
 			if (Aleatoire(0, 101).entier() < 20) {
-				P->bouclier(soins, C, P, window);
+				P->bouclier(soins, P,window);
 			}
 			//std::cout << " OBJ4 ";
 		}
 	}
 }
 
-void Personnage::AjouterVie(long long int montant, Combat & C, sf::RenderWindow* window) {
+void Personnage::AjouterVie(long long int montant, sf::RenderWindow* window) {
 	if (montant <= 0) {
 		montant = 0;
 	}
@@ -290,17 +290,17 @@ void Personnage::AjouterVie(long long int montant, Combat & C, sf::RenderWindow*
 		}
 	
 		if (this->equipeAllier().ia() == false) {
-			H.dessinerDeuxEquipes(this->equipeAllier(), this->equipeEnnemi(),C,window);
+			H.dessinerDeuxEquipes(this->equipeAllier(), this->equipeEnnemi(), window);
 		}
 		else {
-			H.dessinerDeuxEquipes(this->equipeEnnemi(), this->equipeAllier(),C,window);
+			H.dessinerDeuxEquipes(this->equipeEnnemi(), this->equipeAllier(), window);
 		}
 		
 		//H.dessinerJoueur(this->indiceEquipe() + 1, this->equipeAllier().ia(), this,window);
 	}
 }
 
-void Personnage::bouclier(int soins, Combat & C, Personnage* P, sf::RenderWindow* window)
+void Personnage::bouclier(int soins, Personnage* P, sf::RenderWindow* window)
 {
 	if (P->estEnVie()) {
 		if (Aleatoire().entier() <= _pourcentageCritique) {
@@ -329,7 +329,7 @@ void Personnage::bouclier(int soins, Combat & C, Personnage* P, sf::RenderWindow
 
 		}
 		P->stats().ajouterBouclierDonner(soins);
-		P->AjouterBouclier(soins, C, window);
+		P->AjouterBouclier(soins,window);
 		if (possedeObjetNumero(OBJET_SCEPTRE_DRUIDE)) {
 			if (Aleatoire(0, 101).entier() < 10) {
 				P->status().ajouterCompteurProteger(1);
@@ -339,7 +339,7 @@ void Personnage::bouclier(int soins, Combat & C, Personnage* P, sf::RenderWindow
 	}
 }
 
-void Personnage::AjouterBouclier(int montant, Combat & C, sf::RenderWindow* window) {
+void Personnage::AjouterBouclier(int montant, sf::RenderWindow* window) {
 	if (montant <= 0) {
 		montant = 0;
 	}
@@ -355,10 +355,10 @@ void Personnage::AjouterBouclier(int montant, Combat & C, sf::RenderWindow* wind
 		}
 		
 		if (this->equipeAllier().ia() == false) {
-			H.dessinerDeuxEquipes(this->equipeAllier(), this->equipeEnnemi(),C,window);
+			H.dessinerDeuxEquipes(this->equipeAllier(), this->equipeEnnemi(), window);
 		}
 		else {
-			H.dessinerDeuxEquipes(this->equipeEnnemi(), this->equipeAllier(), C,window);
+			H.dessinerDeuxEquipes(this->equipeEnnemi(), this->equipeAllier(), window);
 		}
 		//H.dessinerJoueur(this->indiceEquipe() + 1, this->equipeAllier().ia(), this,window);
 	}
@@ -405,7 +405,7 @@ Equipes & Personnage::equipeEnnemi()
 bool Personnage::habile()const {
 	return Aleatoire(0, 101).entier() <= _chanceHabilete;
 }
-void Personnage::traitementAnimaux(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound > &allSounds) {
+void Personnage::traitementAnimaux(sf::RenderWindow* window, std::vector< sf::Sound > &allSounds) {
 	if (_animal.indice() < 0) {
 
 	}
@@ -415,40 +415,40 @@ void Personnage::traitementAnimaux(Combat & C, sf::RenderWindow* window, std::ve
 		//std::cout << _nom+_animal.type()+"animal" << std::endl;
 		switch (_indiceAnimal) {
 		case 0:
-				_A.soignerZone(Soins, this,C , window);
+				_A.soignerZone(Soins, this,window);
 			break;
 		case 1:
-				soigner(Soins, C, _A.plusFaible(), window);
+				soigner(Soins, _A.plusFaible(),window);	
 			break;
 		case 2:
-				soigner(Soins, C, _A.aleatoireEnVie(), window);
+				soigner(Soins, _A.aleatoireEnVie(),window);
 			break;
 		case 3:
-				Attaque(Degats, _E.plusFaible(), C, window, allSounds);
+				Attaque(Degats, _E.plusFaible(),window, allSounds);
 			break;
 		case 4:
-				_E.attaqueZone(Degats, this,C ,window, allSounds);
+				_E.attaqueZone(Degats, this,window,allSounds);
 			break;
 		case 5:
-				Attaque(Degats, _E.aleatoireEnVie(), C, window, allSounds);
+				Attaque(Degats, _E.aleatoireEnVie(),window, allSounds);
 			break;
 		case 6:
-				_A.bouclierZone(Soins, this,C , window);
+				_A.bouclierZone(Soins, this,window);
 			break;
 		case 7:
-				bouclier(Soins, C, _A.plusFaible(), window);
+				bouclier(Soins, _A.plusFaible(),window);
 			break;
 		case 8:
-				bouclier(Soins, C, _A.aleatoireEnVie(), window);
+				bouclier(Soins, _A.aleatoireEnVie(),window);
 			break;
 		case 9:
-				_A.soignerZone(Soins, this,C , window);
-				_A.bouclierZone(Soins, this,C , window);
+				_A.soignerZone(Soins, this,window);
+				_A.bouclierZone(Soins, this,window);
 			break;
 		}
 	}
 }
-void  Personnage::Attaque(int Degat, Personnage * Defenseur, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound > &allSounds)
+void  Personnage::Attaque(int Degat, Personnage * Defenseur, sf::RenderWindow* window, std::vector< sf::Sound > &allSounds)
 {
 
 	bool redirection = false;
@@ -480,7 +480,7 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, Combat & C, sf::Ren
 			Degat *= 3;
 		}
 		if (Aleatoire().entier() <= _pourcentageCritique) {
-			Degat =(int)((double)Degat * (_degatCritique / 100.0 + 1.0));
+			Degat *= (_degatCritique / 100.0 + 1);
 		}
 		if (Aleatoire().entier() <= _chanceHabilete) {
 			if (possedeObjetNumero(OBJET_CAPE_HABILETE)) {
@@ -501,9 +501,6 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, Combat & C, sf::Ren
 
 		}
 		
-		if (possedeObjetNumero(OBJET_VASE_ANTIQUE_MAGIQUE)) {
-			Degat = (int)((double)Degat * (_mana / 33.3 + 1.0));
-		}
 		if (possedeObjetNumero(OBJET_LAME_MALEFIQUE)) {
 			Degat += Degat/2;
 			//std::cout << " OBJ35 ";
@@ -563,18 +560,18 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, Combat & C, sf::Ren
 				Degat = (int)((double)Degat * 1.5);
 				std::cout << " OBJ9 ";
 			}
-			Defenseur->Attaque(Degat, this, C,window, allSounds);
+			Defenseur->Attaque(Degat, this,window,allSounds);
 			
 		}
 		else if (Defenseur->possedeObjetNumero(OBJET_MARHSMALLOW) && Aleatoire(0, 101).entier() < 10) {
-			Defenseur->bouclier(Degat / 10, C, Defenseur,window);
+			Defenseur->AjouterBouclier(Degat / 10,window);
 		}
 		else {
 
 			for (int i = 0;i < Defenseur->equipeAllier().taille()&&!redirection;i++) {
 				if (Defenseur->equipeAllier()[i]->possedeObjetNumero(OBJET_ARMURE_PROTECTEUR) && Aleatoire(0, 101).entier() < 25) {
 					redirection = true;
-					Attaque(Degat, Defenseur->equipeAllier()[i], C, window, allSounds);
+					Attaque(Degat, Defenseur->equipeAllier()[i],window,allSounds);
 					//std::cout << " OBJ11 ";
 				}
 			}
@@ -621,24 +618,24 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, Combat & C, sf::Ren
 					Degat = 1;
 				}
 				if (Defenseur->possedeObjetNumero(OBJET_ARMURE_SAKERATSU) && _A.estEnVie()) {
-					Defenseur->AttaqueBrut(Degat / 10, _A.plusProcheVivant(),C,window);
+					Defenseur->AttaqueBrut(Degat / 10, _A.plusProcheVivant(),window);
 					//std::cout << " OBJ14 ";
 				}	
 				if (possedeObjetNumero(OBJET_CHAUSSETTES_FLO)) {
 					if (Aleatoire(0, 10000).entier() == 1) {
 						Defenseur->status().appliquerPoison();
 					}
-					Defenseur->Attaque(Defenseur->niveau()/2, this, C, window, allSounds);
+					Defenseur->Attaque(Defenseur->niveau()/2, this, window,allSounds);
 				}
 				if (possedeObjetNumero(OBJET_DEBARDEUR_NICOLAS)) {
-					Defenseur->Attaque(Defenseur->niveau() / 2, this, C, window, allSounds);
+					Defenseur->Attaque(Defenseur->niveau() / 2, this, window, allSounds);
 				}
 				
 				//fin modif dégats
 				degatEffectif = Degat;
-				Defenseur->passifDefensif(window, allSounds,C, degatEffectif,this);
-				Defenseur->traitementAnimaux(C,window, allSounds);
-				this->traitementAnimaux(C, window, allSounds);
+				Defenseur->passifDefensif(window, allSounds, degatEffectif,this);
+				Defenseur->traitementAnimaux(window, allSounds);
+				this->traitementAnimaux(window, allSounds);
 				_S.incrementerNbAttaques();
 				Defenseur->stats().incrementerNbAttaquesRecues();
 				_S.ajouterDegatsProvoquer(Degat);
@@ -662,13 +659,13 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, Combat & C, sf::Ren
 				}
 				if (Defenseur->estEnVie()) {
 					if (status().adducteurbrut() > 0) {
-						AttaqueBrut(status().adducteurbrut(), Defenseur,C,window);
+						AttaqueBrut(status().adducteurbrut(), Defenseur,window);
 					}
 				}
 				if (!Defenseur->estEnVie()&&Defenseur->possedeObjetNumero(OBJET_TOTEM_IMMUNITE)) {
 					if (Defenseur->status().peutRevivre()) {
 						Defenseur->status().revivre();
-						Defenseur->AjouterVie(Defenseur->vieMax(), C, window);
+						Defenseur->AjouterVie(Defenseur->vieMax(),window);
 					}
 				}
 				AffichageCombat H;
@@ -679,10 +676,10 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, Combat & C, sf::Ren
 				Defenseur->setDerniereActionMontant(degatEffectif);
 				Defenseur->setDerniereActionType(actionDEGATS);
 				if (this->equipeAllier().ia() == false) {
-					H.dessinerDeuxEquipes(this->equipeAllier(), this->equipeEnnemi(),C,window);
+					H.dessinerDeuxEquipes(this->equipeAllier(), this->equipeEnnemi(), window);
 				}
 				else {
-					H.dessinerDeuxEquipes(this->equipeEnnemi(), this->equipeAllier(),C,window);
+					H.dessinerDeuxEquipes(this->equipeEnnemi(), this->equipeAllier(), window);
 				}
 			}
 		}
@@ -690,9 +687,9 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, Combat & C, sf::Ren
 			if (possedeObjetNumero(OBJET_FLECHES_TRANCHANTES)) {
 				Degat = (int)((double)Degat*1.37);
 			}
-			Attaque(Degat, _E.aleatoireEnVie(), C, window, allSounds);
+			Attaque(Degat, _E.aleatoireEnVie(),window,allSounds);
 			if (possedeObjetNumero(OBJET_TWINS)) {
-				Attaque(Degat, _E.aleatoireEnVie(), C, window, allSounds);
+				Attaque(Degat, _E.aleatoireEnVie(),window,allSounds);
 			}
 		}
 	}
@@ -704,35 +701,35 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, Combat & C, sf::Ren
 		if (Defenseur->possedeObjetNumero(OBJET_DAGUE_NINJA)) {
 			int deg = degats(0.05, 0.2);
 			deg *= (_degatCritique / 100.0 + 1);
-			Defenseur->AttaqueBrut(deg,_A.plusFaible(),C,window);
+			Defenseur->AttaqueBrut(deg,_A.plusFaible(),window);
 			//std::cout << " OBJ16 ";
 		}
 	}
 	if (possedeObjetNumero(OBJET_FLECHE_TRANSPERCANTE) && _E.estEnVie()) {
 		Degat = degats(0.05, 0.10);
-		AttaqueBrut(Degat, _E.plusFaible(),C,window);
+		AttaqueBrut(Degat, _E.plusFaible(),window);
 		//std::cout << " OBJ13 ";
 	}
 	if (possedeObjetNumero(OBJET_MEMEMTOM) && _A.estEnVie()) {
 		Degat = degats(1.0, 10.0);
 		if (Aleatoire(0, 1001).entier() == 1) {
 			Degat = degats(1.0, 10.0);
-			Attaque(Degat, _E.plusProcheVivant(), C, window, allSounds);
+			Attaque(Degat, _E.plusProcheVivant(),window,allSounds);
 		}
 		if (Aleatoire(0, 101).entier() == 1 &&_E.estEnVie()) {
 			Degat = degats(0.1, 1.0);
-			Attaque(Degat, _E.plusProcheVivant(), C, window, allSounds);
+			Attaque(Degat, _E.plusProcheVivant(),window, allSounds);
 		}
 		if (Aleatoire(0, 11).entier() == 1 && _E.estEnVie()) {
 			Degat = degats(0.01, 0.10);
-			Attaque(Degat, _E.plusProcheVivant(), C, window, allSounds);
+			Attaque(Degat, _E.plusProcheVivant(),window, allSounds);
 		}
 	//	std::cout << " OBJ31 ";
 	}
 	
 }
 
-void  Personnage::AttaqueBrut(int Degat, Personnage* Defenseur, Combat & C, sf::RenderWindow* window)
+void  Personnage::AttaqueBrut(int Degat, Personnage* Defenseur, sf::RenderWindow* window)
 {
 	if (Defenseur->estAttaquable()) {
 		//	std::cout << _nom << " attaqueBrut " << Defenseur->indiceEquipe() << Defenseur->nom();
@@ -763,7 +760,7 @@ void  Personnage::AttaqueBrut(int Degat, Personnage* Defenseur, Combat & C, sf::
 			if (!Defenseur->estEnVie() && Defenseur->possedeObjetNumero(OBJET_TOTEM_IMMUNITE)) {
 				if (Defenseur->status().peutRevivre()) {
 					Defenseur->status().revivre();
-					Defenseur->AjouterVie(Defenseur->vieMax(), C, window);
+					Defenseur->AjouterVie(Defenseur->vieMax(),window);
 				}
 			}
 			AffichageCombat H;
@@ -774,10 +771,10 @@ void  Personnage::AttaqueBrut(int Degat, Personnage* Defenseur, Combat & C, sf::
 			Defenseur->setDerniereActionMontant(Degat);
 			Defenseur->setDerniereActionType(actionDEGATS);
 			if (this->equipeAllier().ia() == false) {
-				H.dessinerDeuxEquipes(this->equipeAllier(), this->equipeEnnemi(),C,window);
+				H.dessinerDeuxEquipes(this->equipeAllier(), this->equipeEnnemi(), window);
 			}
 			else {
-				H.dessinerDeuxEquipes(this->equipeEnnemi(), this->equipeAllier(),C, window);
+				H.dessinerDeuxEquipes(this->equipeEnnemi(), this->equipeAllier(), window);
 			}
 	}
 

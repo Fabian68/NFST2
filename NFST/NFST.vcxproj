@@ -179,7 +179,6 @@
     <ClCompile Include="SqueletteArcher.cpp" />
     <ClCompile Include="Statistiques.cpp" />
     <ClCompile Include="Status.cpp" />
-    <ClCompile Include="Succes.cpp" />
     <ClCompile Include="Tellurique.cpp" />
     <ClCompile Include="Thomas.cpp" />
     <ClCompile Include="Tortue.cpp" />
@@ -238,7 +237,6 @@
     <ClInclude Include="SqueletteArcher.h" />
     <ClInclude Include="Statistiques.h" />
     <ClInclude Include="Status.h" />
-    <ClInclude Include="Succes.h" />
     <ClInclude Include="Tellurique.h" />
     <ClInclude Include="Thomas.h" />
     <ClInclude Include="Tortue.h" />

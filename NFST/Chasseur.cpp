@@ -19,7 +19,7 @@ Chasseur::Chasseur(int LVL, std::string nom, int difficulte, int animal, int rar
 }
 
 
-void Chasseur::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void Chasseur::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -32,25 +32,25 @@ void Chasseur::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector<
 		if (habile()) {
 			Affichage().dessinerTexte(nom() + " coup charger ! ",window);
 			DEGATS = degats(1.0, 4.0);
-			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(), C, window, allSounds);
+			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		}
 		ajouterMana(-1);
 		break;
 	case 2:
 		Affichage().dessinerTexte(nom() + " coup coude ! ",window);
 		DEGATS = degats(1.5, 2.5);
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(), C, window, allSounds);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		ajouterMana(-1);
 		break;
 	case 3:
 		Affichage().dessinerTexte(nom() + " coup charger precis ! ",window);
 		if (habile()) {
 			DEGATS = degats(4.0, 8.0);
-			AttaqueBrut(DEGATS, equipeEnnemi().plusProcheVivant(),C,window);
+			AttaqueBrut(DEGATS, equipeEnnemi().plusProcheVivant(),window);
 		}
 		else {
 			DEGATS = degats(3.0, 6.0);
-			Attaque(DEGATS, equipeEnnemi().aleatoireEnVie(), C, window, allSounds);
+			Attaque(DEGATS, equipeEnnemi().aleatoireEnVie(),window,allSounds);
 		}
 		
 	
@@ -59,10 +59,10 @@ void Chasseur::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector<
 	}
 }
 
-void Chasseur::passif(int tour, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void Chasseur::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 }
 
-void Chasseur::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, Combat & C, int degats, Personnage* P)
+void Chasseur::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 }

@@ -18,7 +18,7 @@ Tellurique::Tellurique(int LVL, std::string nom, int difficulte, int animal, int
 	}
 }
 
-void Tellurique::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void Tellurique::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -32,7 +32,7 @@ void Tellurique::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vecto
 	case 0:
 		DEGATS = degats(0.7+pourcentageReduction()/100.0, 1.4 + pourcentageReduction() / 20.0);
 		Affichage().dessinerTexte(nom() + " charge ",window);
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(), C, window, allSounds);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 
 		ajouterCoupCritique(2);
 		ajouterDegatsCritique(6);
@@ -42,7 +42,7 @@ void Tellurique::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vecto
 
 		SOINS = soins(ratio, ratio*2);
 		Affichage().dessinerTexte(nom() + " ressource terrienne !  ",window);
-		equipeAllier().soignerZone(SOINS, this,C , window);
+		equipeAllier().soignerZone(SOINS, this,window);
 		ajouterMana(1);
 		break;
 	case 2:
@@ -51,12 +51,12 @@ void Tellurique::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vecto
 		for (int i = 0; i <= equipeEnnemi().taille() / 2; i++) {
 			DEGATS = degats(0.10+mult1/80, 0.20+mult1/40 );
 			mult1 += equipeEnnemi()[i]->pourcentageReduction();
-			Attaque(DEGATS, equipeEnnemi()[i], C, window, allSounds);
+			Attaque(DEGATS, equipeEnnemi()[i],window,allSounds);
 
 			DEGATS = degats(0.10 + mult2 / 80, 0.20 + mult2 / 40);
 			indice = abs(equipeEnnemi().taille() - 1 - i);
-			mult2 += equipeEnnemi().perso(indice)->pourcentageReduction();
-			Attaque(DEGATS, equipeEnnemi().perso(indice), C, window, allSounds);
+			mult2 += equipeEnnemi()[indice]->pourcentageReduction();
+			Attaque(DEGATS, equipeEnnemi()[indice],window,allSounds);
 		}
 		ajouterChanceHabileter(3);
 		ajouterMana(1);
@@ -72,7 +72,7 @@ void Tellurique::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vecto
 				else {
 					DEGATS = degats( i/2, i);
 				}
-				Attaque(DEGATS, equipeEnnemi()[i], C, window, allSounds);
+				Attaque(DEGATS, equipeEnnemi()[i],window,allSounds);
 				equipeEnnemi()[i]->status().ajouterCompteurFragile(1);
 			}
 		}
@@ -88,17 +88,14 @@ void Tellurique::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vecto
 	}
 }
 
-void Tellurique::passif(int tour, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void Tellurique::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
-	bouclier(bouclierMax() / 10, C, this,window);
+	AjouterBouclier(bouclierMax() / 10,window);
 	status().ajouterCompteurProteger(1);
 	ajouterVieMax( vie()/100);
-	if (tour % 5 == 0) {
-		premiereFoisToucher = false;
-	}
 }
 
-void Tellurique::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, Combat & C, int degats, Personnage* P)
+void Tellurique::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 	for (int i = 0;i < equipeAllier().taille();i++) {
 		equipeAllier()[i]->ajouterReduction(1);
@@ -107,7 +104,7 @@ void Tellurique::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound
 	if (premiereFoisToucher == false) {
 		for (int i = 0;i < equipeEnnemi().taille();i++) {
 			if (equipeEnnemi()[i]->estEnVie()) {
-				AttaqueBrut((int)equipeEnnemi()[i]->vie() / 5, equipeEnnemi()[i],C,window);
+				AttaqueBrut((int)equipeEnnemi()[i]->vieMax() / 5, equipeEnnemi()[i],window);
 				if (!equipeEnnemi()[i]->status().estBruler()) {
 					equipeEnnemi()[i]->status().appliquerBrulure();
 				}

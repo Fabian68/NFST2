@@ -11,19 +11,11 @@ const int SUCCES_NIV10 = 3;
 const int SUCCES_NIV15 = 4;
 const int SUCCES_NIV20 = 5;
 const int SUCCES_NIV25 = 6;
-const int SUCCES_NIV50 = 7;
-const int SUCCES_OBJET_LEGENDAIRE = 8;
-const int SUCCES_ANIMAL_LEGENDAIRE = 9;
-const int SUCCES_ORBE_LEGENDAIRE = 10;
-const int SUCCES_OEUF_TORTUE = 11;
-const int SUCCES_CENDRE_PHENIX = 12;
-const int SUCCES_NIV25_NICOLAS = 13;
-const int SUCCES_NIV25_FIONA = 14;
-const int SUCCES_NIV10_2PERSOS = 15;
-const int SUCCES_NIV10_FABIAN_FIONA = 16;
-const int SUCCES_NIV25_3PERSOS = 17;
-const int SUCCES_NIV10_NICOLAS_SEBASTIEN = 18;
-const int SUCCES_NIV25_FABIAN_FIONA_CLOE = 19;
+const int SUCCES_NIV30 = 7;
+const int SUCCES_NIV35 = 8;
+const int SUCCES_NIV40 = 9;
+const int SUCCES_NIV45 = 10;
+const int SUCCES_NIV50 = 11;
 class Succes
 {
 public:

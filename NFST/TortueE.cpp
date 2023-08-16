@@ -33,7 +33,7 @@ TortueE::TortueE(int LVL, std::string nom, int difficulte, int animal, int raret
 }
 
 
-void TortueE::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void TortueE::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -43,7 +43,7 @@ void TortueE::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< 
 		DEGATS = degats(0.31, 0.62) + status().enmagasination() / 10;
 		status().retirerEmagasination(status().enmagasination());
 		Affichage().dessinerTexte(nom() + " Morsure ! ",window);
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(), C, window, allSounds);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 
 		ajouterMana(1);
 		break;
@@ -55,7 +55,7 @@ void TortueE::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< 
 		}
 		else {
 			Affichage().dessinerTexte(nom() + " remplie bouclier !  ",window);
-			bouclier(bouclierMax(), C, this, window);
+			bouclier(bouclierMax(), this,window);
 			ajouterMana(-1);
 		}
 
@@ -65,30 +65,30 @@ void TortueE::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< 
 		Affichage().dessinerTexte(nom() + " se soigne !  ",window);
 		status().soignerBrulure();
 		status().soignerPoison();
-		soigner((int)vieMax() / 10, C, this, window);
+		soigner((int)vieMax() / 10, this,window);
 		ajouterMana(-2);
 		break;
 	case 3:
 		Affichage().dessinerTexte(nom() + " coup de queue ! ",window);
 		for (int i = 0; i < equipeEnnemi().taille(); i++) {
 			DEGATS = (int)(0.015 * (double)vie() + 0.005 * (double)vieMax() + 0.5 * (double)force() + 1.0 * (double)vitesse());
-			Attaque(DEGATS, equipeEnnemi()[i], C, window, allSounds);
+			Attaque(DEGATS, equipeEnnemi()[i],window,allSounds);
 		}
 		ajouterMana(-3);
 		break;
 	}
 }
 
-void TortueE::passif(int tour, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void TortueE::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
-	soigner((int)(vieMax() - vie()) / 10, C, this, window);
-	bouclier((bouclierMax() - bouclier()) / 10, C, this, window);
+	soigner((int)(vieMax() - vie()) / 10, this,window);
+	bouclier((bouclierMax() - bouclier()) / 10, this,window);
 }
 
-void TortueE::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, Combat & C, int degats, Personnage* P)
+void TortueE::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 	if (Aleatoire(0, 101).entier() <= chanceHabileter()) {
-		Attaque((int)vieMax() / 100, equipeEnnemi().plusProcheVivant(), C, window, allSounds);
+		Attaque((int)vieMax() / 100, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		equipeAllier().moinsResistant()->ajouterReduction(1);
 		equipeAllier().moinsResistant()->status().ajouterCompteurProteger(1);
 	}

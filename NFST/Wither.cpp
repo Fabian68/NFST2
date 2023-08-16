@@ -13,7 +13,7 @@ Wither::Wither(int LVL, std::string nom, int difficulte, int animal, int rareteA
 	}
 }
 
-void Wither::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void Wither::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -26,7 +26,7 @@ void Wither::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< s
 		else {
 			DEGATS = degats(1.0, 2.0);
 		}
-		Attaque(DEGATS, equipeEnnemi()[i], C, window, allSounds);
+		Attaque(DEGATS, equipeEnnemi()[i],window,allSounds);
 	}
 	if (attaqueDouble() && equipeEnnemi().estEnVie()) {
 		for (int i = 0; i < equipeEnnemi().taille() && equipeEnnemi().estEnVie(); i++) {
@@ -36,27 +36,27 @@ void Wither::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< s
 			else {
 				DEGATS = degats(1.0, 2.0);
 			}
-			Attaque(DEGATS, equipeEnnemi()[i], C, window, allSounds);
+			Attaque(DEGATS, equipeEnnemi()[i],window,allSounds);
 		}
 	}
 	ajouterMana(1);
 }
 
-void Wither::passif(int tour, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void Wither::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int SOINS;
 	if (vie() < vieMax() / 4) {
 		SOINS = soins(0.1, 0.4);
-		soigner(SOINS, C, this, window);
+		soigner(SOINS, this,window);
 
 		SOINS = soins(0.4, 1.6);
-		bouclier(SOINS, C, this, window);
+		bouclier(SOINS, this,window);
 	}
 }
 
-void Wither::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, Combat & C, int degats, Personnage* P)
+void Wither::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 	int SOINS = soins(0.01, 0.1);
-	soigner(SOINS, C, this, window);
-	bouclier(SOINS, C, this, window);
+	soigner(SOINS, this,window);
+	bouclier(SOINS, this,window);
 }

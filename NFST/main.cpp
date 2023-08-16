@@ -66,6 +66,30 @@ void reinitListeEquipe(Equipes& Liste) {
 void reinitEquipe(Equipes& monEquipe, Equipes& ListePerso) {
 	monEquipe.vider();
 	monEquipe.chargerEquipe(ListePerso);
+	
+
+}
+void loadSongs(std::vector< sf::SoundBuffer*> & allBuffers,std::vector< sf::Sound*>& sounds) {
+	sf::SoundBuffer buffer;
+	buffer.loadFromFile("song/giga-chad.ogg");
+	sf::Sound sound1;	
+	sound1.setBuffer(buffer);
+	allBuffers.push_back(&buffer);
+	sounds.push_back(&sound1);
+
+	sf::SoundBuffer buffer2;
+	buffer2.loadFromFile("song/vine-boom.ogg");
+	sf::Sound sound2;
+	sound2.setBuffer(buffer2);
+	allBuffers.push_back(&buffer2);
+	sounds.push_back(&sound2);
+
+	sf::SoundBuffer buffer3;
+	buffer3.loadFromFile("song/bow_shoot.ogg");
+	sf::Sound sound3;
+	sound3.setBuffer(buffer3);
+	allBuffers.push_back(&buffer3);
+	sounds.push_back(&sound3);
 }
 
 void loadSongs2(std::vector<std::shared_ptr<sf::SoundBuffer>>& allBuffers, std::vector<sf::Sound>& sounds) {
@@ -104,7 +128,9 @@ void jouer(sf::RenderWindow* window,Zones & Z,Objets Obj, std::vector<sf::Sound>
 		Z.equipeEnZone(Z.niveauActuel(), Meuchant);
 		Gentil.setAllierEtEnnemis(Meuchant);
 		Meuchant.setAllierEtEnnemis(Gentil);
-		Combat C(Gentil, Meuchant, Z, A, O, allSounds);
+		Combat C(Gentil, Meuchant, Z, A, O, window, allSounds);
+		(*window).display();
+		(*window).clear();
 	}
 	
 	Bouton Continuer(500, 700, "Continuer");
@@ -138,10 +164,16 @@ int main()
 	std::vector<sf::Sound> allSounds;
 
 	loadSongs2(allBuffers2, allSounds);
+	//sounds2.at(0).play();
+	//allSounds2->at(1).play();
 	
 	(*window).setActive(true);
+	//(*window).setVerticalSyncEnabled(true);
+	//(*window).setFramerateLimit(10);
+	//(* window).setFramerateLimit(60);
+	//(* window).display();
 
-	Equipes Gentil(false);
+	Equipes  Gentil(false);
 	Equipes choix(false);
 	Equipes Meuchant(true);
 	Conseils C;
@@ -180,45 +212,6 @@ int main()
 		AfficherSucces.afficher(window);
 		Conseil.afficher(window);
 
-		if (!S.estDebloque(SUCCES_NIV25_FIONA) && choix[3]->niveau()>= 25) {
-			S.debloquerSucces(SUCCES_NIV25_FIONA);
-			S.affichageDeblocageSucces(SUCCES_NIV25_FIONA, allSounds);
-		}
-		if (!S.estDebloque(SUCCES_NIV25_NICOLAS) && choix[1]->niveau() >= 25) {
-			S.debloquerSucces(SUCCES_NIV25_NICOLAS);
-			S.affichageDeblocageSucces(SUCCES_NIV25_NICOLAS, allSounds);
-		}
-
-		if (!S.estDebloque(SUCCES_NIV10_FABIAN_FIONA) && choix[3]->niveau() >= 10 && choix[0]->niveau()>=10) {
-			S.debloquerSucces(SUCCES_NIV10_FABIAN_FIONA);
-			S.affichageDeblocageSucces(SUCCES_NIV10_FABIAN_FIONA, allSounds);
-		}
-		if (!S.estDebloque(SUCCES_NIV25_FABIAN_FIONA_CLOE) && choix[3]->niveau() >= 25 && choix[0]->niveau() >= 25 && choix[9]->niveau() >= 25) {
-			S.debloquerSucces(SUCCES_NIV25_FABIAN_FIONA_CLOE);
-			S.affichageDeblocageSucces(SUCCES_NIV25_FABIAN_FIONA_CLOE, allSounds);
-		}
-		if (!S.estDebloque(SUCCES_NIV10_NICOLAS_SEBASTIEN) && choix[1]->niveau() >= 10 && choix[8]->niveau() >= 10) {
-			S.debloquerSucces(SUCCES_NIV10_NICOLAS_SEBASTIEN);
-			S.affichageDeblocageSucces(SUCCES_NIV10_NICOLAS_SEBASTIEN, allSounds);
-		}
-		int nb_niv10 = 0;
-		int nb_niv25 = 0;
-		for (int i = 0;i < choix.taille();i++) {
-			if (choix[i]->niveau() >= 10) {
-				nb_niv10++;
-				if (choix[i]->niveau() >= 25) {
-					nb_niv25++;
-				}
-			}
-		}
-		if (!S.estDebloque(SUCCES_NIV10_2PERSOS) && nb_niv10 >= 2) {
-			S.debloquerSucces(SUCCES_NIV10_2PERSOS);
-			S.affichageDeblocageSucces(SUCCES_NIV10_2PERSOS, allSounds);
-		}
-		if (!S.estDebloque(SUCCES_NIV25_3PERSOS) && nb_niv25 >= 3) {
-			S.debloquerSucces(SUCCES_NIV25_3PERSOS);
-			S.affichageDeblocageSucces(SUCCES_NIV25_3PERSOS, allSounds);
-		}
 		if (Gentil.taille() > 0) {
 			Jouer.afficher(window);
 		}
@@ -270,9 +263,6 @@ int main()
 						S.affichageDeblocageSucces(0, allSounds);
 					}
 				}
-			}
-			if (event.type == sf::Event::Closed) {
-				window->close();
 			}
 		}
 		//(*window).clear();

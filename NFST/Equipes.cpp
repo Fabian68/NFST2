@@ -108,7 +108,7 @@ Personnage* Equipes::moinsResistant()
 	int j = 0;
 	for (int i = 0;i < (int)_equipe.size();i++) {
 
-		if ( _equipe[i]->pourcentageReduction() < reductionMax) {
+		if (_equipe[i]->pourcentageReduction() > 0 && _equipe[i]->pourcentageReduction() < reductionMax) {
 
 			reductionMax = _equipe[i]->pourcentageReduction();
 			j = i;
@@ -325,27 +325,32 @@ Personnage* Equipes::plusGrosseAttaqueEnvoyer()
 	return _equipe[indice];
 }
 
-void Equipes::attaqueZone(int Degats,Personnage * Attaquant, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void Equipes::attaqueZone(int Degats,Personnage * Attaquant, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	for (int i = 0; i < Attaquant->equipeEnnemi().taille(); i++) {
-		Attaquant->Attaque(Degats, Attaquant->equipeEnnemi()[i],C,window,allSounds);
+		Attaquant->Attaque(Degats, Attaquant->equipeEnnemi()[i],window,allSounds);
 	}
 }
 
-void Equipes::soignerZone(int soins, Personnage* Soigneur, Combat & C, sf::RenderWindow* window)
+void Equipes::soignerZone(int soins, Personnage* Soigneur, sf::RenderWindow* window)
 {
 	for (int i = 0; i < Soigneur->equipeAllier().taille(); i++) {
-		Soigneur->soigner(soins, C, Soigneur->equipeAllier()[i], window);
+		Soigneur->soigner(soins, Soigneur->equipeAllier()[i],window);
 	}
 }
-void Equipes::bouclierZone(int montantBouclier, Personnage* bouclierMan, Combat & C, sf::RenderWindow* window)
+void Equipes::bouclierZone(int montantBouclier, Personnage* bouclierMan, sf::RenderWindow* window)
 {
 	for (int i = 0; i < bouclierMan->equipeAllier().taille(); i++) {
-		bouclierMan->bouclier(montantBouclier,C, bouclierMan->equipeAllier()[i],window);
+		bouclierMan->bouclier(montantBouclier, bouclierMan->equipeAllier()[i],window);
 	}
 }
 void Equipes::vider()
 {
+/*for (int i = 0;i < _equipe.size();i++) {
+		if (! nullptr) {
+			delete _equipe[i];
+		}
+	}*/
 	_equipe.resize(0);
 }
 void Equipes::liberer()
@@ -438,7 +443,7 @@ void Equipes::retirerDernierPerso()
 	_equipe.pop_back();
 }
 
-void Equipes::setAllierEtEnnemis(Equipes & E) {
+void Equipes::setAllierEtEnnemis(Equipes E) {
 	for (int i = 0; i < (int)_equipe.size(); i++) {
 		_equipe[i]->setAllier(*this);
 		_equipe[i]->setEnnemis(E);

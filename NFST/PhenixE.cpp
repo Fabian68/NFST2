@@ -43,7 +43,7 @@ PhenixE::PhenixE(int LVL, std::string nom,int taille, int difficulte, int animal
 }
 
 
-void PhenixE::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void PhenixE::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -55,14 +55,14 @@ void PhenixE::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< 
 		for (int i = 1;i <= _taille;i++) {
 			if (equipeEnnemi().estEnVie()) {
 				DEGATS = degats(0.45, 0.85);
-				Attaque(DEGATS, equipeEnnemi().plusProcheVivant(), C, window, allSounds);
+				Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 			}
 		}
 		if (attaqueDouble()) {
 			for (int i = 1;i <= _taille;i++) {
 				if (equipeEnnemi().estEnVie()) {
 					DEGATS = degats(0.45, 0.85);
-					Attaque(DEGATS, equipeEnnemi().plusProcheVivant(), C, window, allSounds);
+					Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 				}
 			}
 		}
@@ -75,15 +75,15 @@ void PhenixE::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< 
 		if (_taille >= 2) {
 			Affichage().dessinerTexte(nom() + " Soins de phenix ! ",window);
 			SOINS = soins(0.20 * (double)(_taille - 1), 0.40 * (double)(_taille - 1));
-			equipeAllier().soignerZone(SOINS, this, C, window);
+			equipeAllier().soignerZone(SOINS, this,window);
 			if (attaqueDouble()) {
 				SOINS = soins(0.20 * (_taille - 1), 0.40 * (_taille - 1));
-				equipeAllier().soignerZone(SOINS, this,C , window);
+				equipeAllier().soignerZone(SOINS, this,window);
 			}
 			ajouterMana(-1);
 		}
 		else {
-			attaqueEnnemis(C,window,allSounds);
+			attaqueEnnemis(window,allSounds);
 		}
 		
 		break;
@@ -102,33 +102,33 @@ void PhenixE::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< 
 			ajouterMana(-2);
 		}
 		else {
-			attaqueEnnemis(C,window,allSounds);
+			attaqueEnnemis(window,allSounds);
 		}
 		
 		break;
 		if(_taille == 4) {
 			Affichage().dessinerTexte(nom() + " MAELSTROM !  ",window);
 			DEGATS = (2.0, 4.0);
-			equipeEnnemi().attaqueZone(DEGATS, this,C ,window, allSounds);
+			equipeEnnemi().attaqueZone(DEGATS, this,window,allSounds);
 			ajouterMana(-3);
 		}
 		else {
-			attaqueEnnemis(C,window,allSounds);
+			attaqueEnnemis(window,allSounds);
 		}
 		break;
 	}
 }
 
-void PhenixE::passif(int tour, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void PhenixE::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
-	soigner((int)(vieMax() - vie()) / 10, C, this, window);
-	bouclier((bouclierMax() - bouclier()) / 10, C, this, window);
+	soigner((int)(vieMax() - vie()) / 10, this,window);
+	bouclier((bouclierMax() - bouclier()) / 10, this,window);
 }
 
-void PhenixE::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, Combat & C, int degatss, Personnage* P)
+void PhenixE::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degatss, Personnage* P)
 {
 	if (equipeEnnemi().estEnVie()) {
 	
-		AttaqueBrut(degats(0.01 * _taille, 0.02 * _taille + 0.02),equipeEnnemi().plusProcheVivant(),C,window);
+		AttaqueBrut(degats(0.01 * _taille, 0.02 * _taille + 0.02),equipeEnnemi().plusProcheVivant(),window);
 	}
 }

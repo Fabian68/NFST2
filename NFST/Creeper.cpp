@@ -19,7 +19,7 @@ Creeper::Creeper(int LVL, std::string nom, int difficulte, int animal, int raret
 }
 
 
-void Creeper::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void Creeper::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -49,18 +49,18 @@ void Creeper::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< 
 			else {
 				DEGATS = degats(10.0, 20.0);
 			}
-			Attaque(DEGATS, equipeEnnemi()[i], C, window, allSounds);
+			Attaque(DEGATS, equipeEnnemi()[i], window,allSounds);
 		}
 	}
-	Attaque(degats(0.0, 20.0), this, C, window, allSounds);
+	Attaque(degats(0.0, 20.0), this,window,allSounds);
 	ajouterMana(1);
 }
 
-void Creeper::passif(int tour, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void Creeper::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 }
 
-void Creeper::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, Combat & C, int degats, Personnage* P)
+void Creeper::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 	
 }

@@ -16,7 +16,7 @@ Sanglier::Sanglier(int LVL, std::string nom, int difficulte, int animal, int rar
 
 
 
-void Sanglier::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void Sanglier::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -27,7 +27,7 @@ void Sanglier::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector<
 	case 0:
 		DEGATS = degats(0.9, 1.3);
 		Affichage().dessinerTexte(nom() + " charge ",window);
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(), C, window, allSounds);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 
 		ajouterMana(1);
 		break;
@@ -37,10 +37,10 @@ void Sanglier::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector<
 		Affichage().dessinerTexte(nom() + " se repose !  ",window);
 	    status().ajouterCompteurProteger(10);
 		if (vie() == vieMax()) {
-			bouclier(SOINS, C, this, window);
+			bouclier(SOINS, this,window);
 		}
 		else {
-			soigner(SOINS, C, this, window);
+			soigner(SOINS, this,window);
 		}
 		
 		
@@ -59,35 +59,35 @@ void Sanglier::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector<
 		Affichage().dessinerTexte(nom() + " charge dans tout les sens ! ",window);
 		for (int i = 1,j=1; i <= 5 && equipeEnnemi().estEnVie(); i++,j*=2) {
 			DEGATS = degats(j/10.0, j/5.0);
-			Attaque(DEGATS, equipeEnnemi().aleatoireEnVie(), C, window, allSounds);
+			Attaque(DEGATS, equipeEnnemi().aleatoireEnVie(),window,allSounds);
 		}
 		ajouterMana(-3);
 		break;
 	}
 }
 
-void Sanglier::passif(int tour, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void Sanglier::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int SOINS;
 	if ((tour + 1) % 5 == 0) {
 		SOINS = soins(0.10, 0.25);
-		bouclier(SOINS, C, this,window);
+		AjouterBouclier(SOINS,window);
 	}
 	if ((tour + 1) % 10 == 0) {
 		SOINS = soins(0.25, 0.50);
-		soigner(SOINS, C, this, window);
+		soigner(SOINS, this,window);
 	}
 }
 
-void Sanglier::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, Combat & C, int degats, Personnage* P)
+void Sanglier::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 	int SOINS;
 	if (Aleatoire(0, 101).entier() <= 10) {
 		SOINS = soins(0.05, 0.10);
-		bouclier(SOINS, C, this,window);
+		AjouterBouclier(SOINS,window);
 	}
 	if (Aleatoire(0, 101).entier() <= 10) {
 		SOINS = soins(0.08, 0.24);
-		soigner(SOINS, C, this, window);
+		soigner(SOINS, this,window);
 	}
 }

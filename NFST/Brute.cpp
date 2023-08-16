@@ -18,7 +18,7 @@ Brute::Brute(int LVL, std::string nom, int difficulte, int animal, int rareteAni
 }
 
 
-void Brute::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void Brute::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int choix = choixAttaque();
 	int DEGATS;
@@ -32,13 +32,13 @@ void Brute::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf
 		if (enrager) {
 			DEGATS *= 2;
 		}
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(), C, window, allSounds);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		if (attaqueDouble()) {
 			DEGATS = degats(0.4, 0.8);
 			if (enrager) {
 				DEGATS *= 2;
 			}
-			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(), C, window, allSounds);
+			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		}
 		ajouterMana(1);
 		break;
@@ -48,13 +48,13 @@ void Brute::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf
 		if (enrager) {
 			DEGATS *= 2;
 		}
-		Attaque(DEGATS, equipeEnnemi().plusFaible(), C, window, allSounds);
+		Attaque(DEGATS, equipeEnnemi().plusFaible(),window,allSounds);
 		if (attaqueDouble()) {
 			DEGATS = degats(0.5, 1.5);
 			if (enrager) {
 				DEGATS *= 2;
 			}
-			Attaque(DEGATS, equipeEnnemi().plusFaible(), C, window, allSounds);
+			Attaque(DEGATS, equipeEnnemi().plusFaible(),window,allSounds);
 		}
 		ajouterMana(-1);
 		break;
@@ -64,7 +64,7 @@ void Brute::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf
 		DEGATS = degats(0.5, 1.0);
 		DEGATS += status().enmagasination();
 		status().retirerEmagasination(status().enmagasination());
-		AttaqueBrut(DEGATS, equipeEnnemi().plusFort(),C,window);
+		AttaqueBrut(DEGATS, equipeEnnemi().plusFort(),window);
 		ajouterMana(-2);
 		break;
 	case 3:
@@ -74,13 +74,13 @@ void Brute::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf
 		if (enrager) {
 			DEGATS *= 2;
 		}
-		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(), C, window, allSounds);
+		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
 		ajouterMana(-3);
 		break;
 	}
 }
 
-void Brute::passif(int tour, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void Brute::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	if (vie() < (vieMax() / 5)) {
 		enrager = true;
@@ -90,6 +90,6 @@ void Brute::passif(int tour, Combat & C, sf::RenderWindow* window, std::vector< 
 	}
 }
 
-void Brute::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, Combat & C, int degats, Personnage* P)
+void Brute::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 }

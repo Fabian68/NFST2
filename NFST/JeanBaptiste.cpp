@@ -2,17 +2,13 @@
 #include "Affichage.h"
 #include "Aleatoire.h"
 
-JeanBaptiste::JeanBaptiste(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(12, E, O, A, Obj, "JB", 1, 1, 1, 0, 10, 50, 15, 50, 15, 5)
+JeanBaptiste::JeanBaptiste(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(12, E, O, A, Obj, "JB", 4, 1, 5, 5, 10, 50, 15, 50, 15, 5)
 {
 	ajouterVie(9 * vie());
-
-	if (Aleatoire(0, 1000).entier() == 1) {
-		setNom("Jean Le Baptiste");
-	}
 }
 
 
-void JeanBaptiste::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void JeanBaptiste::attaqueEnnemis(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	if (equipeEnnemi().estEnVie()) {
 		int choix = choixAttaque();
@@ -22,28 +18,30 @@ void JeanBaptiste::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vec
 		switch (choix) {
 
 		case 0:
-		
-			Affichage().dessinerTexte(nom() + " se défend ",window);	
-			DEGATS = degats(0.2, 0.4);
-			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(), C, window, allSounds);
+			if (devie()) {
+				Affichage().dessinerTexte(nom() + " se défend ",window);	
+				DEGATS = degats(0.5, 2.0);
+				Attaque(DEGATS, equipeEnnemi().plusProcheVivant(),window,allSounds);
+			}
+			else {
+				ajouterMana(1);
+			}
 			
-			ajouterMana(1);
-		
+			
 			break;
 		case 1:
 			Affichage().dessinerTexte(nom() + " mange sans gluten",window);
 
 			SOINS = (int)((double)vieMax() * 0.005+(double)vie()*0.03);
-			ajouterVieMax(niveau() * 10);
-			soigner(SOINS, C, this, window);
+			soigner(SOINS, this,window);
 			ajouterMana(1);
 			break;
 		case 2:
 
 			Affichage().dessinerTexte(nom() + " degustation de vin ",window);
 			for (int i = 0;i < equipeAllier().taille();i++) {
-				SOINS = soins(0.22, 0.72);
-				soigner(SOINS, C, equipeAllier()[i], window);
+				SOINS = soins(0.66, 1.22);
+				soigner(SOINS, equipeAllier()[i],window);
 
 			}
 			ajouterMana(1);
@@ -51,15 +49,14 @@ void JeanBaptiste::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vec
 			break;
 		case 3:
 			Affichage().dessinerTexte(nom() + " protege le plus faible ! ",window);
-			equipeAllier().moinsResistant()->status().ajouterCompteurProteger(1);
-			equipeAllier().moinsResistant()->ajouterReduction(15);
+			equipeAllier().moinsResistant()->ajouterReduction(25);
 			ajouterMana(-3);
 			break;
 		}
 	}
 }
 
-void JeanBaptiste::passif(int tour, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
+void JeanBaptiste::passif(int tour, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int xp;
 	
@@ -85,22 +82,22 @@ void JeanBaptiste::passif(int tour, Combat & C, sf::RenderWindow* window, std::v
 	}
 	if (tour == 10 || tour == 20 || tour == 30) {
 		Affichage().dessinerTexte(nom() + " partage sa vie, son énergie, sa pation ! ",window);
-		equipeAllier().aleatoireEnVie()->ajouterVieMax((vieMax() / 50));
+		equipeAllier().aleatoireEnVie()->ajouterVieMax((vieMax() / 5));
 		reduireVieMax((vieMax() / 10));
 	}
 	if (tour == 60 || tour == 80 || tour == 100) {
 		Affichage().dessinerTexte(nom() + " partage sa vie, son énergie, sa pation ! ",window);
-		equipeAllier().aleatoireEnVie()->ajouterVieMax((vieMax() / 25));
+		equipeAllier().aleatoireEnVie()->ajouterVieMax((vieMax() / 4));
 		reduireVieMax((vieMax() / 20));
 	}
 	if (tour == 130 || tour == 160 || tour == 200) {
 		Affichage().dessinerTexte(nom() + " partage sa vie, son énergie, sa pation ! ",window);
-		equipeAllier().aleatoireEnVie()->ajouterVieMax((vieMax() / 10));
-		reduireVieMax((vieMax() / 33));
+		equipeAllier().aleatoireEnVie()->ajouterVieMax((vieMax() / 3));
+		reduireVieMax((vieMax() / 30));
 	}
 	
 }
 
-void JeanBaptiste::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, Combat & C, int degats, Personnage* P)
+void JeanBaptiste::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, int degats, Personnage* P)
 {
 }
