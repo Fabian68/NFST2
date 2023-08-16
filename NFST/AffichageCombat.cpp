@@ -1,4 +1,5 @@
 #include "AffichageCombat.h"
+#include "Combat.h"
 
 void AffichageCombat::afficherTexte(float x, float y, std::string texte, sf::Color couleurTexte, sf::RenderWindow* window)const {
 	sf::Font _font;
@@ -100,7 +101,7 @@ void AffichageCombat::dessinerJoueur(int indice, bool equipeIA, Personnage* P, s
 		couleurStatutEmpoisonner = sf::Color::Black;
 	}
 	sf::CircleShape circle1(5.f);
-	circle1.setPosition(x - 20.f, y + 1);
+	circle1.setPosition(x - 16.f, y + 1);
 	circle1.setFillColor(couleurStatutEmpoisonner);
 	circle1.setOutlineColor(sf::Color::White);
 	circle1.setOutlineThickness(1.f);
@@ -114,7 +115,7 @@ void AffichageCombat::dessinerJoueur(int indice, bool equipeIA, Personnage* P, s
 	}
 
 	sf::CircleShape circle2(5.f);
-	circle2.setPosition(x - 20.f, y + 13.f);
+	circle2.setPosition(x - 16.f, y + 13.f);
 	circle2.setFillColor(couleurStatutBruler);
 	circle2.setOutlineColor(sf::Color::White);
 	circle2.setOutlineThickness(1.f);
@@ -179,6 +180,15 @@ void AffichageCombat::dessinerJoueur(int indice, bool equipeIA, Personnage* P, s
 	rectangleBouclier2.setPosition(sf::Vector2f(x + 2.f + (float)pourcentageBouclier * 2.f, y + 45.f));
 	(*window).draw(rectangleBouclier2);
 
+	for (int i = 0;i < P->mana();i++) {
+		sf::RectangleShape rectangMana(sf::Vector2f(2.f, 2.f));
+		rectangMana.setOutlineColor(sf::Color::Blue);
+		rectangMana.setOutlineThickness(1.f);
+		rectangMana.setFillColor(sf::Color::Cyan);
+		rectangMana.setPosition(sf::Vector2f(x + 3.f * (float)i + 1.f, y + 62.f));
+		(*window).draw(rectangMana);
+	}
+
 	couleurTexte = sf::Color::White;
 
 	str = conversion(P->vie()) + " / " + conversion(P->vieMax());
@@ -204,15 +214,22 @@ void AffichageCombat::dessinerEquipeIA(Equipes I, sf::RenderWindow* window) cons
 	}
 }
 
-void AffichageCombat::dessinerDeuxEquipes(Equipes Joueur, Equipes IA, sf::RenderWindow* window) const
+void AffichageCombat::dessinerDeuxEquipes(Equipes Joueur, Equipes IA, Combat & C, sf::RenderWindow* window) const
 {
 	dessinerEquipeJoueur(Joueur, window);
 	dessinerEquipeIA(IA, window);
-	
+	afficherTexte(5, 3, "Tour : " + std::to_string(C.tour() + 1), sf::Color::Magenta, window);
+	AffichageCombat().dessinerTour(C.quiJoue(), C.quiJoueIndex(), window);
+	sf::Event event;
+	while (window->pollEvent(event))
+	{
+		
+	}
 	(*window).display();
 	sf::Time  DELAY = sf::milliseconds(Delais().getDelais() * 20);
 	sf::sleep(DELAY);
 	(*window).clear();
+	//cleanMainZone(window);
 }
 
 void AffichageCombat::dessinerAttaque(Personnage* Attaquant, Personnage* Defenseur, sf::RenderWindow* window) {
@@ -300,4 +317,73 @@ void AffichageCombat::afficherStats(Equipes joueur, sf::RenderWindow* window) {
 	afficherTexte(30.f, 620.f, "Plus grosse attaque recue : " + joueur.plusGrosseAttaqueRecue()->nom() + " " + std::to_string(joueur.plusGrosseAttaqueRecue()->stats().plusGrosseAttaqueRecue()) + " dégats.", sf::Color::White, window);
 
 	std::cout << "Combat finis" << std::endl;
+}
+
+void AffichageCombat::dessinerTour(std::vector<Personnage*> quiJoue,int index, sf::RenderWindow* window)
+{
+	float hauteur1 = 805.f;
+	float hauteur2 = 845.f;
+	float rectangleHauteur = hauteur2 - hauteur1;
+
+	int nbQuiJoue = quiJoue.size();
+
+	sf::Color couleurRectangle = sf::Color::Magenta;
+	sf::Color couleurTexte = sf::Color::White;
+
+	float rectangleLargeur = 1200.f / (float)nbQuiJoue;
+
+	sf::RectangleShape rectangBlack(sf::Vector2f(1200.f, rectangleHauteur));
+	rectangBlack.setOutlineColor(sf::Color::Black);
+	rectangBlack.setOutlineThickness(1.f);
+	rectangBlack.setFillColor(couleurRectangle);
+	float positionX = 0.f;
+	rectangBlack.setPosition(sf::Vector2f(0.f, hauteur1));
+
+	for (int i = 0;i < nbQuiJoue;i++) {
+		sf::RectangleShape rectangTour(sf::Vector2f(rectangleLargeur -4.f, rectangleHauteur));
+		rectangTour.setOutlineColor(sf::Color::White);
+		rectangTour.setOutlineThickness(1.f);
+		if (index == i) {
+			couleurRectangle = sf::Color::Cyan;
+		}
+		else if (index < i) {
+			couleurRectangle = sf::Color::Black;
+		}
+		else {
+			couleurRectangle = sf::Color::Magenta;
+		}
+		rectangTour.setFillColor(couleurRectangle);
+		positionX = rectangleLargeur * (float)i + 2.f;
+		rectangTour.setPosition(sf::Vector2f(positionX , hauteur1));
+		(*window).draw(rectangTour);
+		afficherTexte(positionX +2.f, (hauteur1 + hauteur2) / 2.0, quiJoue.at(i)->nom().substr(0,3), couleurTexte, window);
+	}
+	
+}
+
+void AffichageCombat::cleanMainZone(sf::RenderWindow* window)const
+{
+	float hauteur1 = 20.f;
+	float hauteur2 = 800.f;
+	float rectangleHauteur = hauteur2 - hauteur1;
+
+	sf::Color couleurRectangle = sf::Color::Black;
+
+	float rectangleLargeur = 1200.f;
+
+	sf::RectangleShape rectangBlack(sf::Vector2f(rectangleLargeur, rectangleHauteur));
+	rectangBlack.setOutlineColor(sf::Color::Black);
+	rectangBlack.setOutlineThickness(1.f);
+	rectangBlack.setFillColor(couleurRectangle);
+	float positionX = 0.f;
+	rectangBlack.setPosition(sf::Vector2f(positionX, hauteur1));
+	(*window).draw(rectangBlack);
+
+	sf::RectangleShape rectangBlack2(sf::Vector2f(rectangleLargeur -100., 100.f));
+	rectangBlack2.setOutlineColor(sf::Color::Black);
+	rectangBlack2.setOutlineThickness(1.f);
+	rectangBlack2.setFillColor(couleurRectangle);
+	positionX = 0.f;
+	rectangBlack2.setPosition(sf::Vector2f(100.f, 0.f));
+	(*window).draw(rectangBlack2);	
 }
