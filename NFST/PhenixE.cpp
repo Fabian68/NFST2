@@ -70,9 +70,11 @@ void PhenixE::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< 
 		ajouterMana(1);
 		break;
 	case 1:
-		status().soignerBrulure();
-		status().soignerPoison();
 		if (_taille >= 2) {
+			for (int i = 0; i < equipeAllier().taille();i++) {
+				equipeAllier()[i]->status().soignerBrulure();
+				equipeAllier()[i]->status().soignerPoison();
+			}
 			Affichage().dessinerTexte(nom() + " Soins de phenix ! ",window);
 			SOINS = soins(0.20 * (double)(_taille - 1), 0.40 * (double)(_taille - 1));
 			equipeAllier().soignerZone(SOINS, this, C, window);

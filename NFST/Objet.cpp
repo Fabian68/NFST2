@@ -91,14 +91,14 @@ void Objet::appliquerEffet(Personnage* P) {
 		P->ajouterVitesse(10);
 		break;
 	case OBJET_COLERE_FLORIAN:
-		P->ajouterForce(50);
-		P->ajouterVie(500);
-		P->ajouterVitesse(50);
+		P->ajouterForce(30);
+		P->ajouterVie(300);
+		P->ajouterVitesse(30);
 		break;
 	case OBJET_TRINITE:
-		P->ajouterForce(100);
-		P->ajouterVie(1000);
-		P->ajouterVitesse(100);
+		P->ajouterForce(75);
+		P->ajouterVie(750);
+		P->ajouterVitesse(75);
 		break;
 	case OBJET_DEBARDEUR_NICOLAS:
 		P->ajouterForce( P->force()/20);
@@ -107,9 +107,9 @@ void Objet::appliquerEffet(Personnage* P) {
 		P->ajouterVie( P->vieMax()/20);
 		break;
 	case OBJET_EXCALIBUER:
-		P->ajouterForce(500);
-		P->ajouterVie(5000);
-		P->ajouterVitesse(500);
+		P->ajouterForce(150);
+		P->ajouterVie(1500);
+		P->ajouterVitesse(150);
 		break;
 	case OBJET_FLECHES_TRANCHANTES:
 		P->ajouterChanceRicochet(7);

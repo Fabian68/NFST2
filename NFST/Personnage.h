@@ -65,6 +65,8 @@ public:
 	bool habile() const;
 	void traitementAnimaux(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound > &allSounds);
     void   Attaque(int Degat, Personnage * Defenseur, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound > &allSounds) ;
+	void changeTour(bool estSonTour);
+	bool estSonTour()const;
 	void AttaqueBrut(int Degat, Personnage* Defenseur, Combat & C, sf::RenderWindow* window);
 	int degatsCritiques() const;
 	void setReduction(int montant);
@@ -145,6 +147,6 @@ private:
 	std::pair<Objet, Objet> _objets2;
 	int _derniereActionMontant;
 	int _derniereActionType;
-	
+	bool _sonTour;
 };
 

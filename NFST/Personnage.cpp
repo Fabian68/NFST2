@@ -19,6 +19,7 @@ Personnage::Personnage(int LVL, std::string nom, int vieLVL, int forceLVL, int v
 	_objets2.second = Objet();
 	_derniereActionType = actionNULL;
 	_derniereActionMontant = 0;
+	_sonTour = false;
 }
 
 Personnage::Personnage(int id,Experiences E,Orbes O,Animaux A, Objets Obj, std::string nom, int vieLVL, int forceLVL, int vitesseLVL, int chanceDoubleAttaque, int chanceHabilete, int pourcentageReduction, int pourcentageDeviation, int pourcentageBlocage, int pourcentageEsquive, int pourcentageRicochet) :
@@ -47,6 +48,7 @@ Personnage::Personnage(int id,Experiences E,Orbes O,Animaux A, Objets Obj, std::
 	appliquerEffets();
 	_derniereActionType = actionNULL;
 	_derniereActionMontant = 0;
+	_sonTour = false;
 }
 
 Personnage::~Personnage()
@@ -628,10 +630,10 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, Combat & C, sf::Ren
 					if (Aleatoire(0, 10000).entier() == 1) {
 						Defenseur->status().appliquerPoison();
 					}
-					Defenseur->Attaque(Defenseur->niveau()/2, this, C, window, allSounds);
+					Defenseur->Attaque(Defenseur->niveau(), this, C, window, allSounds);
 				}
 				if (possedeObjetNumero(OBJET_DEBARDEUR_NICOLAS)) {
-					Defenseur->Attaque(Defenseur->niveau() / 2, this, C, window, allSounds);
+					Defenseur->Attaque(Defenseur->niveau(), this, C, window, allSounds);
 				}
 				
 				//fin modif dégats
@@ -732,6 +734,13 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, Combat & C, sf::Ren
 	
 }
 
+void Personnage::changeTour(bool estSonTour) {
+	_sonTour = estSonTour;
+}
+
+bool Personnage::estSonTour()const {
+	return _sonTour;
+}
 void  Personnage::AttaqueBrut(int Degat, Personnage* Defenseur, Combat & C, sf::RenderWindow* window)
 {
 	if (Defenseur->estAttaquable()) {
@@ -858,7 +867,9 @@ void Personnage::modifierIndiceEquipe(int i) {
 
 int Personnage::choixAttaque()
 {
-	return Aleatoire(0, (_mana % 4 + 1)).entier();
+	int vote1 = Aleatoire(0, (_mana % 4 + 1)).entier();
+	int vote2 = Aleatoire(0, (_mana % 4 + 1)).entier();
+	return std::max(vote1,vote2);
 }
 
 int Personnage::indiceEquipe()const {

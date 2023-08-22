@@ -10,7 +10,7 @@ Orbes::Orbes()
 	FILE* file = fopen("Orbes.txt", "r");
 	if (file == NULL) {
 		std::ofstream os("Orbes.txt", std::ios::binary);
-		
+
 		for (int i = 0; i < 25; i++) {
 			for (int j = 0; j < 5; j++) {
 				os.write((char*)&zero, sizeof(zero));
@@ -31,12 +31,12 @@ Orbes::Orbes()
 	_orbesLVL.resize(25);
 	_choixOrbes.resize(25);
 	for (int i = 0; i < 25; i++) {
-			_orbesLVL[i].resize(5);
-			_choixOrbes[i].resize(5);
-	}	
-	
+		_orbesLVL[i].resize(5);
+		_choixOrbes[i].resize(5);
+	}
+
 	std::ifstream is("Orbes.txt", std::ios::binary);
-	for(int i=0;i<25;i++){
+	for (int i = 0;i < 25;i++) {
 		for (int j = 0; j < 5; j++) {
 			is.read((char*)&_orbesLVL[i][j], sizeof(_orbesLVL[i][j]));
 			//is >> _orbesLVL[i][j];
@@ -46,12 +46,12 @@ Orbes::Orbes()
 			//is >> _choixOrbes[i][j];
 		}
 	}
-	is.close();	
+	is.close();
 }
 
 void Orbes::sauvegarder()
 {
-	std::ofstream os("Orbes.txt",std::ios::binary);
+	std::ofstream os("Orbes.txt", std::ios::binary);
 
 	for (int i = 0; i < 25; i++) {
 		for (int j = 0; j < 5; j++) {
@@ -89,17 +89,17 @@ void Orbes::buffOrbes(int indiceJoueur, int& attaqueLvlBonus, int& vieLvLBonus, 
 
 bool Orbes::orbeDebloquer(int indiceJoueur, int rareter) const
 {
-	return _orbesLVL[indiceJoueur][rareter-1] != 0;
+	return _orbesLVL[indiceJoueur][rareter - 1] != 0;
 }
 
 void Orbes::deblocageOrbe(int indiceJoueur, int rareter, std::string perso, sf::RenderWindow* window, std::vector< sf::Sound>& allSounds)
 {
 	std::string txt = "";
-	txt+= perso +" a débloquer une orbe ";
-	txt+= " de rarete ";
+	txt += perso + " a débloquer une orbe ";
+	txt += " de rarete ";
 	switch (rareter) {
 	case 1:
-		txt+= " commune ( 1 ";
+		txt += " commune ( 1 ";
 		break;
 	case 2:
 		txt += " rare ( 2 ";
@@ -122,63 +122,74 @@ void Orbes::deblocageOrbe(int indiceJoueur, int rareter, std::string perso, sf::
 			S.debloquerSucces(SUCCES_ORBE_LEGENDAIRE);
 			S.affichageDeblocageSucces(SUCCES_ORBE_LEGENDAIRE, allSounds);
 		}
+
+		if (rareter == 4) {
+			allSounds[5].play();
+		}
+		else {
+			allSounds[6].play();
+		}
 	}
-/*	std::cout << "points de stats par niveaux) ,vous dever choisir ou l'equiper, entrer ";
-	std::cout << std::endl;
-	std::cout << " 1 pour attaque ";
-	std::cout << std::endl;
-	std::cout << " 2 pour vie ";
-	std::cout << std::endl;
-	std::cout << " 3 pour vitesse ";
-	std::cout << std::endl;
-	int entrer;
-	std::cin >> entrer;
-	if (entrer < 1 || entrer >3) {
-		entrer = 1;
-	}*/
-	Bouton(300.f, 400.f, txt, sf::Color::Black, sf::Color::Green, sf::Color::Green).afficher(window);
-	Bouton(300.f, 440.f, "Equiper sur  : ", sf::Color::Green, sf::Color::Green).afficher(window);
-	Bouton Un(320.f, 480.f, " Attaque ", sf::Color::Green, sf::Color::Green);
+	else {
+		allSounds[4].play();
+	}
+	/*	std::cout << "points de stats par niveaux) ,vous dever choisir ou l'equiper, entrer ";
+		std::cout << std::endl;
+		std::cout << " 1 pour attaque ";
+		std::cout << std::endl;
+		std::cout << " 2 pour vie ";
+		std::cout << std::endl;
+		std::cout << " 3 pour vitesse ";
+		std::cout << std::endl;
+		int entrer;
+		std::cin >> entrer;
+		if (entrer < 1 || entrer >3) {
+			entrer = 1;
+		}*/
+	Bouton(300.f, 400.f, txt).afficher(window);
+	Bouton(300.f, 440.f, "Equiper sur  : ").afficher(window);
+	Bouton Un(320.f, 480.f, " Attaque ");
 	Un.afficher(window);
-	Bouton Deux(420.f, 480.f, " Vie ", sf::Color::Green, sf::Color::Green);
+	Bouton Deux(420.f, 480.f, " Vie ");
 	Deux.afficher(window);
-	Bouton Trois(520.f, 480.f, " Vitesse ", sf::Color::Green, sf::Color::Green);
+	Bouton Trois(520.f, 480.f, " Vitesse ");
 	Trois.afficher(window);
 
 	int select;
-	bool selectionner =false;
+	bool selectionner = false;
 
 	sf::Time  DELAY = sf::milliseconds(50);
-	float xc, yc;
+	float xc=0.f, yc=0.f;
 	(*window).display();
-	do {
-		while (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			sf::sleep(DELAY);
-		}
-		sf::Vector2i position = sf::Mouse::getPosition();
-		xc = (float)position.x;
-		yc = (float)position.y;
 
-		if (Un.comprendLesCoord(xc, yc,allSounds)) {
+	sf::Event event;
+	do {
+		while ((*window).pollEvent(event))
+		{
+			if (event.type == sf::Event::MouseButtonPressed) {
+				sf::Vector2i position = sf::Mouse::getPosition((*window));
+				xc = (float)position.x;
+				yc = (float)position.y;
+			}
+		}
+		if (Un.comprendLesCoord(xc, yc, allSounds)) {
 			selectionner = true;
 			select = 1;
 		}
-		else if (Deux.comprendLesCoord(xc, yc,allSounds)) {
+		else if (Deux.comprendLesCoord(xc, yc, allSounds)) {
 			selectionner = true;
 			select = 2;
 		}
-		else if(Trois.comprendLesCoord(xc, yc,allSounds)){
+		else if (Trois.comprendLesCoord(xc, yc, allSounds)) {
 			selectionner = true;
 			select = 3;
 		}
 	} while (!selectionner);
 	(*window).display();
-	(* window).clear();
-	
-	
+	(*window).clear();
+
 	_orbesLVL[indiceJoueur][rareter - 1] = 1;
 	_choixOrbes[indiceJoueur][rareter - 1] = select;
-
 	sauvegarder();
 }
 
@@ -189,7 +200,7 @@ int Orbes::choixOrbe(int indicePerso, int rareter) const
 
 void Orbes::setChoixOrbe(int indicePerso, int rareter, int choix)
 {
-	_choixOrbes[indicePerso][rareter - 1]=choix;
+	_choixOrbes[indicePerso][rareter - 1] = choix;
 	sauvegarder();
 }
 

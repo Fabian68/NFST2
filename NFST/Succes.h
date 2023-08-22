@@ -24,6 +24,7 @@ const int SUCCES_NIV10_FABIAN_FIONA = 16;
 const int SUCCES_NIV25_3PERSOS = 17;
 const int SUCCES_NIV10_NICOLAS_SEBASTIEN = 18;
 const int SUCCES_NIV25_FABIAN_FIONA_CLOE = 19;
+const int SUCCES_10SUCCES = 20;
 class Succes
 {
 public:
@@ -40,6 +41,8 @@ public:
 	bool estCache(int i)const;
 	std::string nom(int i)const;
 	std::string description(int i)const;
+
+	int nbSuccesDebloque() const;
 
 private:
 	std::vector<int> _succesDebloquer;

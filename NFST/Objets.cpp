@@ -108,13 +108,13 @@ Objets::Objets()
 	_listeObjets.push_back(Objet("Soie de lapin", 17, 10, "+10% de vitesse"));
 	_listeObjets.push_back(Objet("Sauciflar", 18, 100, "+5% chance de coup critique"));
 	_listeObjets.push_back(Objet("J&B", 19, 100, "+10 points dans chaque stats"));
-	_listeObjets.push_back(Objet("Colère de Florian ", 20, 1000, "+50 points dans chaque stats"));
-	_listeObjets.push_back(Objet("Trinité", 21, 10000, "+100 points dans chaque stats"));
-	_listeObjets.push_back(Objet("Debardeur de Nicolas ", 22, 1000, "Attaque l'attaquant pour des dégats de 50% votre niveau,+5% d'attaque"));
+	_listeObjets.push_back(Objet("Colère de Florian ", 20, 1000, "+30 points dans chaque stats"));
+	_listeObjets.push_back(Objet("Trinité", 21, 10000, "+75 points dans chaque stats"));
+	_listeObjets.push_back(Objet("Debardeur de Nicolas ", 22, 1000, "Attaque l'attaquant pour des dégats de 100% votre niveau,+5% d'attaque"));
 	_listeObjets.push_back(Objet(" Jue de pomme", 23, 100, "+5% de vie max"));
-	_listeObjets.push_back(Objet("Les chaussetes de FLO", 24, 10000, " Attaque l'attaquant pour des dégats de 50% votre niveau, 1 chance sur 10 000 d'ifnliger poison lors d'une attaque"));
+	_listeObjets.push_back(Objet("Les chaussetes de FLO", 24, 10000, " Attaque l'attaquant pour des dégats de 100% votre niveau, 1 chance sur 10 000 d'ifnliger poison lors d'une attaque"));
 	_listeObjets.push_back(Objet(" Gilet par balle", 25, 10000," Les dégats sont reduit de 1 par niveau du personnage "));
-	_listeObjets.push_back(Objet("EXCALIBUR", 26, 10000, "+500 points dans chaque stats"));
+	_listeObjets.push_back(Objet("EXCALIBUR", 26, 10000, "+150 points dans chaque stats"));
 	_listeObjets.push_back(Objet("Flèches tranchantes", 27, 10000, "+7% de chance de ricochet, les ricochet font 37% de plus de dégats."));
 	_listeObjets.push_back(Objet("Cote du sadomaso", 28, 10000, "Reduit de 1(+ 1 tout les 100 niveau) les dégats par coup reçu."));
 	_listeObjets.push_back(Objet("Fléau du sadique", 29, 10000, "Ajoute 1(+1 tout les 100 niveau) de dégats par attaques réaliser."));
@@ -158,7 +158,7 @@ Objets::Objets()
 	}
 
 	_tableLoot[6].push_back(_listeObjets[46]);
-	_tableLoot[8].push_back(_listeObjets[47]);
+	_tableLoot[44].push_back(_listeObjets[47]);
 	for (int i = 1;i <= 8;i++) {
 		_tableLoot[88].push_back(_listeObjets[47]);
 	}
@@ -430,12 +430,21 @@ void Objets::deblocageObjet(int indiceObjet, sf::RenderWindow* window, std::vect
 
 	Succes S;
 	int rareter = _listeObjets[indiceObjet].rareter();
-	if (rareter == 4 || rareter == 5) {
+	if (rareter == 10000 || rareter == 100000) {
 		Succes S;
 		if (!S.estDebloque(SUCCES_OBJET_LEGENDAIRE)) {
 			S.debloquerSucces(SUCCES_OBJET_LEGENDAIRE);
 			S.affichageDeblocageSucces(SUCCES_OBJET_LEGENDAIRE, allSounds);
 		}
+		if (rareter == 10000) {
+			allSounds[5].play();
+		}
+		else {
+			allSounds[6].play();
+		}
+	}
+	else {
+		allSounds[4].play();
 	}
 	if (indiceObjet == OBJET_OEUF_TORTUE) {
 		Succes S;

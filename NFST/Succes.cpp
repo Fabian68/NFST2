@@ -69,8 +69,8 @@ Succes::Succes()
 	_succesCache.push_back(true);
 	_listeSucces.push_back(std::make_pair("Monter Fabian, Fiona et Cloe au niv 25", "Nouveau personnage : Maelle"));
 	_succesCache.push_back(true);
-
-
+	_listeSucces.push_back(std::make_pair("Débloquer 10 succès", "Les combats seront 25% plus rapide"));
+	_succesCache.push_back(true);
 }
 
 void Succes::sauvegarder()
@@ -92,7 +92,7 @@ bool Succes::estDebloque(int succes) const
 void Succes::affichageDeblocageSucces(int succes, std::vector< sf::Sound> allSounds) const
 {
 	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(400, 200), "Succes débloqué");
-	allSounds[1].play();
+	allSounds[3].play();
 	sf::Color couleurTexte = sf::Color::White;
 	sf::Color couleurFond = sf::Color::Black;
 
@@ -165,3 +165,12 @@ std::string Succes::description(int i) const
 	return _listeSucces[i].second;
 }
 
+int Succes::nbSuccesDebloque() const {
+	int nb_succes_debloquer = 0;
+	for (int i = 0;i < _succesDebloquer.size();i++) {
+		if (_succesDebloquer[i] == 1) {
+			nb_succes_debloquer += 1;
+		}
+	}
+	return nb_succes_debloquer;
+}

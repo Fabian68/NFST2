@@ -11,7 +11,16 @@
 
 Combat::Combat(Equipes & Joueur, Equipes & Ia, Zones& Z, Animaux& A, Orbes& O, std::vector< sf::Sound >& allSounds) : _joueur{ Joueur }, _ia{ Ia }, _tour{ 0 }
 {
-	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1200, 850), "Combat");
+	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1200, 825), "Combat");
+	if (!_backgroundTexture.loadFromFile("graphics/img1.png"))
+	{
+		// Erreur
+		std::cout << "Erreur durant le chargement de l'image de background." << std::endl;
+	}
+	else {
+		_background.setTexture(_backgroundTexture);
+	}
+		
 	window->setActive();
 	window->setFramerateLimit(1);
 
@@ -32,6 +41,10 @@ Combat::Combat(Equipes & Joueur, Equipes & Ia, Zones& Z, Animaux& A, Orbes& O, s
 			del = std::min(1, del);
 		}
 	}
+	Succes S;
+	if (S.estDebloque(SUCCES_10SUCCES)) {
+		del = (int)((double)del * 0.75);
+	}
 	delais.setDelais(del);
 
 	modifierQuiJoue();
@@ -47,7 +60,7 @@ Combat::Combat(Equipes & Joueur, Equipes & Ia, Zones& Z, Animaux& A, Orbes& O, s
 			_quiJoueIndex = i;
 			if ((_joueur.estEnVie() && _ia.estEnVie())) {
 				if (_quiJoue[i]->estEnVie()) {
-					//
+					_quiJoue[i]->changeTour(true);
 					nbFoisJouer++;			
 					if (nbFoisJouer % _nbJouerPourAugmenterTour == 0) {
 						_tour++;
@@ -76,13 +89,21 @@ Combat::Combat(Equipes & Joueur, Equipes & Ia, Zones& Z, Animaux& A, Orbes& O, s
 								is.read((char*)&un, sizeof(un));
 								is.close();
 							}
-							if (_joueur.perso(t)->id() == 3 && _tour == 25) {
-								_joueur.ajouterPerso(new Lapin(_joueur.perso(t)->niveau(), "Perle", 0, 9, 5, 302));
+							if (_joueur.perso(t)->id() == 3 && _joueur.perso(t)->estEnVie() && _tour == 25) {
+								Personnage* L = new Lapin(_joueur.perso(t)->niveau(), "Perle", 0, 9, 5, 21);
+								L->ajouterVie(_joueur.perso(t)->vieMax() / 10);
+								L->ajouterForce(_joueur.perso(t)->force() / 10);
+								L->ajouterVitesse(_joueur.perso(t)->vitesse() / 10);
+								_joueur.ajouterPerso(L);
 								_joueur.setAllierEtEnnemis(_ia);
 								_ia.setAllierEtEnnemis(_joueur);
 							}
-							if (_joueur.perso(t)->id() == 3 && _tour == 50) {
-								_joueur.ajouterPerso(new Sanglier(_joueur.perso(t)->niveau(), "Oxanne", 0, 9, 5, 303));
+							if (_joueur.perso(t)->id() == 3 && _joueur.perso(t)->estEnVie() && _tour == 50) {
+								Personnage* S = new Sanglier(_joueur.perso(t)->niveau(), "Oxanne", 0, 9, 5, 22);
+								S->ajouterVie(_joueur.perso(t)->vieMax() / 10);
+								S->ajouterForce(_joueur.perso(t)->force() / 10);
+								S->ajouterVitesse(_joueur.perso(t)->vitesse() / 10);
+								_joueur.ajouterPerso(S);
 								_joueur.setAllierEtEnnemis(_ia);
 								_ia.setAllierEtEnnemis(_joueur);
 							}
@@ -107,6 +128,7 @@ Combat::Combat(Equipes & Joueur, Equipes & Ia, Zones& Z, Animaux& A, Orbes& O, s
 						//AffichageCombat().dessinerDeuxEquipes(_joueur, _ia,window);
 					}
 					_quiJoue[i]->attaqueEnnemis(*this,window, allSounds);
+					_quiJoue[i]->changeTour(false);
 				}
 			}
 		}
@@ -299,6 +321,9 @@ Combat::~Combat()
 {
 }
 
+sf::Sprite Combat::fond()const {
+	return _background;
+}
 int Combat::tour() const
 {
 	return _tour;

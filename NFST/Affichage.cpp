@@ -46,6 +46,35 @@ void Affichage::affichageTexte(float x, float y, std::string texte, sf::Color co
 	//(*window).display();
 }
 
+sf::Color Affichage::colorRareter(int rareter)const {
+	sf::Color C;
+	switch (rareter) {
+	case 1:
+	case 10:
+		C = sf::Color(128, 255, 0);
+		break;
+	case 2:
+	case 100 :
+		C = sf::Color::Blue;
+		break;
+	case 3:
+	case 1000:
+		C = sf::Color(204, 102, 0);
+		break;
+	case 4:
+	case 10000:
+		C = sf::Color::Yellow;
+		break;
+	case 5:
+	case 100000:
+		C = sf::Color(204, 0, 0);
+		break;
+	default:
+		C = sf::Color::White;
+	}
+	return C;
+}
+
 void Affichage::afficherJoueurs(int indice, Equipes& Liste, sf::RenderWindow* window, std::vector< sf::Sound > &allSounds)const {
 	float x = 50;
 	float y = 20;
@@ -60,43 +89,44 @@ void Affichage::afficherJoueurs(int indice, Equipes& Liste, sf::RenderWindow* wi
 	afficherTexte(x, y + 20.f, str, couleurTexte, window);
 
 	str = "Force : " + std::to_string(Liste[indice]->force());
-	afficherTexte(x, y + 40.f, str, couleurTexte, window);
+	afficherTexte(x, y + 40.f, str, sf::Color::Red, window);
 
 	str = "Vie : " + std::to_string(Liste[indice]->vieMax());
-	afficherTexte(x, y + 60.f, str, couleurTexte, window);
+	afficherTexte(x, y + 60.f, str, sf::Color::Green, window);
 
 	str = "Vitesse : " + std::to_string(Liste[indice]->vitesse());
-	afficherTexte(x, y + 80.f, str, couleurTexte, window);
+	afficherTexte(x, y + 80.f, str, sf::Color::Yellow, window);
 
 	str = "Chance de double attaque : " + std::to_string(Liste[indice]->chanceDoubleAttaque());
-	afficherTexte(x, y + 100.f, str, couleurTexte, window);
+	afficherTexte(x, y + 100.f, str, sf::Color::Yellow, window);
 
 	str = "Chance de coup habile : " + std::to_string(Liste[indice]->chanceHabileter());
-	afficherTexte(x, y + 120.f, str, couleurTexte, window);
+	afficherTexte(x, y + 120.f, str, sf::Color::Yellow, window);
 
 	str = "Chance de deviation : " + std::to_string(Liste[indice]->pourcentageDeviation());
-	afficherTexte(x, y + 140.f, str, couleurTexte, window);
+	afficherTexte(x, y + 140.f, str, sf::Color::Magenta, window);
 
 	str = "Pourcentage de reduction de degats : " + std::to_string(Liste[indice]->pourcentageReduction());
-	afficherTexte(x, y + 160.f, str, couleurTexte, window);
+	afficherTexte(x, y + 160.f, str, sf::Color::Green, window);
 
 	str = "Chance de ricochet : " + std::to_string(Liste[indice]->pourcentageRicochet());
-	afficherTexte(x, y + 180.f, str, couleurTexte, window);
+	afficherTexte(x, y + 180.f, str, sf::Color::Magenta, window);
 
 	str = "Chance esquive : " + std::to_string(Liste[indice]->pourcentageEsquive());
-	afficherTexte(x, y + 200.f, str, couleurTexte, window);
+	afficherTexte(x, y + 200.f, str, sf::Color::Yellow, window);
 
 	str = "Chance de blocage : " + std::to_string(Liste[indice]->pourcentageBlocage());
-	afficherTexte(x, y + 220.f, str, couleurTexte, window);
+	afficherTexte(x, y + 220.f, str, sf::Color::Green, window);
 
 	float x2 = x - 20.f;
 
 	x = x + 250.f;
 
-	afficherTexte(x - 250.f, y + 350.f, Liste[indice]->objets().first.nom(), couleurTexte, window);
-	afficherTexte(x - 250.f, y + 390.f, Liste[indice]->objets().second.nom(), couleurTexte, window);
-	afficherTexte(x - 250.f, y + 430.f, Liste[indice]->objets2().first.nom(), couleurTexte, window);
-	afficherTexte(x - 250.f, y + 470.f, Liste[indice]->objets2().second.nom(), couleurTexte, window);
+	
+	afficherTexte(x - 250.f, y + 350.f, Liste[indice]->objets().first.nom(), colorRareter(Liste[indice]->objets().first.rareter()), window);
+	afficherTexte(x - 250.f, y + 390.f, Liste[indice]->objets().second.nom(), colorRareter(Liste[indice]->objets().second.rareter()), window);
+	afficherTexte(x - 250.f, y + 430.f, Liste[indice]->objets2().first.nom(), colorRareter(Liste[indice]->objets2().first.rareter()), window);
+	afficherTexte(x - 250.f, y + 470.f, Liste[indice]->objets2().second.nom(), colorRareter(Liste[indice]->objets2().second.rareter()), window);
 
 	sf::RectangleShape rectangle(sf::Vector2f(470.f, 140.f));
 	rectangle.setOutlineColor(couleurTexte);
@@ -123,9 +153,9 @@ void Affichage::afficherJoueurs(int indice, Equipes& Liste, sf::RenderWindow* wi
 		//rectangle(x + 90, y + 30, x + 400, y + 70);
 
 		afficherTexte(x + 100.f, y + 40.f, " Ratio Min : ", couleurTexte, window);
-		afficherTexte(x + 180.f, y + 40.f, std::to_string((int)(A.ratioMin(rareter) * 100)) + " %", couleurTexte, window);
+		afficherTexte(x + 180.f, y + 40.f, std::to_string((int)(A.ratioMin(rareter) * 100)) + " %", colorRareter(rareter), window);
 		afficherTexte(x + 230.f, y + 40.f, " Ratio Max : ", couleurTexte, window);
-		afficherTexte(x + 310.f, y + 40.f, std::to_string((int)(A.ratioMax(rareter) * 100)) + " %", couleurTexte, window);
+		afficherTexte(x + 310.f, y + 40.f, std::to_string((int)(A.ratioMax(rareter) * 100)) + " %", colorRareter(rareter), window);
 
 		sf::RectangleShape rectangle3(sf::Vector2f(425.f, 30.f));
 		rectangle3.setOutlineColor(couleurTexte);
@@ -135,8 +165,8 @@ void Affichage::afficherJoueurs(int indice, Equipes& Liste, sf::RenderWindow* wi
 		(*window).draw(rectangle3);
 
 		//rectangle(x + 90, y + 80, x + 515, y + 110);
-		afficherTexte(x + 100.f, y + 90.f, " Pourcentage d'activation quand attaque ou est attaquer : ", couleurTexte, window);
-		afficherTexte(x + 475.f, y + 90.f, std::to_string(A.pourcentageActivation(rareter)) + " %", couleurTexte, window);
+		afficherTexte(x + 98.f, y + 90.f, " Pourcentage d'activation quand attaque ou est attaquer : ", couleurTexte, window);
+		afficherTexte(x + 460.f, y + 90.f, std::to_string(A.pourcentageActivation(rareter)) + " %", colorRareter(rareter), window);
 	}
 	Animaux N;
 
@@ -176,7 +206,7 @@ void Affichage::afficherJoueurs(int indice, Equipes& Liste, sf::RenderWindow* wi
 				texteAnimaux += " cheater";
 				break;
 			}
-			afficherTexte(x, y, texteAnimaux, couleurTexte, window);
+			afficherTexte(x, y, texteAnimaux, colorRareter(rareter), window);
 			Bouton(x + 275.f, y - 10.f, "Equiper", sf::Color::Black, sf::Color::White, sf::Color::White).afficher(window);
 			y += 50.f;
 		}
@@ -212,7 +242,7 @@ void Affichage::afficherJoueurs(int indice, Equipes& Liste, sf::RenderWindow* wi
 				break;
 			}
 			texteOrbe += "S/ LVL ) Equiper : ";
-			afficherTexte(x, (float)k, texteOrbe, couleurTexte, window);
+			afficherTexte(x, (float)k, texteOrbe, colorRareter(i), window);
 			for (int jj = 1, xpas = 0; jj <= 3; jj++) {
 				if (O.choixOrbe(indice, i) != jj) {
 					switch (jj) {
@@ -408,6 +438,10 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		case 15:
 			str = "Aucun";
 			break;
+		case 16:
+			str = "Les statistiques sont améliorés selon le temps joué Taille = T (1 à 4) sur le personnage,les améliorations redescendent à zéro si le personnage tombe KO";
+			str = str + "\^n" + "+ niveau dégats et -niveau de reduction de dégats fixe";
+			break;
 
 	}
 	afficherTexte(x, y + 30.f, str, couleurTexte, window);
@@ -427,7 +461,7 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		str = "Tout les 5 tours se soigne pour 30-60% de votre force, soins potentiel :" + std::to_string(Liste[indice]->soins(0.2, 0.4));
 		break;
 	case 3:
-		str = "A 25 tour ajoute un lapin dans l'équipe avec un animal qui soigne et bouclier de zone, a 50 tour un sanglier, les animaux attaquent lorsque Fiona ce fait attaquer et quand Fiona attaque";
+		str = "A 25 tour ajoute un lapin dans l'équipe avec un animal qui soigne et bouclier de zone, a 50 tour un sanglier,ils bénéficient de stats supplémentaire équivalent à 10% des stats de Fiona";
 		str = str + "\n" + "Tout les 17 tours ajoute 7% chance de coup critique, si habile ajoute également 7% de dégats critique";
 		str = str + "\n" + "Tout les 70 tours ajoute 17% de dégats critique et attaque l'ennemi le plus fort 17 fois pour 17%-(18%+1,7% x numéro coup)force, somme dégats potentiel => ";
 		DEGATS = 0;
@@ -476,6 +510,9 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		str = "Tout les tours augmente la vie max à hauteur de 10% de sa force, puis 10% si habile puis une seconde fois 10% si habile";
 		str = str + "\n" + "Tout les 100 tours attaque l'ennemi à hauteur de 111-211% de votre force, si tirage habile l'attaque est brut";
 		break;
+	case 16:
+		str = "Tout les tours soigne 10% de ses pv manquent et bouclier 10% du bouclier manquent";
+		break;
 	}
 	afficherTexte(x, y + 110.f, str, couleurTexte, window);
 
@@ -490,10 +527,10 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		break;
 	case 2:
 		str = "Lance un jet d'habilete, si concluant ajoute 1% de reduction de dégats au coéquipier le plus faible et un compteur de protection";
-		str = str + " puis vous ajouter un bouclier à vous même équivalent à 4% de votre vie actuel, bouclier potentiel : " + std::to_string((double)Liste[indice]->vie() * 0.04);
+		str = str + "\n" +"puis vous ajouter un bouclier à vous même équivalent à 4 % de votre vie actuel, bouclier potentiel : " + std::to_string((double)Liste[indice]->vie() * 0.04);
 		break;
 	case 3:
-		str = "Déclanche les compéteces des animaux";
+		str = "Aucun";
 		break;
 	case 4:
 		str = "Emmagasine 10% des dégats reçu";
@@ -531,6 +568,9 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		break;
 	case 15:
 		str = "augmente la vie max à hauteur de 10% de sa force, puis 10% si habile puis une seconde fois 10% si habile";
+		break;
+	case 16:
+		str = "Taille = T (1 à 4) selon le temps joué, attaque brut l'ennemi le plus proche pour (1 x T)-(2 + 2 x T)% de votre force";
 		break;
 	}
 	afficherTexte(x, y + 180.f, str, couleurTexte, window);
@@ -597,6 +637,9 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		str = "Attaque l'ennemi le plus proche à hauteur de 1-2% de votre vie max + 10-20% de votre force, + 1 mana";
 		str = str + "\n" + "Si tirage habile attaque brut l'ennemi le plus proche à hauteur de 0,5-1% de votre vie max + 5-10% de votre force, + 1 mana";
 		break;
+	case 16:
+		str = "Attaque taille fois l'ennemi le plus proche pour 45-85% de votre force, + 1 mana, ré-attaque si attaque double";
+		break;
 	}
 	afficherTexte(x, y + 250.f, str, couleurTexte, window);
 
@@ -632,7 +675,7 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		str = "Ajoute + 1 reduction de dégats à chaque membre de l'équipe, + 1 si double attaque, + 1 si habile, - 1 mana";
 		break;
 	case 2:
-		str = "Attaque l'equipe ennemi pour 10-20% de votre attaque à 60%-120% par ennemis selon sa position plus au centre et selon le nombre d'ennemis, ennemi au centre prend deux coups,-1 mana, dégats potentiel :" + std::to_string(Liste[indice]->degats(0.10, 20)) + " à " + std::to_string(Liste[indice]->degats(0.60, 120));
+		str = "Attaque l'equipe ennemi pour 10-20% de votre attaque à 60%-120% par ennemis selon sa position plus au centre et selon le nombre d'ennemis, ennemi au centre prend deux coups,-1 mana";
 		break;
 	case 3:
 		str = "Soigne 7 fois un allier aléatoire pour 10-25% de votre force si tirage habile, si double attaque 5-50% soins potentiels, + 1 mana";
@@ -648,7 +691,8 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		str = str + "\n" + "Si habile à la place : Soigne l'équipe pour (RA/16)-(RA/12)% de votre force et bouclier pour (RA/32)-(RA/24)% de votre force, +1 mana";
 		break;
 	case 7:
-		str = "Se soigne 1 à 100 fois (si habile pour chaque coups) avec compteur numero du soins NS, soins = (NS/1 000)-(NS/1 000 + 1)% de votre force et ajoute vie maximal à hauteur de vie max/1 000 pour chaque soins, + 1 mana";
+		str = "Se soigne 1 à 100 fois (si habile pour chaque coups) avec compteur numero du soins NS, soins = (NS/1 000)-(NS/1 000 + 1)% de votre force";
+		str = str + "\n" + "et ajoute vie maximal à hauteur de vie max / 1 000 pour chaque soins, +1 mana";
 		break;
 	case 8:
 		str = "Attaque l'ennemi le plus faible pour 25-50% de votre force, si attaque double reattaque pour 50-100%, si double attaque reattaque pour 75-150% de votre force, -1 mana";
@@ -675,6 +719,10 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		break;
 	case 15:
 		str = "Nombre d'alliés en vie = NA, soigne toute l'équipe à hauteur de (1/NA)-(4/NA)% de votre force et bouclier pour (0,5/NA)-(2/NA)% de votre force, -1 mana ";
+		break;
+	case 16:
+		str = "Compétence disponible si taile = 2 ou plus : Soigne les brulures et poisons de tout les alliers puis ";
+		str = str + "\n" + "Soigne l'équipe pour (20 x (T-1))-(40 x (T-1))% de votre force, -1 mana";
 		break;
 	}
 	afficherTexte(x, y + 340.f, str, couleurTexte, window);
@@ -730,6 +778,10 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		break;
 	case 15:
 		str = "Se bouclier à hauteur de 25-75% de votre force puis soigne à hauteur de 50-150% de votre force, puis ajoute 5% reduction de dégats,-2 mana";
+		break;
+	case 16:
+		str = "Compétence disponible si taile = 3 ou plus : Ajoute T chance de double attaque, chance habileter et chance coup critique";
+		str = str + "\n" + "T/2 reduction de dégats et chance de ricochets, T x 2 compteurs de protections et T x 2 +2 dégats critiques, -2 mana";
 		break;
 	}
 	afficherTexte(x, y + 430.f, str, couleurTexte, window);
@@ -791,6 +843,9 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		str = "Première transformation : Reduit de 90% sa vie maximum et double sa force, +10% reduction de dégats, - 3 mana";
 		str = str + "\n" + "Deuxième transformation (si première transformation et mana superieur à 9) : Reduit de 90% la vie maximum, double la force et +20% reduction de dégats";
 		str = str + "\n" + "Si les deux transformations on étés faites : Augmente vie max à hauteur de niveau/10 et soigne pour 20-120% de votre force et bouclier pour 10-60% de votre force";
+		break;
+	case 16:
+		str = "Compétence disponible si taile = 4 (max) : Attaque l'équipe ennemi pour 100-400% de votre force";
 		break;
 	}
 	afficherTexte(x, y + 520.f, str, couleurTexte, window);
@@ -924,9 +979,9 @@ sf::Color couleurTexte = sf::Color::White;
 for (int i = (page - 1) * 15 + 1; i <= std::min(obj.nombreObjets(), page * 15); i++) {
 	if (obj.estDebloquer(obj.objetNumero(i))) {
 		txt = obj.objetNumero(i).nom() + "     " + obj.objetNumero(i).rareterTexte();
-		afficherTexte(50.f, y + 20.f, txt, couleurTexte, window);
+		afficherTexte(50.f, y + 20.f, txt, colorRareter(obj.objetNumero(i).rareter()), window);
 		txt = obj.objetNumero(i).effet();
-		afficherTexte(50.f, y + 40.f, txt, couleurTexte, window);
+		afficherTexte(50.f, y + 40.f, txt, colorRareter(obj.objetNumero(i).rareter()), window);
 		Bouton(1000.f, y + 25.f, "Equiper").afficher(window);
 	}
 	else {

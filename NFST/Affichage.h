@@ -18,6 +18,8 @@ public:
 	void afficherTexte(float x, float y, std::string texte,sf::Color couleurTexte, sf::RenderWindow * window)const;
 
 	void affichageTexte(float x, float y, std::string texte, sf::Color couleurTexte, sf::RenderWindow * window);
+
+	sf::Color colorRareter(int rareter)const;
 	
 	void afficherJoueurs(int indice, Equipes& Liste, sf::RenderWindow * window, std::vector< sf::Sound >& allSounds) const;
 	void afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) const;

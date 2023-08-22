@@ -82,10 +82,29 @@ void loadSongs2(std::vector<std::shared_ptr<sf::SoundBuffer>>& allBuffers, std::
 	buffer3->loadFromFile("./song/bow_shoot.ogg");
 	allBuffers.push_back(buffer3);
 
+	std::shared_ptr<sf::SoundBuffer> buffer4 = std::make_shared<sf::SoundBuffer>();
+	buffer4->loadFromFile("./song/xbox-rare-achievement.ogg");
+	allBuffers.push_back(buffer4);
+
+	std::shared_ptr<sf::SoundBuffer> buffer5 = std::make_shared<sf::SoundBuffer>();
+	buffer5->loadFromFile("./song/ta-da_yrvBrlS.ogg");
+	allBuffers.push_back(buffer5);
+
+	std::shared_ptr<sf::SoundBuffer> buffer6 = std::make_shared<sf::SoundBuffer>();
+	buffer6->loadFromFile("./song/anime-wow-sound-effect.ogg");
+	allBuffers.push_back(buffer6);
+
+	std::shared_ptr<sf::SoundBuffer> buffer7 = std::make_shared<sf::SoundBuffer>();
+	buffer7->loadFromFile("./song/outro-song_oqu8zAg.ogg");
+	allBuffers.push_back(buffer7);
 	// Créer les objets sf::Sound en utilisant les buffers stockés dans allBuffers
 	sounds.push_back(sf::Sound(*buffer1));
 	sounds.push_back(sf::Sound(*buffer2));
 	sounds.push_back(sf::Sound(*buffer3));
+	sounds.push_back(sf::Sound(*buffer4));
+	sounds.push_back(sf::Sound(*buffer5));
+	sounds.push_back(sf::Sound(*buffer6));
+	sounds.push_back(sf::Sound(*buffer7));
 }
 
 void jouer(sf::RenderWindow* window,Zones & Z,Objets Obj, std::vector<sf::Sound>& allSounds, Affichage & H, Equipes & Meuchant, Equipes & Gentil,Equipes & choix) {
@@ -218,6 +237,11 @@ int main()
 		if (!S.estDebloque(SUCCES_NIV25_3PERSOS) && nb_niv25 >= 3) {
 			S.debloquerSucces(SUCCES_NIV25_3PERSOS);
 			S.affichageDeblocageSucces(SUCCES_NIV25_3PERSOS, allSounds);
+		}
+
+		if (!S.estDebloque(SUCCES_10SUCCES) && S.nbSuccesDebloque()>=10 ) {
+			S.debloquerSucces(SUCCES_10SUCCES);
+			S.affichageDeblocageSucces(SUCCES_10SUCCES, allSounds);
 		}
 		if (Gentil.taille() > 0) {
 			Jouer.afficher(window);

@@ -35,16 +35,16 @@ Animal::Animal(int numero)
 	case 1:
 		for (int i = 0; i < 5; i++) {
 			_pourcentagesActivations[i] = 10 + 5 * i;
-			_ratioMin[i] = 0.05 * pow(2,i)+0.01;
-			_ratioMax[i] = 0.10 * pow(2,i);
+			_ratioMin[i] = 0.04 * pow(2,i)+0.01;
+			_ratioMax[i] = 0.08 * pow(2,i);
 			_type = " soigne le plus faible ";
 		}
 		break;
 	case 2:
 		for (int i = 0; i < 5; i++) {
 			_pourcentagesActivations[i] = 3 + 8 * i;
-			_ratioMin[i] = 0.10 +0.10*i;
-			_ratioMax[i] = 0.15+0.20 * i;
+			_ratioMin[i] = 0.10 +0.08*i;
+			_ratioMax[i] = 0.15+ 0.16 * i;
 			_type = " soigne un allier aleatoire ";
 		}
 		break;
@@ -63,13 +63,13 @@ Animal::Animal(int numero)
 		for (int i = 0; i < 5; i++) {
 			_pourcentagesActivations[i] = 2 + 5 * i;
 			_ratioMin[i] = 0.01 * pow(2, i)+0.02;
-			_ratioMax[i] = 0.01 * pow(2, i*1.0+1.0)+0.04;
+			_ratioMax[i] = 0.01 * pow(2, i*1.0+0.5)+0.03;
 			_type = " attaque de zone ";
 		}
 		break;
 	case 5:
-		_ratioMin[0] = 0.015;
-		_ratioMax[0] = 0.030;
+		_ratioMin[0] = 0.010;
+		_ratioMax[0] = 0.020;
 		_pourcentagesActivations[0] = 5;
 		for (int i = 1; i < 5; i++) {
 			_pourcentagesActivations[i] = _pourcentagesActivations[i-1]+5;
@@ -89,8 +89,8 @@ Animal::Animal(int numero)
 	case 7:
 		for (int i = 0; i < 5; i++) {
 			_pourcentagesActivations[i] = 3 + 8 * i;
-			_ratioMin[i] = 0.03 * pow(2, i);
-			_ratioMax[i] = 0.06 * pow(2, i);
+			_ratioMin[i] = 0.025 * pow(2, i);
+			_ratioMax[i] = 0.05 * pow(2, i);
 			_type = " bouclier le plus faible ";
 		}
 		break;
@@ -98,15 +98,15 @@ Animal::Animal(int numero)
 		for (int i = 0; i < 5; i++) {
 			_pourcentagesActivations[i] = 1 + 10 * i;
 			_ratioMin[i] = 0.05 * (i*1.0+1.0);
-			_ratioMax[i] = 0.10+0.10 * (i*1.0+1.0);
+			_ratioMax[i] = 0.10+0.075 * (i*1.0+1.0);
 			_type = " bouclier un allier aleatoire ";
 		}
 		break;
 	case 9:
 		for (int i = 0; i < 5; i++) {
 			_pourcentagesActivations[i] = 1 + 11 * i;
-			_ratioMin[i] = 0.03 * (i*1.0+1.0)+0.2;
-			_ratioMax[i] = 0.06 * (i*1.0+1.0)+0.4;
+			_ratioMin[i] = 0.025 * (i*1.0+1.0)+0.2;
+			_ratioMax[i] = 0.05 * (i*1.0+1.0)+0.4;
 			_type = " bouclier et soigne le plus faible ";
 		}
 		break;

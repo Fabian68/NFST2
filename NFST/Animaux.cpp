@@ -133,6 +133,15 @@ void Animaux::deblocageAnimal(int indicePersonnage, int indiceAnimal, int rarete
 			S.debloquerSucces(SUCCES_ANIMAL_LEGENDAIRE);
 			S.affichageDeblocageSucces(SUCCES_ANIMAL_LEGENDAIRE, allSounds);	
 		}
+		if (rareteAnimal == 4) {
+			allSounds[5].play();
+		}
+		else {
+			allSounds[6].play();
+		}
+	}
+	else {
+		allSounds[4].play();
 	}
 	/*std::cout << ", voulez voul l'equiper ? Entrer le chiffre 0 si oui ";
 	int entrer;
