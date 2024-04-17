@@ -61,7 +61,7 @@ Animal::Animal(int numero)
 		break;
 	case 4:
 		for (int i = 0; i < 5; i++) {
-			_pourcentagesActivations[i] = 2 + 5 * i;
+			_pourcentagesActivations[i] = 10 + 5 * i;
 			_ratioMin[i] = 0.01 * pow(2, i)+0.02;
 			_ratioMax[i] = 0.01 * pow(2, i*1.0+0.5)+0.03;
 			_type = " attaque de zone ";

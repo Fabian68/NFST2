@@ -364,11 +364,15 @@ void Equipes::ajouterExperience(int xp, Experiences E) {
 	for (int i = 0; i < (int)_equipe.size(); i++) {
 		if (_equipe[i]->possedeObjetNumero(OBJET_PATTE_LAPIN)) {
 			E.ajouterXP(_equipe[i]->id(), xp/3);
-			std::cout << " OBJ7 ";
 		}
 		if (_equipe[i]->possedeObjetNumero(OBJET_BEUH)) {
 			E.ajouterXP(_equipe[i]->id(), xp);
-			std::cout << " OBJ8 ";
+		}
+		if (_equipe[i]->possedeObjetNumero(OBJET_FER_CHEVAL)) {
+			E.ajouterXP(_equipe[i]->id(), xp/4);
+		}
+		if (_equipe[i]->possedeObjetNumero(OBJET_TREFLE_QUATTRE)) {
+			E.ajouterXP(_equipe[i]->id(), xp/2);
 		}
 		E.ajouterXP(_equipe[i]->id(), xp);
 	}

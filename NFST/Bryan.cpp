@@ -2,9 +2,15 @@
 #include "Aleatoire.h"
 #include "Affichage.h"
 
-Bryan::Bryan(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(5, E, O, A, Obj, "Bryan", 1, 4, 4, 15, 15, -100, 0, 0, 20, 3) {
+Bryan::Bryan(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(5, E, O, A, Obj, "Bryan", 1, 4, 4, 15, 15, -50, 0, 0, 20, 3) {
 	ajouterCoupCritique(5);
 	ajouterDegatsCritique(25);
+
+	if (!_texture.loadFromFile("graphics/bryan.png"))
+	{
+		// error...
+	}
+	_sprite.setTexture(_texture);
 }
 
 void Bryan::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)

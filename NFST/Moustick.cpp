@@ -1,8 +1,14 @@
 #include "Moustick.h"
 #include "Affichage.h"
+#include <iostream>
 
 Moustick::Moustick(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(4, E, O, A, Obj, "Moustick", 1, 3, 3, 0, 10, 0, 0, 0, 0, 0) {
-
+	
+	if (!_texture.loadFromFile("graphics/moustick.png"))
+	{
+		// error...
+	}
+	_sprite.setTexture(_texture);
 	status().devientEnmagasineur();
 
 }
@@ -13,11 +19,12 @@ void Moustick::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector<
 	int choix = choixAttaque();
 	int DEGATS;
 
-	int ratio = 100 * static_cast<int>(1.0 - (vie() * 1.0) / (vieMax() * 1.0));
+	int ratio = static_cast <int>(100.0 * (1.0 - (vie() * 1.0) / (vieMax() * 1.0)));
 	ratio = std::min(99, ratio);
 	int ratioPositif = static_cast<int>((vieMax() * 1.0) / (vie() * 1.0))+1;
 	ratioPositif = std::min(ratioPositif, 30);
 	setReduction(ratio);
+	std::cout << pourcentageReduction() << std::endl;
 	
 	switch (choix) {
 
@@ -27,7 +34,6 @@ void Moustick::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector<
 		for (int i = 0; i < (1 + ratioPositif/2)&&equipeEnnemi().estEnVie(); i++) {
 			DEGATS = degats(ratioPositif / 30.0, ratioPositif / 15.0);
 			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(), C, window, allSounds);
-			ajouterMana(1);
 		}
 		ajouterMana(1+ratio/10);
 		break;
@@ -67,17 +73,19 @@ void Moustick::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector<
 
 void Moustick::passif(int tour, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
-	reduireVie(static_cast<int>(vie() / 20.0));
+	reduireVie(static_cast<int>(vie() / 100.0));
 
-	int ratio = 100*static_cast<int>(1.0-(vie() * 1.0) / (vieMax() * 1.0));
+	int ratio = static_cast <int>(100.0 * (1.0 - (vie() * 1.0) / (vieMax() * 1.0)));
 	ratio = std::min(99, ratio);
 	setReduction(ratio);
+	std::cout << pourcentageReduction() << std::endl;
 }
 
 void Moustick::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, Combat & C, int degats, Personnage* P)
 {
-	int ratio = 100 * static_cast<int>(1.0 - (vie() * 1.0) / (vieMax() * 1.0));
+	int ratio = static_cast < int>(100.0 * (1.0 - (vie() * 1.0) / (vieMax() * 1.0)));
 	ratio = std::min(99, ratio);
 	setReduction(ratio);
+	std::cout << pourcentageReduction() << std::endl;
 	
 }

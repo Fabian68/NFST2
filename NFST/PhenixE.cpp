@@ -13,6 +13,10 @@ PhenixE::PhenixE(int LVL, std::string nom,int taille, int difficulte, int animal
 		ajouterChanceDoubleAttaque(15);
 		ajouterChanceHabileter(27);
 		ajouterChanceRicochet(8);
+		if (!_texture.loadFromFile("graphics/phenix4E.png"))
+		{
+			// error...
+		}
 	}
 	else if (taille==3) {
 		setNom("Phénix Adulte");
@@ -23,6 +27,10 @@ PhenixE::PhenixE(int LVL, std::string nom,int taille, int difficulte, int animal
 		ajouterChanceDoubleAttaque(10);
 		ajouterChanceHabileter(9);
 		ajouterChanceRicochet(4);
+		if (!_texture.loadFromFile("graphics/phenix3E.png"))
+		{
+			// error...
+		}
 	}
 	else if (taille==2) {
 		setNom("Jeune Phénix");
@@ -33,10 +41,19 @@ PhenixE::PhenixE(int LVL, std::string nom,int taille, int difficulte, int animal
 		ajouterChanceDoubleAttaque(5);
 		ajouterChanceHabileter(3);
 		ajouterChanceRicochet(2);
+		if (!_texture.loadFromFile("graphics/phenix2E.png"))
+		{
+			// error...
+		}
 	}
 	else {
 		setNom("Bebe Phénix");
+		if (!_texture.loadFromFile("graphics/phenixE.png"))
+		{
+			// error...
+		}
 	}
+	_sprite.setTexture(_texture);
 	status().setReducteur(1 * niveau());
 	status().setAdducteur(1 * niveau());
 	_taille = taille;

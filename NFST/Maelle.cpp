@@ -4,6 +4,11 @@
 Maelle::Maelle(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(13, E, O, A, Obj, "Maelle", 3, 3, 1, 30, 30, -20, 0, 20, 0, 0)
 {
 	estTransformer = false;
+	if (!_texture.loadFromFile("graphics/maelle.png"))
+	{
+		// error...
+	}
+	_sprite.setTexture(_texture);
 }
 
 void Maelle::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
@@ -64,15 +69,20 @@ void Maelle::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< s
 			ajouterMana(-2);
 			break;
 		case 3:
-			if (estTransformer == false) {
+			if (estTransformer == false && mana()>=10) {
 				Affichage().dessinerTexte(nom() + " Se transforme en dinausore ! ",window);
 				setNom("Maellosaure");
 				ajouterForce(force());
 				ajouterVitesse(vitesse());
 				ajouterVieMax(9 * vieMax());
 				ajouterChanceHabileter(20);
-				ajouterMana(-3);
+				ajouterMana(-10);
 				estTransformer = true;
+				if (!_texture.loadFromFile("graphics/Maellosaure.png"))
+				{
+					// error...
+				}
+				_sprite.setTexture(_texture);
 			}
 			else {
 				ajouterMana(3);

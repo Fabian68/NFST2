@@ -25,6 +25,7 @@ class Personnage
 public:
 	Personnage(int id, Experiences E,Orbes O,Animaux A,Objets Obj, std::string nom, int vieLVL, int attaqueLVL, int vitesseLVL, int chanceDoubleAttaque, int chanceHabilete, int pourcentageReduction, int pourcentageDeviation, int pourcentageBlocage, int pourcentageEsquive, int pourcentageRicochet);
 	Personnage(int LVL, std::string nom, int vieLVL, int attaqueLVL, int vitesseLVL, int chanceDoubleAttaque, int chanceHabilete, int pourcentageReduction, int pourcentageDeviation, int pourcentageBlocage, int pourcentageEsquive, int pourcentageRicochet,int indiceAnimal,int rareteAnimal);
+	sf::Sprite & sprite();
 	virtual ~Personnage();
 	int id() const;
 	int mana()const;
@@ -148,5 +149,8 @@ private:
 	int _derniereActionMontant;
 	int _derniereActionType;
 	bool _sonTour;
+protected:
+	sf::Texture _texture;
+	sf::Sprite _sprite;
 };
 

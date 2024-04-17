@@ -10,6 +10,10 @@ Tortue::Tortue(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(14, E
 		ajouterVitesse(-3*niveau());
 		ajouterVie((long long int)120 * niveau());
 		ajouterReduction(80);
+		if (!_texture.loadFromFile("graphics/tortue4.png"))
+		{
+			// error...
+		}
 	}
 	else if (niveau() > 99) {
 		setNom("Adulte tortue");
@@ -17,6 +21,10 @@ Tortue::Tortue(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(14, E
 		ajouterVitesse(-2*niveau());
 		ajouterVie((long long int)40 * niveau());
 		ajouterReduction(50);
+		if (!_texture.loadFromFile("graphics/tortue3.png"))
+		{
+			// error...
+		}
 	}
 	else if (niveau() > 9) {
 		setNom("Jeune tortue");
@@ -24,10 +32,19 @@ Tortue::Tortue(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(14, E
 		ajouterVitesse(-niveau());
 		ajouterVie((long long int)10 * niveau());
 		ajouterReduction(20);
+		if (!_texture.loadFromFile("graphics/tortue2.png"))
+		{
+			// error...
+		}
 	}
 	else {
 		setNom("Bebe tortue");
+		if (!_texture.loadFromFile("graphics/bebe_tortue.png"))
+		{
+			// error...
+		}
 	}
+	_sprite.setTexture(_texture);
 	status().setReducteur(2 * niveau());
 	status().devientEnmagasineur();
 }

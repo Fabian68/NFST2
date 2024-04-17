@@ -3,6 +3,11 @@
 #include "Aleatoire.h"
 Thomas::Thomas(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(2, E, O, A,Obj, "Thomas", 6, 3, 1, 0, 10, 50, 3, 5, 0, 3)
 {
+	if (!_texture.loadFromFile("graphics/thomas.png"))
+	{
+		// error...
+	}
+	_sprite.setTexture(_texture);
 }
 
 void Thomas::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)

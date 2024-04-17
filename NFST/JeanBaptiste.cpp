@@ -9,6 +9,11 @@ JeanBaptiste::JeanBaptiste(Experiences E, Orbes O, Animaux A, Objets Obj) : Pers
 	if (Aleatoire(0, 1000).entier() == 1) {
 		setNom("Jean Le Baptiste");
 	}
+	if (!_texture.loadFromFile("graphics/jb.png"))
+	{
+		// error...
+	}
+	_sprite.setTexture(_texture);
 }
 
 
@@ -62,7 +67,11 @@ void JeanBaptiste::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vec
 void JeanBaptiste::passif(int tour, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	int xp;
-	
+	if ((tour + 1) % 5 == 0) {
+		for (int i = 0;i < equipeAllier().taille();i++) {
+			equipeAllier()[i]->ajouterMana(1);
+		}
+	}
 	if ((tour + 1) % 10 == 0) {
 		Affichage().dessinerTexte(nom() + " donne de l'xp a lequipe ! ",window);
 		if (niveau() >= 7000) {

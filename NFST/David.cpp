@@ -2,7 +2,14 @@
 #include "Aleatoire.h"
 #include "Affichage.h"
 
-David::David(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(6, E, O, A, Obj, "David", 1, 1, 6, 0, 30, 0, 3, 0, 0, 3) {}
+David::David(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(6, E, O, A, Obj, "David", 1, 1, 6, 0, 30, 0, 3, 0, 0, 3) {
+
+	if (!_texture.loadFromFile("graphics/david.png"))
+	{
+		// error...
+	}
+	_sprite.setTexture(_texture);
+}
 
 
 void David::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)

@@ -84,6 +84,13 @@ void Zones::equipeEnZone(int i,Equipes & E)
 		E.ajouterPerso(new Sanglier(10, "Petit sanglier"));
 		E.ajouterPerso(new Lapin(6, "Lapin"));
 		E.ajouterPerso(new Sanglier(8, "Petit sanglier"));
+		E.ajouterPerso(new Lapin(2, "Lapin nain"));
+		E.ajouterPerso(new Lapin(3, "Petit lapin"));
+		E.ajouterPerso(new Lapin(1, "Lapin nain"));
+		E.ajouterPerso(new Lapin(4, "Petit lapin"));
+		E.ajouterPerso(new Lapin(2, "Lapin nain"));
+		E.ajouterPerso(new Lapin(4, "Petit lapin"));
+		E.ajouterPerso(new Lapin(2, "Lapin nain"));
 		break;
 	case 8:
 		E.ajouterPerso(new Sanglier(12, "Petit sanglier"));
@@ -97,35 +104,36 @@ void Zones::equipeEnZone(int i,Equipes & E)
 		E.ajouterPerso(new TortueE(9, ""));
 		break;
 	case 10:
-		E.ajouterPerso(new Sanglier(18, "SANGLINOLANT", 1, 9, 1));
+		E.ajouterPerso(new Sanglier(16, "SANGLINOLANT", 1, 9, 1));
 		E.ajouterPerso(new Sanglier(15, "Petit sanglier"));
 		E.ajouterPerso(new Sanglier(12, "Petit sanglier"));
-		E.ajouterPerso(new Sanglier(17, "SANGLOT", 1, 9, 1));
+		E.ajouterPerso(new Sanglier(15, "SANGLOT", 1, 9, 1));
 		break;
 	case 11:
-		E.ajouterPerso(new Sanglier(20, "Sanglier"));
-		E.ajouterPerso(new Lapin(22, "Lapin"));
+		E.ajouterPerso(new Sanglier(22, "Sanglier"));
+		E.ajouterPerso(new Lapin(26, "Lapin"));
 		E.ajouterPerso(new Cerf(20, "Cerf a rien"));
 		E.ajouterPerso(new Lapin(25, "Teddy"));
-		E.ajouterPerso(new PhenixE(30, "phephe"));
+		E.ajouterPerso(new PhenixE(32, "phephe"));
 		break;
 	case 12:
 		E.ajouterPerso(new Sanglier(25, "Sanglier"));
-		E.ajouterPerso(new Lapin(24, "Lapinot"));
-		E.ajouterPerso(new Cerf(27, "Cerf volant"));
-		E.ajouterPerso(new Cerf(28, "Cerfsceau"));
+		E.ajouterPerso(new Lapin(28, "Lapinot"));
+		E.ajouterPerso(new Cerf(31, "Cerf volant"));
+		E.ajouterPerso(new Cerf(33, "Cerfsceau"));
 		break;
 	case 13:
-		E.ajouterPerso(new Sanglier(32, "Sanglier"));
-		E.ajouterPerso(new Cerf(29, "Cerftrude"));
-		E.ajouterPerso(new Cerf(30, "Cerftoi"));
-		E.ajouterPerso(new Cerf(35, "Dans sa maison un grand cerf"));
+		E.ajouterPerso(new Sanglier(35, "Sanglier"));
+		E.ajouterPerso(new Cerf(34, "Cerftrude"));
+		E.ajouterPerso(new Cerf(36, "Cerftoi"));
+		E.ajouterPerso(new Cerf(38, "Dans sa maison un grand cerf"));
 		break;
 	case 14:
-		E.ajouterPerso(new Sanglier(35, "Sanglier"));
-		E.ajouterPerso(new Cerf(32, "Cerftrude"));
-		E.ajouterPerso(new Cerf(32, "Cerftoi"));
-		E.ajouterPerso(new Cerf(37, "Dans sa maison un grand cerf"));
+		E.ajouterPerso(new Sanglier(37, "Sanglier"));
+		E.ajouterPerso(new Cerf(38, "Cerftrude"));
+		E.ajouterPerso(new Cerf(39, "Cerftoi"));
+		E.ajouterPerso(new Cerf(38, "Dans sa maison un grand cerf"));
+		E.ajouterPerso(new TortueE(41, ""));
 		break;
 	case 15:
 		E.ajouterPerso(new Cerf(42, "Cerf d'acier",2,8,2));
@@ -138,6 +146,7 @@ void Zones::equipeEnZone(int i,Equipes & E)
 		E.ajouterPerso(new Cerf(52, "Cerf"));
 		E.ajouterPerso(new Cerf(57, "Cerf"));
 		E.ajouterPerso(new Lapin(59, "Lapin"));
+		E.ajouterPerso(new PhenixE(65, "Phenwick",2));
 		break;
 	case 17:
 		E.ajouterPerso(new Sanglier(60, "Sanglier"));
@@ -159,9 +168,9 @@ void Zones::equipeEnZone(int i,Equipes & E)
 		break;
 	case 20:
 		E.ajouterPerso(new Lapin(90, "Lapinou",2,9,5));
-		E.ajouterPerso(new Lapin(95, "Lapin",0,2,1));
-		E.ajouterPerso(new Cerf(99, "Cerf",0,3,2));
-		E.ajouterPerso(new Sanglier(92, "Sanglier",0,5,2));
+		E.ajouterPerso(new Lapin(95, "Lapinouboss",1,2,1));
+		E.ajouterPerso(new Cerf(99, "Cerfa",1,3,2));
+		E.ajouterPerso(new Sanglier(92, "ROi des Sangliers",2,5,2));
 		E.ajouterPerso(new TortueE(99, ""));
 		E.perso(0)->setObjets(obj.objetNumero(10), obj.objetNumero(11));
 		break;
@@ -225,21 +234,21 @@ void Zones::equipeEnZone(int i,Equipes & E)
 		E.perso(3)->setObjets(obj.objetNumero(15), obj.objetNumero(16));
 		break;
 	case 30:
-		E.ajouterPerso(new Zombie(200, "Zombie Cochon",0,1,3));
+		E.ajouterPerso(new Zombie(200, "Zombie Cochon",3,1,3));
 		E.ajouterPerso(new Creeper(199, "Creeper",1));
 		E.ajouterPerso(new Ghast(200, "Ghast"));
 		E.ajouterPerso(new WitherSquelette(200, "Wither Squelette"));
 		E.perso(0)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		break;
 	case 31:
-		E.ajouterPerso(new Zombie(210, "Zombie Cochon", 0, 1, 3));
+		E.ajouterPerso(new Zombie(210, "Zombie Cochon", 3, 1, 3));
 		E.ajouterPerso(new Ghast(215, "Ghast"));
 		E.ajouterPerso(new Ghast(210, "Ghast"));
 		E.ajouterPerso(new WitherSquelette(220, "Wither Squelette"));
 		E.perso(0)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		break;
 	case 32:
-		E.ajouterPerso(new Zombie(220, "Zombie Cochon", 0, 1, 3));
+		E.ajouterPerso(new Zombie(220, "Zombie Cochon", 3, 1, 3));
 		E.ajouterPerso(new WitherSquelette(225, "Wither Squelette"));
 		E.ajouterPerso(new WitherSquelette(230, "Wither Squelette"));
 		E.ajouterPerso(new WitherSquelette(222, "Wither Squelette"));
@@ -867,22 +876,25 @@ int Zones::nbPersoJouable() const
 	if (_niveauMax >= 6) {
 		nb++;
 	}
-	if (_niveauMax >= 16) {
+	if (_niveauMax >= 11) {
 		nb++;
 	}
-	if (_niveauMax >= 34) {
+	if (_niveauMax >= 21) {
+		nb++;
+	}
+	if (_niveauMax >= 31) {
+		nb++;
+	}
+	if (_niveauMax >= 41) {
 		nb++;
 	}
 	if (_niveauMax >= 51) {
 		nb++;
 	}
-	if (_niveauMax >= 60) {
+	if (_niveauMax >= 61) {
 		nb++;
 	}
-	if (_niveauMax >= 70) {
-		nb++;
-	}
-	if (_niveauMax >= 77) {
+	if (_niveauMax >= 76) {
 		nb++;
 	}
 	return nb;

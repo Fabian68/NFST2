@@ -3,7 +3,7 @@
 #include "Affichage.h"
 
 
-Nicolas::Nicolas(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(1, E, O, A, Obj, "Niquola", 4, 4, 4, 10, 0, 20, 0, 25, 0, 0) {
+Nicolas::Nicolas(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(1, E, O, A, Obj, "Niquola", 3, 3, 3, 10, 0, 20, 0, 25, 0, 0) {
 
 	status().devientEnmagasineur();
 	_compteur_tour_joue = 0;
@@ -14,6 +14,11 @@ Nicolas::Nicolas(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(1, 
 	else if (Aleatoire(0, 1000).entier() == 52) {
 		setNom("Nicla");
 	}
+	if (!_texture.loadFromFile("graphics/nicolas.png"))
+	{
+		// error...
+	}
+	_sprite.setTexture(_texture);
  //ajouter Nicla
 }
 

@@ -42,15 +42,15 @@ void AffichageCombat::dessinerTexteModificationVie(Personnage* P, sf::RenderWind
 	int ACTION = P->getDerniereActionType();
 	float x;
 	if (P->equipeAllier().ia()) {
-		x = 1200.f - 95.f;
+		x = 1200.f - 195.f;
 	}
 	else {
-		x = 310.f;
+		x = 430.f;
 	}
 
-	float y = -20.f + 70.f * (float)(P->indiceEquipe() + 1);
+	float y = -35.f + 100.f * (float)(P->indiceEquipe() + 1);
 
-	std::string texte = " - " + conversion(montant);
+	std::string texte = conversion(montant);
 	switch (ACTION) {
 	case actionDEGATS:
 		afficherTexte(x, y, texte, sf::Color::Red, window);
@@ -69,16 +69,16 @@ void AffichageCombat::dessinerJoueur(int indice, bool equipeIA, Personnage* P, s
 	sf::Color couleurTexte;
 	sf::Color couleurFond = sf::Color::Black;
 	if (equipeIA) {
-		x = 1180.f - 360.f;
+		x = 1180.f - 460.f;
 		couleurTexte = sf::Color::Red;
 	}
 	else {
-		x = 20.f;
+		x = 130.f;
 		couleurTexte = sf::Color::Green;
 	}
 	std::string str = P->nom() + " " + std::to_string(P->niveau());
 	
-	float y = -50.f + 70.f * (float)indice;
+	float y = -65.f + 100.f * (float)indice;
 
 	sf::RectangleShape rectangle1(sf::Vector2f(360.f, 65.f));
 	rectangle1.setOutlineColor(couleurTexte);
@@ -91,6 +91,14 @@ void AffichageCombat::dessinerJoueur(int indice, bool equipeIA, Personnage* P, s
 	}
 	rectangle1.setPosition(sf::Vector2f(x, y));
 	(*window).draw(rectangle1);
+
+	if (equipeIA) {
+		P->sprite().setPosition(sf::Vector2f(x-136.f , y - 30.f));
+	}
+	else {
+		P->sprite().setPosition(sf::Vector2f(x + 361.f, y - 30.f));
+	}
+	window->draw(P->sprite());
 
 	afficherTexte(x + 2.f, y + 5.f, str, couleurTexte, window);
 	
@@ -203,6 +211,147 @@ void AffichageCombat::dessinerJoueur(int indice, bool equipeIA, Personnage* P, s
 	afficherTexte(x + 210.f, y + 43.f, str, couleurTexte, window);
 	
 	dessinerTexteModificationVie(P, window);
+
+	int pourcentage = 0;
+	float max = (float)std::max(P->equipeAllier().meilleurDegats()->stats().degatsProvoquer(), P->equipeEnnemi().meilleurDegats()->stats().degatsProvoquer());
+	pourcentage = (int)(100.f * ((float)P->stats().degatsProvoquer() / max));
+	if (pourcentage < 0 || pourcentage >100) {
+		pourcentage = 0;
+	}
+
+	sf::Color couleur1 = sf::Color::Red;
+	sf::Color couleur2 = sf::Color::Black;
+	float val1 = (float)pourcentage;
+	float val2 = -(float)pourcentage + 100.f;
+	x = 5.f;
+	if (equipeIA) {
+		x = 1088.f;
+		val2 = (float)pourcentage;
+		val1 = -(float)pourcentage + 100.f;
+		couleur1 = sf::Color::Black;
+		couleur2 = sf::Color::Red;
+	}
+	
+	sf::RectangleShape rectangleP1(sf::Vector2f(val1 , 15.f));
+	rectangleP1.setOutlineColor(sf::Color::White);
+	rectangleP1.setOutlineThickness(1.f);
+	rectangleP1.setFillColor(couleur1);
+	rectangleP1.setPosition(sf::Vector2f(x , y));
+	(*window).draw(rectangleP1);
+
+	sf::RectangleShape rectangleP2(sf::Vector2f(val2, 15.f));
+	rectangleP2.setOutlineColor(sf::Color::White);
+	rectangleP2.setOutlineThickness(1.f);
+	rectangleP2.setFillColor(couleur2);
+	rectangleP2.setPosition(sf::Vector2f(x  + val1 , y));
+	(*window).draw(rectangleP2);
+
+	afficherTexte(x + 52.f, y, conversion(P->stats().degatsProvoquer()), sf::Color::White, window);
+
+	y += 16.f;
+	pourcentage = 0;
+	max = (float)std::max(P->equipeAllier().meilleurTank()->stats().degatsRecu(), P->equipeEnnemi().meilleurTank()->stats().degatsRecu());
+	pourcentage = (int)(100.f * ((float)P->stats().degatsRecu() / max));
+	if (pourcentage < 0 || pourcentage >100) {
+		pourcentage = 0;
+	}
+
+	couleur1 = sf::Color(51, 102, 0);
+	couleur2 = sf::Color::Black;
+
+	val1 = (float)pourcentage;
+	val2 = -(float)pourcentage + 100.f;
+	if (equipeIA) {
+		val2 = (float)pourcentage;
+		val1 = -(float)pourcentage + 100.f;
+		couleur1 = sf::Color::Black;
+		couleur2 = sf::Color(51, 102, 0);
+	}
+	sf::RectangleShape rectangleD1(sf::Vector2f(val1, 15.f));
+	rectangleD1.setOutlineColor(sf::Color::White);
+	rectangleD1.setOutlineThickness(1.f);
+	rectangleD1.setFillColor(couleur1);
+	rectangleD1.setPosition(sf::Vector2f(x, y));
+	(*window).draw(rectangleD1);
+
+	sf::RectangleShape rectangleD2(sf::Vector2f(val2, 15.f));
+	rectangleD2.setOutlineColor(sf::Color::White);
+	rectangleD2.setOutlineThickness(1.f);
+	rectangleD2.setFillColor(couleur2);
+	rectangleD2.setPosition(sf::Vector2f(x + val1, y));
+	(*window).draw(rectangleD2);
+
+	afficherTexte(x + 52.f, y, conversion(P->stats().degatsRecu()), sf::Color::White, window);
+
+	y += 16.f;
+	pourcentage = 0;
+	max = (float)std::max(P->equipeAllier().meilleurSoigneur()->stats().soinsDonner(), P->equipeEnnemi().meilleurSoigneur()->stats().soinsDonner());
+	pourcentage = (int)(100.f * ((float)P->stats().soinsDonner() / max));
+	if (pourcentage < 0 || pourcentage >100) {
+		pourcentage = 0;
+	}
+
+	couleur1 = sf::Color::Green;
+	couleur2 = sf::Color::Black;
+
+	val1 = (float)pourcentage;
+	val2 = -(float)pourcentage + 100.f;
+	if (equipeIA) {
+		val2 = (float)pourcentage;
+		val1 = -(float)pourcentage + 100.f;
+		couleur1 = sf::Color::Black;
+		couleur2 = sf::Color::Green;
+	}
+	sf::RectangleShape rectangleS1(sf::Vector2f(val1, 15.f));
+	rectangleS1.setOutlineColor(sf::Color::White);
+	rectangleS1.setOutlineThickness(1.f);
+	rectangleS1.setFillColor(couleur1);
+	rectangleS1.setPosition(sf::Vector2f(x, y));
+	(*window).draw(rectangleS1);
+
+	sf::RectangleShape rectangleS2(sf::Vector2f(val2, 15.f));
+	rectangleS2.setOutlineColor(sf::Color::White);
+	rectangleS2.setOutlineThickness(1.f);
+	rectangleS2.setFillColor(couleur2);
+	rectangleS2.setPosition(sf::Vector2f(x + val1, y));
+	(*window).draw(rectangleS2);
+
+	afficherTexte(x + 52.f, y, conversion(P->stats().soinsDonner()), sf::Color::White, window);
+
+	y += 16.f;
+	pourcentage = 0;
+	max = (float)std::max(P->equipeAllier().meilleurBouclier()->stats().bouclierDonner(), P->equipeEnnemi().meilleurBouclier()->stats().bouclierDonner());
+	pourcentage = (int)(100.f * ((float)P->stats().bouclierDonner() / max));
+	if (pourcentage < 0 || pourcentage >100) {
+		pourcentage = 0;
+	}
+
+	couleur1 = sf::Color::Magenta;
+	couleur2 = sf::Color::Black;
+
+	val1 = (float)pourcentage;
+	val2 = -(float)pourcentage + 100.f;
+	if (equipeIA) {
+		val2 = (float)pourcentage;
+		val1 = -(float)pourcentage + 100.f;
+		couleur1 = sf::Color::Black;
+		couleur2 = sf::Color::Magenta;
+	}
+	sf::RectangleShape rectangleB1(sf::Vector2f(val1, 15.f));
+	rectangleB1.setOutlineColor(sf::Color::White);
+	rectangleB1.setOutlineThickness(1.f);
+	rectangleB1.setFillColor(couleur1);
+	rectangleB1.setPosition(sf::Vector2f(x, y));
+	(*window).draw(rectangleB1);
+
+	sf::RectangleShape rectangleB2(sf::Vector2f(val2, 15.f));
+	rectangleB2.setOutlineColor(sf::Color::White);
+	rectangleB2.setOutlineThickness(1.f);
+	rectangleB2.setFillColor(couleur2);
+	rectangleB2.setPosition(sf::Vector2f(x + val1, y));
+	(*window).draw(rectangleB2);
+
+	afficherTexte(x + 52.f, y, conversion(P->stats().bouclierDonner()), sf::Color::White, window);
 }
 
 void AffichageCombat::dessinerEquipeJoueur(Equipes J, sf::RenderWindow* window) const
@@ -219,6 +368,145 @@ void AffichageCombat::dessinerEquipeIA(Equipes I, sf::RenderWindow* window) cons
 	}
 }
 
+void AffichageCombat::dessinerStatsJoueur(int indice,Equipes E, bool equipeIA, Personnage* P, sf::RenderWindow* window) const
+{
+	float x=0.f;
+	sf::Color couleurTexte = sf::Color::White;
+	sf::Color couleurFond = sf::Color::Black;
+	sf::Color couleurRectangle = sf::Color::Red;
+
+	std::string categorie = "";
+	int pourcentage = 0;
+
+	std::string str = P->nom() + " " + std::to_string(P->niveau());
+
+	float y = 0.0;
+
+	if (equipeIA) {
+		y = 400.f;
+		couleurTexte = sf::Color::Red;
+	}
+	else {
+		y = 20.f;
+		couleurTexte = sf::Color::Green;
+	}
+
+	categorie = "Dégats infligés";
+	pourcentage = (int)(100.f * ((float)P->stats().degatsProvoquer() / (float)E.meilleurDegats()->stats().degatsProvoquer()));
+	if (pourcentage < 0 || pourcentage >100) {
+		pourcentage = 0;
+	}
+	afficherTexte(x + 150.f, 5.f, categorie, sf::Color::Red, window);
+
+	y = y + 30.f * (float)indice -20.f;
+
+	afficherTexte(x + 2.f, y, str, couleurTexte, window);
+
+	sf::RectangleShape rectangleP1(sf::Vector2f((float)pourcentage * 2.f, 15.f));
+	rectangleP1.setOutlineColor(sf::Color::White);
+	rectangleP1.setOutlineThickness(1.f);
+	rectangleP1.setFillColor(couleurRectangle);
+	rectangleP1.setPosition(sf::Vector2f(x + 102.f, y));
+	(*window).draw(rectangleP1);
+
+	sf::RectangleShape rectangleP2(sf::Vector2f(-(float)pourcentage * 2.f + 200.f, 15.f));
+	rectangleP2.setOutlineColor(sf::Color::White);
+	rectangleP2.setOutlineThickness(1.f);
+	rectangleP2.setFillColor(sf::Color::Black);
+	rectangleP2.setPosition(sf::Vector2f(x + 102.f + (float)pourcentage * 2.f, y));
+	(*window).draw(rectangleP2);
+
+	afficherTexte(x + 152.f, y, conversion(P->stats().degatsProvoquer()), sf::Color::White, window);
+
+	x += 225.f;
+	couleurRectangle = sf::Color::Green;
+	categorie = "Dégats subis";
+	pourcentage = (int)(100.f * ((float)P->stats().degatsRecu() / (float)E.meilleurTank()->stats().degatsRecu()));
+	if (pourcentage < 0 || pourcentage >100) {
+		pourcentage = 0;
+	}
+	afficherTexte(x + 150.f, 5.f, categorie, sf::Color::Green, window);
+
+	sf::RectangleShape rectangleS1(sf::Vector2f((float)pourcentage * 2.f, 15.f));
+	rectangleS1.setOutlineColor(sf::Color::White);
+	rectangleS1.setOutlineThickness(1.f);
+	rectangleS1.setFillColor(couleurRectangle);
+	rectangleS1.setPosition(sf::Vector2f(x + 102.f, y));
+	(*window).draw(rectangleS1);
+
+	sf::RectangleShape rectangleS2(sf::Vector2f(-(float)pourcentage * 2.f + 200.f, 15.f));
+	rectangleS2.setOutlineColor(sf::Color::White);
+	rectangleS2.setOutlineThickness(1.f);
+	rectangleS2.setFillColor(sf::Color::Black);
+	rectangleS2.setPosition(sf::Vector2f(x + 102.f + (float)pourcentage * 2.f, y));
+	(*window).draw(rectangleS2);
+
+	afficherTexte(x + 152.f, y, conversion(P->stats().degatsRecu()), sf::Color::White, window);
+
+	x += 225.f;
+	couleurRectangle = sf::Color::Green;
+	categorie = "Soins provoqués";
+	pourcentage = (int)(100.f * ((float)P->stats().soinsDonner() / (float)E.meilleurSoigneur()->stats().soinsDonner()));
+	if (pourcentage < 0 || pourcentage >100) {
+		pourcentage = 0;
+	}
+	afficherTexte(x + 150.f, 5.f, categorie, sf::Color::Green, window);
+
+	sf::RectangleShape rectangleSo1(sf::Vector2f((float)pourcentage * 2.f, 15.f));
+	rectangleSo1.setOutlineColor(sf::Color::White);
+	rectangleSo1.setOutlineThickness(1.f);
+	rectangleSo1.setFillColor(couleurRectangle);
+	rectangleSo1.setPosition(sf::Vector2f(x + 102.f, y));
+	(*window).draw(rectangleSo1);
+
+	sf::RectangleShape rectangleSo2(sf::Vector2f(-(float)pourcentage * 2.f + 200.f, 15.f));
+	rectangleSo2.setOutlineColor(sf::Color::White);
+	rectangleSo2.setOutlineThickness(1.f);
+	rectangleSo2.setFillColor(sf::Color::Black);
+	rectangleSo2.setPosition(sf::Vector2f(x + 102.f + (float)pourcentage * 2.f, y));
+	(*window).draw(rectangleSo2);
+
+	afficherTexte(x + 152.f, y, conversion(P->stats().soinsDonner()), sf::Color::White, window);
+
+	x += 225.f;
+	couleurRectangle = sf::Color::Magenta;
+	categorie = "Bouclié provoqués";
+	pourcentage = (int)(100.f * ((float)P->stats().bouclierDonner() / (float)E.meilleurBouclier()->stats().bouclierDonner()));
+	if (pourcentage < 0 || pourcentage >100) {
+		pourcentage = 0;
+	}
+	afficherTexte(x + 150.f, 5.f, categorie, sf::Color::Magenta, window);
+
+	sf::RectangleShape rectangleBo1(sf::Vector2f((float)pourcentage * 2.f, 15.f));
+	rectangleBo1.setOutlineColor(sf::Color::White);
+	rectangleBo1.setOutlineThickness(1.f);
+	rectangleBo1.setFillColor(couleurRectangle);
+	rectangleBo1.setPosition(sf::Vector2f(x + 102.f, y));
+	(*window).draw(rectangleBo1);
+
+	sf::RectangleShape rectangleBo2(sf::Vector2f(-(float)pourcentage * 2.f + 200.f, 15.f));
+	rectangleBo2.setOutlineColor(sf::Color::White);
+	rectangleBo2.setOutlineThickness(1.f);
+	rectangleBo2.setFillColor(sf::Color::Black);
+	rectangleBo2.setPosition(sf::Vector2f(x + 102.f + (float)pourcentage * 2.f, y));
+	(*window).draw(rectangleBo2);
+
+	afficherTexte(x + 152.f, y, conversion(P->stats().bouclierDonner()), sf::Color::White, window);
+}
+
+void AffichageCombat::dessinerStatsEquipeJoueur(Equipes J, sf::RenderWindow* window) const
+{
+	for (int i = 0; i < J.taille(); i++) {
+		dessinerStatsJoueur(i + 1,J, false, J.perso(i), window);
+	}
+}
+
+void AffichageCombat::dessinerStatsEquipeIA(Equipes I, sf::RenderWindow* window) const
+{
+	for (int i = 0; i < I.taille(); i++) {
+		dessinerStatsJoueur(i + 1, I, true, I.perso(i), window);
+	}
+}
 void AffichageCombat::dessinerDeuxEquipes(Equipes Joueur, Equipes IA, Combat & C, sf::RenderWindow* window) const
 {
 	window->draw(C.fond());
@@ -229,7 +517,7 @@ void AffichageCombat::dessinerDeuxEquipes(Equipes Joueur, Equipes IA, Combat & C
 	sf::Event event;
 	while (window->pollEvent(event))
 	{
-		
+
 	}
 	(*window).display();
 	sf::Time  DELAY = sf::milliseconds(Delais().getDelais() * 20);
@@ -238,6 +526,21 @@ void AffichageCombat::dessinerDeuxEquipes(Equipes Joueur, Equipes IA, Combat & C
 	//cleanMainZone(window);
 }
 
+void AffichageCombat::dessinerStatistiques(Equipes Joueur, Equipes IA, Combat& C, sf::RenderWindow* window) const
+{
+	(*window).clear();
+	dessinerStatsEquipeJoueur(Joueur, window);
+	dessinerStatsEquipeIA(IA, window);
+	sf::Event event;
+	while (window->pollEvent(event))
+	{
+
+	}
+	(*window).display();
+
+	
+	//cleanMainZone(window);
+}
 void AffichageCombat::dessinerAttaque(Personnage* Attaquant, Personnage* Defenseur, sf::RenderWindow* window) {
 
 	int i, j;
@@ -327,8 +630,8 @@ void AffichageCombat::afficherStats(Equipes joueur, sf::RenderWindow* window) {
 
 void AffichageCombat::dessinerTour(std::vector<Personnage*> quiJoue,int index, sf::RenderWindow* window)
 {
-	float hauteur1 = 801.f;
-	float hauteur2 = 824.f;
+	float hauteur1 = 1026.f;
+	float hauteur2 = 1045.f;
 	float rectangleHauteur = hauteur2 - hauteur1;
 
 	int nbQuiJoue = quiJoue.size();

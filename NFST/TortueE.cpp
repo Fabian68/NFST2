@@ -10,6 +10,10 @@ TortueE::TortueE(int LVL, std::string nom, int difficulte, int animal, int raret
 		ajouterVitesse(-3 * niveau());
 		ajouterVie((long long int)520 * niveau());
 		ajouterReduction(80);
+		if (!_texture.loadFromFile("graphics/tortue4E.png"))
+		{
+			// error...
+		}
 	}
 	else if (niveau() > 99) {
 		setNom("Adulte tortue");
@@ -17,6 +21,10 @@ TortueE::TortueE(int LVL, std::string nom, int difficulte, int animal, int raret
 		ajouterVitesse(-2 * niveau());
 		ajouterVie((long long int)160 * niveau());
 		ajouterReduction(50);
+		if (!_texture.loadFromFile("graphics/tortue3E.png"))
+		{
+			// error...
+		}
 	}
 	else if (niveau() > 9) {
 		setNom("Jeune tortue");
@@ -24,10 +32,19 @@ TortueE::TortueE(int LVL, std::string nom, int difficulte, int animal, int raret
 		ajouterVitesse(-niveau());
 		ajouterVie((long long int)40 * niveau());
 		ajouterReduction(20);
+		if (!_texture.loadFromFile("graphics/tortue2E.png"))
+		{
+			// error...
+		}
 	}
 	else {
 		setNom("Bebe tortue");
+		if (!_texture.loadFromFile("graphics/bebe_tortue_e.png"))
+		{
+			// error...
+		}
 	}
+	_sprite.setTexture(_texture);
 	status().setReducteur(2 * niveau());
 	status().devientEnmagasineur();
 }

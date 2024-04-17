@@ -128,10 +128,10 @@ Objets::Objets()
 	_listeObjets.push_back(Objet("Némésis", 37, 10000, "Faites 50% plus de dégats a l'ennemi qui a la même position dans son equipe que vous dans la votre et recever deux fois moins de dégats de sa part"));
 	_listeObjets.push_back(Objet("Casse-noix", 38, 1000, "Vous faites 50% de dégats en plus a un ennemi qui possède un bouclier et 100% a un ennemis qui possede tout son bouclier"));
 	_listeObjets.push_back(Objet("Esprit du guerrier", 39, 1000, "Vous faites 1% de dégats en plus pour chaque pourceentage de point de vie qu'ils vous manquent"));
-	_listeObjets.push_back(Objet("T6wins", 40, 10000, "Un ricochet envoie 2 attaques au lieu d'une"));
+	_listeObjets.push_back(Objet("T6wins", 40, 10000, "Un ricochet envoie 2 attaques au lieu d'une, +2% chance de ricochets"));
 	_listeObjets.push_back(Objet("Oeil d'aigle", 41, 100000, "Vos attaques font des dégats supplémentaires équivalent a 1% de la vie actuelle de l'ennemi "));
 	_listeObjets.push_back(Objet("Peau épaisse", 42, 100000, "Vous recever des dégats en moins équivalent a 1% de votre vie maximum "));
-	_listeObjets.push_back(Objet("Dildo", 43, 100000, "Vos attaques passent a travers de la reduction de dégats et des blocages "));
+	_listeObjets.push_back(Objet("Dildo", 43, 100000, "Vos attaques passent a travers 50% de la reduction de dégats et des blocages "));
 	_listeObjets.push_back(Objet("Oeuf de Tortue", 44, 10000, "Permet de jouer un nouveau personnage, pas besoin de l'équiper "));
 	_listeObjets.push_back(Objet("Cendre de Phénix", 45, 10000, "Permet de jouer un nouveau personnage, pas besoin de l'équiper  "));
 	_listeObjets.push_back(Objet("Hantise", 46, 1000, "Le personnage equiper fais 3 fois plus de dégats s'il est KO"));
@@ -139,7 +139,12 @@ Objets::Objets()
 	_listeObjets.push_back(Objet("Spartan armor", 48, 10000, "Vous faites plus de dégats en fonction du montant d'armure actuelle jusqu'a +100%"));
 	_listeObjets.push_back(Objet("Avance rapide", 49, 1000, "Les combats vont deux fois plus vite"));
 	_listeObjets.push_back(Objet("Vase antique magique", 50, 100000, "+1 mana par tour, +3% de dégats par points de mana"));
-
+	_listeObjets.push_back(Objet("Racine Eternel", 51, 10000, "+ 0,1-1% de votre vie en dégats supplémentaires"));
+	_listeObjets.push_back(Objet("Force grandissante", 52, 10000, " -10% de dégats critiques, +1% de dégats critique par tour"));
+	_listeObjets.push_back(Objet("Bouclier amélioré", 53, 10000, " reduit de 25% les dégats subis pendant que bouclier"));
+	_listeObjets.push_back(Objet("Maladresse", 54, 1000, " +10% dégats, +10% dégats critiques, quand vous attaquer vous recevez une attaque équivalent à 10% des dégats (post reduction)"));
+	_listeObjets.push_back(Objet("Fer à cheval", OBJET_FER_CHEVAL, 10000, "+14% de forces, +25% xp"));
+	_listeObjets.push_back(Objet("Trèfle à quattre feuilles", OBJET_TREFLE_QUATTRE, 100000, "+20% de points de vie, +50% xp"));
 
 	//_listeObjets.push_back(Objet("Antidote", 18, 100000, "Rend insensible au poison"));
 
@@ -158,10 +163,28 @@ Objets::Objets()
 	}
 
 	_tableLoot[6].push_back(_listeObjets[46]);
+	_tableLoot[9].push_back(_listeObjets[OBJET_FER_CHEVAL]);
+	_tableLoot[16].push_back(_listeObjets[OBJET_TREFLE_QUATTRE]);
 	_tableLoot[44].push_back(_listeObjets[47]);
 	for (int i = 1;i <= 8;i++) {
 		_tableLoot[88].push_back(_listeObjets[47]);
 	}
+	_tableLoot[13].push_back(_listeObjets[54]);
+	_tableLoot[14].push_back(_listeObjets[54]);
+	_tableLoot[26].push_back(_listeObjets[54]);
+	_tableLoot[28].push_back(_listeObjets[54]);
+	_tableLoot[39].push_back(_listeObjets[54]);
+
+	_tableLoot[12].push_back(_listeObjets[52]);
+	_tableLoot[16].push_back(_listeObjets[52]);
+	_tableLoot[20].push_back(_listeObjets[52]);
+	_tableLoot[20].push_back(_listeObjets[53]);
+	
+	_tableLoot[9].push_back(_listeObjets[51]);
+	_tableLoot[18].push_back(_listeObjets[51]);
+	_tableLoot[27].push_back(_listeObjets[51]);
+	_tableLoot[36].push_back(_listeObjets[51]);
+	_tableLoot[45].push_back(_listeObjets[51]);
 
 	_tableLoot[10].push_back(_listeObjets[50]);
 	_tableLoot[20].push_back(_listeObjets[50]);

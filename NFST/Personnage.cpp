@@ -20,6 +20,11 @@ Personnage::Personnage(int LVL, std::string nom, int vieLVL, int forceLVL, int v
 	_derniereActionType = actionNULL;
 	_derniereActionMontant = 0;
 	_sonTour = false;
+	if (!_texture.loadFromFile("graphics/lapin2.png"))
+	{
+		// error...
+	}
+	_sprite.setTexture(_texture);
 }
 
 Personnage::Personnage(int id,Experiences E,Orbes O,Animaux A, Objets Obj, std::string nom, int vieLVL, int forceLVL, int vitesseLVL, int chanceDoubleAttaque, int chanceHabilete, int pourcentageReduction, int pourcentageDeviation, int pourcentageBlocage, int pourcentageEsquive, int pourcentageRicochet) :
@@ -49,8 +54,16 @@ Personnage::Personnage(int id,Experiences E,Orbes O,Animaux A, Objets Obj, std::
 	_derniereActionType = actionNULL;
 	_derniereActionMontant = 0;
 	_sonTour = false;
+	if (!_texture.loadFromFile("graphics/lapin2.png"))
+	{
+		// error...
+	}
+	_sprite.setTexture(_texture);
 }
 
+sf::Sprite & Personnage::sprite() {
+	return _sprite;
+}
 Personnage::~Personnage()
 {
 	
@@ -180,7 +193,7 @@ int Personnage::xpDonner() const
 	double xp;
 	double multiplicateur = 1.0;
 	xp = _force / 10.0 + _vitesse / 10.0 + _vieMax / 100.0;
-	multiplicateur += _chanceDoubleAttaque / 100.0 + _chanceHabilete / 100.0 + _pourcentageRicochet / 100.0 + _pourcentageReduction / 90.0 + _pourcentageEsquive / 90.0 + _pourcentageDeviation / 80.0 + _pourcentageBlocage / 100.0;
+	multiplicateur += _chanceDoubleAttaque / 100.0 + _chanceHabilete / 100.0 + _pourcentageRicochet / 100.0 + _pourcentageReduction / 50.0 + _pourcentageEsquive / 50.0 + _pourcentageDeviation / 25.0 + _pourcentageBlocage / 50.0;
 	return round(xp * multiplicateur);
 }
 int Personnage::soins(double RatioMin,double RatioMax, int choixStats) const {
@@ -265,7 +278,7 @@ void Personnage::soigner(int soins, Combat & C, Personnage * P, sf::RenderWindow
 			soins =(int)( P->vieMax() - P->vie());
 			
 		}
-		P->stats().ajouterSoinsDonner(soins);
+		this->stats().ajouterSoinsDonner(soins);
 		P->AjouterVie(soins, C, window);
 		if (possedeObjetNumero(OBJET_SCEPTRE_DRUIDE)) {
 			if (Aleatoire(0, 101).entier() < 20) {
@@ -330,7 +343,7 @@ void Personnage::bouclier(int soins, Combat & C, Personnage* P, sf::RenderWindow
 			soins = P->bouclierMax() - P->bouclier();
 
 		}
-		P->stats().ajouterBouclierDonner(soins);
+		this->stats().ajouterBouclierDonner(soins);
 		P->AjouterBouclier(soins, C, window);
 		if (possedeObjetNumero(OBJET_SCEPTRE_DRUIDE)) {
 			if (Aleatoire(0, 101).entier() < 10) {
@@ -460,6 +473,12 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, Combat & C, sf::Ren
 	int degatEffectif;
 	if (Defenseur->estAttaquable()) {
 
+		if (possedeObjetNumero(OBJET_RACINE_ETERNEL)) {
+			Degat +=(int)(Aleatoire(1.0 / 1000.0, 1.0 / 100.0).decimal() * (double)_vie);
+		}
+		if (possedeObjetNumero(OBJET_MALADRESSE)) {
+			Degat += Degat/10;
+		}
 		if (possedeObjetNumero(OBJET_OEIL_AIGLE)) {
 			Degat += Defenseur->vie() / 100;
 		}
@@ -560,6 +579,11 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, Combat & C, sf::Ren
 		if (Degat < 0) {
 			Degat = 1;
 		}
+		if (possedeObjetNumero(OBJET_MALADRESSE)) {
+			Attaque(Degat/10, this, C, window, allSounds);
+		}
+
+
 		if (Defenseur->devie()) {
 			if (Defenseur->possedeObjetNumero(OBJET_VOILE_MIROIR)) {
 				Degat = (int)((double)Degat * 1.5);
@@ -606,8 +630,20 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, Combat & C, sf::Ren
 				if (!possedeObjetNumero(OBJET_DILDO)) {
 					Degat = Defenseur->reductionDesDegats(Degat);
 				}
-				if (Defenseur->bloque() && !possedeObjetNumero(OBJET_DILDO)) {
-					Degat /= 2;
+				else {
+					int reduction = Defenseur->pourcentageReduction();
+					Defenseur->setReduction(reduction / 2);
+					Degat = Defenseur->reductionDesDegats(Degat);
+					Defenseur->setReduction(reduction);
+				}
+				if (Defenseur->bloque()) {
+					if (!possedeObjetNumero(OBJET_DILDO)) {
+						Degat = Degat - Degat/4;
+					}
+					else {
+						Degat /= 2;
+					}
+					
 				}
 				if (Defenseur->status().estProteger()) {
 					Degat /= 2;
@@ -618,7 +654,11 @@ void  Personnage::Attaque(int Degat, Personnage * Defenseur, Combat & C, sf::Ren
 						Degat /= 2;
 					}
 				}
-
+				if (Defenseur->possedeObjetNumero(OBJET_BOUCLIER_AMELIORER)) {
+					if (indiceEquipe() == Defenseur->indiceEquipe()) {
+						Degat = Degat - Degat/4;
+					}
+				}
 				if (Degat < 0) {
 					Degat = 1;
 				}
@@ -869,7 +909,14 @@ int Personnage::choixAttaque()
 {
 	int vote1 = Aleatoire(0, (_mana % 4 + 1)).entier();
 	int vote2 = Aleatoire(0, (_mana % 4 + 1)).entier();
-	return std::max(vote1,vote2);
+
+	if (_mana > 10) {
+		return std::max(vote1, vote2);
+	}
+	else {
+		return vote1;
+	}
+	
 }
 
 int Personnage::indiceEquipe()const {

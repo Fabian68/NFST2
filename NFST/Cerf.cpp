@@ -7,17 +7,36 @@ Cerf::Cerf(int LVL, std::string nom, int difficulte, int animal, int rareteAnima
 	ajouterVitesse(vitesse()/2);
 	if (difficulte == 1) {
 		ajouterVie(9 * vie());
+		if (!_texture.loadFromFile("graphics/cerf_tank.png"))
+		{
+			// error...
+		}
+		_sprite.setTexture(_texture);
 	}
 	else if (difficulte == 2) {
 		ajouterForce(force());
-		ajouterVitesse(vitesse());
+		//ajouterVitesse(vitesse());
 		ajouterVie(19 * vie());
 		ajouterReduction(90);
+		if (!_texture.loadFromFile("graphics/cerf_diamand.png"))
+		{
+			// error...
+		}
+		_sprite.setTexture(_texture);
 	}
 	else if (difficulte == 5) {
 		ajouterVie(2*vie());
 		ajouterReduction(99);
 	}
+	else {
+		if (!_texture.loadFromFile("graphics/cerf.png"))
+		{
+			// error...
+		}
+		_sprite.setTexture(_texture);
+	}
+
+	
 }
 
 void Cerf::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)

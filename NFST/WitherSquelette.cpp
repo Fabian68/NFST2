@@ -10,8 +10,9 @@ WitherSquelette::WitherSquelette(int LVL, std::string nom, int difficulte, int a
 		ajouterVie(9 * vie());
 	}
 	else if (difficulte == 5) {
-		ajouterVie(vie());
+		ajouterVie(5*vie());
 		ajouterReduction(90);
+		ajouterForce(force());
 	}
 }
 

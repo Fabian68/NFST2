@@ -122,11 +122,202 @@ void Affichage::afficherJoueurs(int indice, Equipes& Liste, sf::RenderWindow* wi
 
 	x = x + 250.f;
 
-	
-	afficherTexte(x - 250.f, y + 350.f, Liste[indice]->objets().first.nom(), colorRareter(Liste[indice]->objets().first.rareter()), window);
-	afficherTexte(x - 250.f, y + 390.f, Liste[indice]->objets().second.nom(), colorRareter(Liste[indice]->objets().second.rareter()), window);
-	afficherTexte(x - 250.f, y + 430.f, Liste[indice]->objets2().first.nom(), colorRareter(Liste[indice]->objets2().first.rareter()), window);
-	afficherTexte(x - 250.f, y + 470.f, Liste[indice]->objets2().second.nom(), colorRareter(Liste[indice]->objets2().second.rareter()), window);
+	sf::Texture texture;
+	sf::Sprite sprite;
+	switch (indice) {
+	case 0:
+		if (!texture.loadFromFile("graphics/fabianH.png"))
+		{
+			// error...
+		}
+		sprite.setTexture(texture);
+		
+		break;
+	case 1:
+		if (!texture.loadFromFile("graphics/nicolasH.png"))
+		{
+			// error...
+		}
+		sprite.setTexture(texture);
+
+		break;
+	case 2:
+		if (!texture.loadFromFile("graphics/thomasH.png"))
+		{
+			// error...
+		}
+		sprite.setTexture(texture);
+
+		break;
+	case 3:
+		if (!texture.loadFromFile("graphics/fionaH.png"))
+		{
+			// error...
+		}
+		sprite.setTexture(texture);
+
+		break;
+	case 4:
+		if (!texture.loadFromFile("graphics/moustickH.png"))
+		{
+			// error...
+		}
+		sprite.setTexture(texture);
+
+		break;
+	case 5:
+		if (!texture.loadFromFile("graphics/bryanH.png"))
+		{
+			// error...
+		}
+		sprite.setTexture(texture);
+
+		break;
+	case 6:
+		if (!texture.loadFromFile("graphics/davidH.png"))
+		{
+			// error...
+		}
+		sprite.setTexture(texture);
+
+		break;
+	case 7:
+		if (!texture.loadFromFile("graphics/isidoreH.png"))
+		{
+			// error...
+		}
+		sprite.setTexture(texture);
+
+		break;
+	case 8:
+		if (!texture.loadFromFile("graphics/sebH.png"))
+		{
+			// error...
+		}
+		sprite.setTexture(texture);
+
+		break;
+	case 9:
+		if (!texture.loadFromFile("graphics/cloeH.png"))
+		{
+			// error...
+		}
+		sprite.setTexture(texture);
+
+		break;
+	case 10:
+		if (!texture.loadFromFile("graphics/amineH.png"))
+		{
+			// error...
+		}
+		sprite.setTexture(texture);
+
+		break;
+	case 11:
+		if (Liste.perso(indice)->nom() == "Floppy") {
+			if (!texture.loadFromFile("graphics/floppyH.png"))
+			{
+				// error...
+			}
+		}
+		else {
+			if (!texture.loadFromFile("graphics/florianH.png"))
+			{
+				// error...
+			}
+		}
+		sprite.setTexture(texture);
+
+		break;
+	case 12:
+		if (!texture.loadFromFile("graphics/jbH.png"))
+		{
+			// error...
+		}
+		sprite.setTexture(texture);
+
+		break;
+	case 13:
+		if (!texture.loadFromFile("graphics/maelleH.png"))
+		{
+			// error...
+		}
+		sprite.setTexture(texture);
+
+		break;
+	case 14:
+		if (Liste.perso(indice)->niveau() > 999) {
+			if (!texture.loadFromFile("graphics/tortue4H.png"))
+			{
+				// error...
+			}
+		}
+		else if (Liste.perso(indice)->niveau() > 99) {
+			if (!texture.loadFromFile("graphics/tortue3H.png"))
+			{
+				// error...
+			}
+		}
+		else if (Liste.perso(indice)->niveau() > 9) {
+			if (!texture.loadFromFile("graphics/tortue2H.png"))
+			{
+				// error...
+			}
+		}
+		else {
+			if (!texture.loadFromFile("graphics/bebe_tortueH.png"))
+			{
+				// error...
+			}
+			sprite.setTexture(texture);
+		}
+		sprite.setTexture(texture);
+
+		break;
+	case 15:
+		if (!texture.loadFromFile("graphics/salimH.png"))
+		{
+			// error...
+		}
+		sprite.setTexture(texture);
+
+		break;
+	case 16:
+		if (Liste.perso(indice)->nom() == "Ancien Phenix" ) {
+			if (!texture.loadFromFile("graphics/phenix4H.png"))
+			{
+				// error...
+			}
+		}
+		else if (Liste.perso(indice)->nom() == "Phénix Adulte" ) {
+			if (!texture.loadFromFile("graphics/phenix3H.png"))
+			{
+				// error...
+			}
+		}
+		else if (Liste.perso(indice)->nom() == "Jeune Phénix" ) {
+			if (!texture.loadFromFile("graphics/phenix2H.png"))
+			{
+				// error...
+			}
+		}
+		else {
+			if (!texture.loadFromFile("graphics/phenixH.png"))
+			{
+				// error...
+			}
+		}
+		sprite.setTexture(texture);
+
+		break;
+	}
+	sprite.setPosition(10.f, 435.f);
+	window->draw(sprite);
+
+	afficherTexte(x - 250.f, y + 260.f, Liste[indice]->objets().first.nom(), colorRareter(Liste[indice]->objets().first.rareter()), window);
+	afficherTexte(x - 250.f, y + 300.f, Liste[indice]->objets().second.nom(), colorRareter(Liste[indice]->objets().second.rareter()), window);
+	afficherTexte(x - 250.f, y + 340.f, Liste[indice]->objets2().first.nom(), colorRareter(Liste[indice]->objets2().first.rareter()), window);
+	afficherTexte(x - 250.f, y + 380.f, Liste[indice]->objets2().second.nom(), colorRareter(Liste[indice]->objets2().second.rareter()), window);
 
 	sf::RectangleShape rectangle(sf::Vector2f(470.f, 140.f));
 	rectangle.setOutlineColor(couleurTexte);
@@ -264,22 +455,22 @@ void Affichage::afficherJoueurs(int indice, Equipes& Liste, sf::RenderWindow* wi
 	}
 	Experiences E;
 
-	Bouton Retour(300.f, 700.f, "RETOUR");
+	Bouton Retour(700.f, 700.f, "RETOUR ");
 	Retour.afficher(window);
 	Bouton Precedent(450.f, 700.f, "Precedent");
 	Precedent.afficher(window);
 	Bouton Suivant(600.f, 700.f, "Suivant");
 	Suivant.afficher(window);
 
-	Bouton AjouterObjet1(250.f, 350.f, "Changer");
+	Bouton AjouterObjet1(250.f, 260.f, "Changer");
 	AjouterObjet1.afficher(window);
-	Bouton AjouterObjet2(250.f, 400.f, "Changer");
+	Bouton AjouterObjet2(250.f, 310.f, "Changer");
 	AjouterObjet2.afficher(window);
 
 	Zones Z = Zones();
 
-	Bouton AjouterObjet3(250.f, 450.f, "Changer");
-	Bouton AjouterObjet4(250.f, 500.f, "Changer");
+	Bouton AjouterObjet3(250.f, 360.f, "Changer");
+	Bouton AjouterObjet4(250.f, 410.f, "Changer");
 	if (Z.niveauMax() >= 25) {
 
 		AjouterObjet3.afficher(window);
@@ -498,6 +689,7 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		break;
 	case 12:
 		str = "Tout les 10 tours permet de faire gagner de l'xp selon son niveau : 1/7/70/700/7000 au niveau 1/70/700/7000, les alliers ko bénéficient aussi de l'xp";
+		str = str + "\n" + "Tout les 5 tours ajoute 1 point de mana à chaque membre de l'équipe";
 		str = str + "\n" + "Au tour 10/20/30/60/80/100/130/160/200 partage 2/2/2/4/4/4/10/10/10% de sa vie max à un allier aléatoire et perd 10/10/10/5/5/5/3/3/3% de sa vie max";
 		break;
 	case 13:
@@ -608,7 +800,7 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		str = "Ataque jusqu'a 7 fois l'ennemi le plus faible pour 15-35% de sa vitesse si tirage habile, + 1 mana";
 		break;
 	case 7:
-		str = "Attaque un ennemi aléatoire à hauteur de 0,1-1% de sa force puis 100-150% si tirage habile, si tirage habile + 2 mana sinon + 1";
+		str = "Attaque un ennemi aléatoire à hauteur de 0,1-1% de sa force puis 50-150% si tirage habile, si tirage habile + 2 mana sinon + 1";
 		break;
 	case 8:
 		str = "CA = compteur attaque, Attaque (vitesse x 5)/force fois l'ennemi le plus proche pour (1+CA/100)-(2+CA/50)% de votre force, compteur attaque augmente de 1 ";
@@ -821,10 +1013,11 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		str = "Attaque l'equipe ennemi pour 10-40% de votre attaque à 50%-200% par ennemis selon sa position plus au centre et selon le nombre d'ennemis, ennemi au centre prend deux coups,-3 mana, dégats potentiel :";
 		break;
 	case 9:
-		str = "Attaque l'equipe adverse à hauteur de 100-200% de votre force, -3 mana";
+		str = "Attaque l'equipe adverse à hauteur de 75-150% de votre force, -3 mana";
 		break;
 	case 10:
-		str = "Point de mana du personnage = PM, attaque l'ennemi le plus proche à hauteur de (PM/3)-(PM/2)% de votre force + 50-100% de votre bouclier,reduit le bouclier à 0 et le mana à 0";
+		str = "Point de mana du personnage = PM, attaque l'ennemi le plus proche à hauteur de (PM/3)-(PM/2)% de votre force + (25 + PM/15)-(50+PM/10)% de votre bouclier,reduit le bouclier à 0 et le mana à 0";
+		str = str + "\n" + " dégats augmentés par le pourcentage de reduction de la cible";
 		break;
 	case 11:
 		str = "Attaque un ennemi aléatoire à hauteur de 5-350% de votre force,-3 mana";
@@ -833,15 +1026,15 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		str = "Ajoute 15% de reduction de dégats au coéquipier le moins résistant et un compteur de protection, -3 mana";
 		break;
 	case 13:
-		str = "Double sa force et sa vitesse,mutliplie sa vie par 10,augmente ses chances de coup habile de 20%,- 3 mana";
+		str = "Double sa force et sa vitesse,mutliplie sa vie par 10,augmente ses chances de coup habile de 20%,- 5 mana";
 		str = str + "\n" + "Si déja transformé ajoute 3 points de mana";
 		break;
 	case 14:
 		str = "Attaque l'équipe adverse à hauteur de 1,5% de sa vie actuel + 0,5% de ses points de vie max + 50% de sa force + 100% de sa force, -3 mana";
 		break;
 	case 15:
-		str = "Première transformation : Reduit de 90% sa vie maximum et double sa force, +10% reduction de dégats, - 3 mana";
-		str = str + "\n" + "Deuxième transformation (si première transformation et mana superieur à 9) : Reduit de 90% la vie maximum, double la force et +20% reduction de dégats";
+		str = "Première transformation : Reduit de 90% sa vie maximum et double sa force, +10% reduction de dégats, - 5 mana";
+		str = str + "\n" + "Deuxième transformation (si première transformation et mana superieur à 9) : Reduit de 90% la vie maximum, double la force et +20% reduction de dégats, -10 mana";
 		str = str + "\n" + "Si les deux transformations on étés faites : Augmente vie max à hauteur de niveau/10 et soigne pour 20-120% de votre force et bouclier pour 10-60% de votre force";
 		break;
 	case 16:

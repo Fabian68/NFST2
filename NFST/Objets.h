@@ -55,6 +55,12 @@ const int OBJET_HUIT_BALL = 47;
 const int OBJET_SPARTAN_ARMOR = 48;
 const int OBJET_AVANCE_RAPIDE = 49;
 const int OBJET_VASE_ANTIQUE_MAGIQUE = 50;
+const int OBJET_RACINE_ETERNEL = 51;
+const int OBJET_FORCE_GRANDISSANTE = 52;
+const int OBJET_BOUCLIER_AMELIORER = 53;
+const int OBJET_MALADRESSE = 54;
+const int OBJET_FER_CHEVAL = 55;
+const int OBJET_TREFLE_QUATTRE = 56;
 
 
 class Objets

@@ -8,6 +8,11 @@ Sebastien::Sebastien(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage
 	if (Aleatoire(0, 1000).entier() == 1) {
 		setNom("Seb la frite");
 	}
+	if (!_texture.loadFromFile("graphics/seb.png"))
+	{
+		// error...
+	}
+	_sprite.setTexture(_texture);
 }
 
 

@@ -11,16 +11,27 @@
 
 Combat::Combat(Equipes & Joueur, Equipes & Ia, Zones& Z, Animaux& A, Orbes& O, std::vector< sf::Sound >& allSounds) : _joueur{ Joueur }, _ia{ Ia }, _tour{ 0 }
 {
-	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1200, 825), "Combat");
-	if (!_backgroundTexture.loadFromFile("graphics/img1.png"))
-	{
-		// Erreur
-		std::cout << "Erreur durant le chargement de l'image de background." << std::endl;
+	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1200, 1050), "Combat");
+	//sf::RenderWindow* windowStats = new sf::RenderWindow(sf::VideoMode(1200, 750), "Statistiques");
+	if (Z.niveauActuel() < 10) {
+		if (!_backgroundTexture.loadFromFile("graphics/foret.png"))
+		{
+			// Erreur
+			std::cout << "Erreur durant le chargement de l'image de background." << std::endl;
+		}
 	}
 	else {
-		_background.setTexture(_backgroundTexture);
+		if (!_backgroundTexture.loadFromFile("graphics/foret_d.png"))
+		{
+			// Erreur
+			std::cout << "Erreur durant le chargement de l'image de background." << std::endl;
+		}
 	}
-		
+	
+	_background.setTexture(_backgroundTexture);
+	_background.setScale(sf::Vector2f(1200.f / 1024.f, 1050.f / 1024.f));
+	
+	window->setPosition(sf::Vector2i(450.f, 0.f));
 	window->setActive();
 	window->setFramerateLimit(1);
 
@@ -80,6 +91,9 @@ Combat::Combat(Equipes & Joueur, Equipes & Ia, Zones& Z, Animaux& A, Orbes& O, s
 								if (_joueur.perso(t)->possedeObjetNumero(OBJET_VASE_ANTIQUE_MAGIQUE)) {
 									_joueur.perso(t)->ajouterMana(1);
 								}
+								if (_joueur.perso(t)->possedeObjetNumero(OBJET_FORCE_GRANDISSANTE)) {
+									_joueur.perso(t)->ajouterDegatsCritique(1);
+								}
 								_joueur.perso(t)->status().effetBrulure();
 								_joueur.perso(t)->status().effetPoison();
 							}
@@ -129,6 +143,7 @@ Combat::Combat(Equipes & Joueur, Equipes & Ia, Zones& Z, Animaux& A, Orbes& O, s
 					}
 					_quiJoue[i]->attaqueEnnemis(*this,window, allSounds);
 					_quiJoue[i]->changeTour(false);
+					//AC.dessinerStatistiques(_joueur, _ia, *this, windowStats);
 				}
 			}
 		}
@@ -170,7 +185,9 @@ Combat::Combat(Equipes & Joueur, Equipes & Ia, Zones& Z, Animaux& A, Orbes& O, s
 
 		tirageRecompenses(Z, A, O, window, allSounds);
 	}
+	Joueur = _joueur;
 	window->close();
+	//windowStats->close();
 }
 
 void Combat::modifierQuiJoue() {
@@ -258,6 +275,19 @@ void Combat::tirageRecompenses(Zones Z, Animaux A, Orbes O, sf::RenderWindow* wi
 	int indiceJoueur;
 
 	int chanceTirage;
+	int max = 1;
+	if (Z.niveauActuel() > 39 ) {
+		max = 5;
+	}
+	else if (Z.niveauActuel() > 19) {
+		max = 4;
+	}
+	else if (Z.niveauActuel() > 9) {
+		max = 3;
+	}
+	else if (Z.niveauActuel() > 4) {
+		max = 2;
+	}
 	//Pour chaque perso
 	for (int i = 0; i < _joueur.taille(); i++) {
 		//Pour chaque animal
@@ -265,7 +295,7 @@ void Combat::tirageRecompenses(Zones Z, Animaux A, Orbes O, sf::RenderWindow* wi
 		for (int j = 0; j < 9; j++) {
 			//Pour chaque rarete animal
 			chanceTirage = 10000 + 90000 - 900 * Z.niveauActuel() - 90 * Z.niveauMax();
-			for (int k = 1; k <= 5; k++) {
+			for (int k = 1; k <= max; k++) {
 				if (Aleatoire(0, chanceTirage).entier() == 1) {
 					if (!A.animalDebloquer(indiceJoueur, j, k)) {
 						A.deblocageAnimal(indiceJoueur, j, k, _joueur[i]->nom(), window, allSounds);
@@ -288,7 +318,7 @@ void Combat::tirageRecompenses(Zones Z, Animaux A, Orbes O, sf::RenderWindow* wi
 		//Pour chaque rareter d'orbe
 
 		chanceTirage = 1000 + 9000 - 90 * Z.niveauActuel() - 9 * Z.niveauMax();
-		for (int j = 1; j <= 5; j++) {
+		for (int j = 1; j <= max; j++) {
 			if (Aleatoire(0, chanceTirage).entier() == 1) {
 				if (!O.orbeDebloquer(indiceJoueur, j)) {
 					O.deblocageOrbe(indiceJoueur, j, _joueur[i]->nom(), window, allSounds);
@@ -339,32 +369,4 @@ int Combat::quiJoueIndex() const
 	return _quiJoueIndex;
 }
 
-
-
-/*
-void InitQuiJoue(){
-	long long int somme = 0;
-	for(int i=PREMIER;i<=CINQUIEME;i++) {
-		somme+=PersoCarac[Equipe[TEAM1][i]][AGILITE];
-		somme+=PersoCarac[Equipe[TEAM2][i]][AGILITE];
-	}
-	int Ratio[10];
-	for(int i=0;i<=4;i++) {
-		Ratio[i]=static_cast<int>(PersoCarac[Equipe[TEAM1][i]][AGILITE]/(1.0*somme/12));
-		Ratio[i+5]=static_cast<int>(PersoCarac[Equipe[TEAM2][i]][AGILITE]/(1.0*somme/12));
-	}
-
-  for(double i=0.9;i>-0.1;i=i-0.1) {
-	for(int j=0;j<=4;j++) {
-		if(Ratio[j]>=i) {
-			QuiJoue.push_back(Equipe[TEAM1][j]);
-		  }
-		if(Ratio[j+5]>=i) {
-			QuiJoue.push_back(Equipe[TEAM2][j]);
-		  }
-	  }
-
-  }
-}
-*/
 

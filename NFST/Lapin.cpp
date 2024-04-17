@@ -9,8 +9,18 @@ Lapin::Lapin(int LVL,std::string nom,int difficulte,int animal,int rareteAnimal,
 		ajouterForce(force());
 		ajouterVitesse(vitesse());
 		ajouterVie(9*vie());
+		if (!_texture.loadFromFile("graphics/lapin_boss.png"))
+		{
+			// error...
+		}
+		_sprite.setTexture(_texture);
 	}
 	if (difficulte == 2) {
+		if (!_texture.loadFromFile("graphics/lapin_d2.png"))
+		{
+			// error...
+		}
+		_sprite.setTexture(_texture);
 		ajouterForce(force());
 		ajouterVitesse(vitesse());
 		ajouterVie(19 * vie());
@@ -19,6 +29,14 @@ Lapin::Lapin(int LVL,std::string nom,int difficulte,int animal,int rareteAnimal,
 	else if (difficulte == 5) {
 		ajouterVie(vie());
 		ajouterReduction(90);
+	}
+
+	if (id == 21) {
+		if (!_texture.loadFromFile("graphics/Perle.png"))
+		{
+			// error...
+		}
+		_sprite.setTexture(_texture);
 	}
 }
 void Lapin::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) {

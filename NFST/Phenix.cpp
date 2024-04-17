@@ -37,6 +37,10 @@ Phenix::Phenix(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(16, E
 		ajouterChanceDoubleAttaque(15);
 		ajouterChanceHabileter(27);
 		ajouterChanceRicochet(8);
+		if (!_texture.loadFromFile("graphics/phenix4.png"))
+		{
+			// error...
+		}
 	}
 	else if (_taille == 3) {
 		setNom("Phénix Adulte");
@@ -47,6 +51,10 @@ Phenix::Phenix(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(16, E
 		ajouterChanceDoubleAttaque(10);
 		ajouterChanceHabileter(9);
 		ajouterChanceRicochet(4);
+		if (!_texture.loadFromFile("graphics/phenix3.png"))
+		{
+			// error...
+		}
 	}
 	else if (_taille == 2) {
 		setNom("Jeune Phénix");
@@ -57,10 +65,19 @@ Phenix::Phenix(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(16, E
 		ajouterChanceDoubleAttaque(5);
 		ajouterChanceHabileter(3);
 		ajouterChanceRicochet(2);
+		if (!_texture.loadFromFile("graphics/phenix2.png"))
+		{
+			// error...
+		}
 	}
 	else {
 		setNom("Bebe Phénix");
+		if (!_texture.loadFromFile("graphics/phenix.png"))
+		{
+			// error...
+		}
 	}
+	_sprite.setTexture(_texture);
 	status().setReducteur(_taille * niveau());
 	status().setAdducteur(_taille * niveau());
 	

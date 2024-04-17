@@ -9,8 +9,37 @@ Sanglier::Sanglier(int LVL, std::string nom, int difficulte, int animal, int rar
 		ajouterForce(force());
 		ajouterVitesse(vitesse());
 		ajouterVie(9 * vie());
+		if (!_texture.loadFromFile("graphics/sanglier_boss.png"))
+		{
+			// error...
+		}
+		_sprite.setTexture(_texture);
+	}else if (difficulte == 2) {
+		ajouterForce(force()*2);
+		ajouterVie(19 * vie());
+		if (!_texture.loadFromFile("graphics/sanglier_d2.png"))
+		{
+			// error...
+		}
+		_sprite.setTexture(_texture);
 	}
-	status().setReducteur(niveau() * 2);
+	else {
+		if (!_texture.loadFromFile("graphics/sanglier.png"))
+		{
+			// error...
+		}
+		_sprite.setTexture(_texture);
+		status().setReducteur(niveau() * 2);
+	}
+	if (id == 22) {
+		if (!_texture.loadFromFile("graphics/Oxanne.png"))
+		{
+			// error...
+		}
+		_sprite.setTexture(_texture);
+	}
+
+	
 }
 
 

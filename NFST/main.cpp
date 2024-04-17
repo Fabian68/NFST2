@@ -98,13 +98,13 @@ void loadSongs2(std::vector<std::shared_ptr<sf::SoundBuffer>>& allBuffers, std::
 	buffer7->loadFromFile("./song/outro-song_oqu8zAg.ogg");
 	allBuffers.push_back(buffer7);
 	// Créer les objets sf::Sound en utilisant les buffers stockés dans allBuffers
-	sounds.push_back(sf::Sound(*buffer1));
-	sounds.push_back(sf::Sound(*buffer2));
-	sounds.push_back(sf::Sound(*buffer3));
-	sounds.push_back(sf::Sound(*buffer4));
-	sounds.push_back(sf::Sound(*buffer5));
-	sounds.push_back(sf::Sound(*buffer6));
-	sounds.push_back(sf::Sound(*buffer7));
+	sounds.emplace_back(*buffer1);
+	sounds.emplace_back(*buffer2);
+	sounds.emplace_back(*buffer3);
+	sounds.emplace_back(*buffer4);
+	sounds.emplace_back(*buffer5);
+	sounds.emplace_back(*buffer6);
+	sounds.emplace_back(*buffer7);
 }
 
 void jouer(sf::RenderWindow* window,Zones & Z,Objets Obj, std::vector<sf::Sound>& allSounds, Affichage & H, Equipes & Meuchant, Equipes & Gentil,Equipes & choix) {
@@ -132,7 +132,8 @@ void jouer(sf::RenderWindow* window,Zones & Z,Objets Obj, std::vector<sf::Sound>
 	H2.afficherStats(Gentil, window);
 	(*window).display();
 	sf::Event event;
-	float x=0.0, y=0.0;
+	float x=0.0;
+	float y=0.0;
 	do {
 		while ((*window).pollEvent(event))
 		{

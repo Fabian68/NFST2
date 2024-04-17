@@ -6,7 +6,11 @@
 
 Fiona::Fiona(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(3, E, O, A, Obj, "Fiona", 3, 2, 1, 7, 7, 7, 7, 7, 7, 37) , _nbAnimaux{0} {
 
-	
+	if (!_texture.loadFromFile("graphics/fiona.png"))
+	{
+		// error...
+	}
+	_sprite.setTexture(_texture);
 }
 
 void Fiona::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)

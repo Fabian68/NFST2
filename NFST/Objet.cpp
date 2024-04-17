@@ -129,6 +129,22 @@ void Objet::appliquerEffet(Personnage* P) {
 		P->ajouterEsquive(8);
 		P->ajouterChanceRicochet(8);
 		P->ajouterChanceDoubleAttaque(8);
+		break;
+	case OBJET_TWINS:
+		P->ajouterChanceRicochet(2);
+		break;
+	case OBJET_FORCE_GRANDISSANTE:
+		P->ajouterDegatsCritique(-10);
+		break;
+	case OBJET_MALADRESSE:
+		P->ajouterDegatsCritique(10);
+		break;
+	case OBJET_FER_CHEVAL:
+		P->ajouterForce(P->force()/7);
+		break;
+	case OBJET_TREFLE_QUATTRE:
+		P->ajouterForce(P->vieMax() / 5);
+		break;
 	default:
 		break;
 	}

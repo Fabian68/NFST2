@@ -16,7 +16,20 @@ Florian::Florian(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(11,
 		ajouterForce(niveau());
 		ajouterVitesse(3 * niveau());
 		ajouterEsquive(20);
+		if (!_texture.loadFromFile("graphics/floppy.png"))
+		{
+			// error...
+		}
 	}
+	else {
+		if (!_texture.loadFromFile("graphics/florian.png"))
+		{
+			// error...
+		}
+		_sprite.setTexture(_texture);
+	}
+
+	
 }
 
 void Florian::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)

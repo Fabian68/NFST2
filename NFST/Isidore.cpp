@@ -1,7 +1,13 @@
 #include "Isidore.h"
 #include "Affichage.h"
 
-Isidore::Isidore(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(7, E, O, A, Obj, "Isidore", 1, 1, 8, 8, 8, 8, 8, 8, 8, 8) {}
+Isidore::Isidore(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(7, E, O, A, Obj, "Isidore", 1, 1, 8, 8, 8, 8, 8, 8, 8, 8) {
+	if (!_texture.loadFromFile("graphics/isidore.png"))
+	{
+		// error...
+	}
+	_sprite.setTexture(_texture);
+}
 
 
 void Isidore::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
@@ -24,7 +30,7 @@ void Isidore::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< 
 
 
 			Affichage().dessinerTexte(nom() + "saute sur " + equipeEnnemi().perso(cible)->nom(),window);
-			DEGATS = degats(1.0, 1.5);
+			DEGATS = degats(0.5, 1.5);
 		
 			Attaque(DEGATS, equipeEnnemi().perso(cible), C, window, allSounds);
 			ajouterMana(1);

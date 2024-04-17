@@ -1,7 +1,14 @@
 #include "Cloe.h"
 #include "Affichage.h"
 
-Cloe::Cloe(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(9, E, O, A, Obj, "Cloe", 1, 1, 4, 25, 25, -50, 0, 0, 20, 0) {}
+Cloe::Cloe(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(9, E, O, A, Obj, "Cloe", 1, 1, 4, 25, 25, -50, 0, 0, 20, 0) {
+
+	if (!_texture.loadFromFile("graphics/cloe.png"))
+	{
+		// error...
+	}
+	_sprite.setTexture(_texture);
+}
 
 
 void Cloe::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
@@ -55,7 +62,7 @@ void Cloe::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf:
 		break;
 	case 3:
 		Affichage().dessinerTexte(nom() + "balance de la KPOP ",window);
-		DEGATS = degats(1.0, 2.0);
+		DEGATS = degats(0.75, 1.5);
 		equipeEnnemi().attaqueZone(DEGATS, this,C ,window, allSounds);
 		ajouterMana(-3);
 		break;

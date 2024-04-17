@@ -2,7 +2,14 @@
 #include "Affichage.h"
 #include "Aleatoire.h"
 
-Salim::Salim(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(15, E, O, A, Obj, "Salim", 6, 1, 1, 0, 25, -20, 0, 0, 0, 3), estTransformer{ false }, superTransformation{ false } {}
+Salim::Salim(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(15, E, O, A, Obj, "Salim", 6, 1, 1, 0, 25, -20, 0, 0, 0, 3), estTransformer{ false }, superTransformation{ false } {
+
+	if (!_texture.loadFromFile("graphics/salim.png"))
+	{
+		// error...
+	}
+	_sprite.setTexture(_texture);
+}
 
 
 void Salim::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
@@ -48,13 +55,19 @@ void Salim::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf
 		ajouterMana(-2);
 		break;
 	case 3:
-		if (!estTransformer) {
+		if (!estTransformer && mana() > 5) {
 			Affichage().dessinerTexte(nom() + " TRANSFORMATION ! ",window);
 			reduireVieMax((vieMax() / 10) * 9);
 			ajouterForce(force() * 2);
 			setNom("GRAND SALIMALEKUM");
 			estTransformer = true;
 			ajouterReduction(10);
+			ajouterMana(-5);
+			if (!_texture.loadFromFile("graphics/salim2.png"))
+			{
+				// error...
+			}
+			_sprite.setTexture(_texture);
 		}
 		else if (!superTransformation && mana() > 9) {
 			Affichage().dessinerTexte(nom() + "SUUUPPEEEERR TRANSFORMATION ! ",window);
@@ -63,6 +76,12 @@ void Salim::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf
 			setNom("GRAND SALIMALEKUM DIEUX DES TERRES ET DES OCEANS");
 			superTransformation = true;
 			ajouterReduction(20);
+			ajouterMana(-10);
+			if (!_texture.loadFromFile("graphics/salim3.png"))
+			{
+				// error...
+			}
+			_sprite.setTexture(_texture);
 		}
 		else {
 			Affichage().dessinerTexte(nom() + " rejuvenation ! ",window);
@@ -71,8 +90,9 @@ void Salim::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf
 			soigner(SOINS, C, this, window);
 			SOINS = soins(0.1, 0.6);
 			bouclier(SOINS, C, this, window);
+			ajouterMana(-3);
 		}
-		ajouterMana(-3);
+		
 		break;
 	}
 }

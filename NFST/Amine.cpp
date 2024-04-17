@@ -1,8 +1,13 @@
 #include "Amine.h"
 #include "Affichage.h"	
 
-Amine::Amine(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(10, E, O, A, Obj, "Amine", 1, 5, 1, 0, 25, -50, 5, 50, 0,5)
+Amine::Amine(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(10, E, O, A, Obj, "Amine", 1, 5, 1, 0, 25, -25, 5, 50, 0,5)
 {
+	if (!_texture.loadFromFile("graphics/amine.png"))
+	{
+		// error...
+	}
+	_sprite.setTexture(_texture);
 }
 
 void Amine::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
@@ -39,7 +44,9 @@ void Amine::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf
 		break;
 	case 3:
 		Affichage().dessinerTexte(nom() + " ASURA STRIKE ! ",window);
-		DEGATS = degats((double)point_mana/3.0, (double)point_mana/2.0) + degats(0.5, 1.0, CHOIXBOUCLIER);
+		double modificateur = 1.0 + (double)equipeEnnemi().plusProcheVivant()->pourcentageReduction() / 100.0;
+		DEGATS = degats((double)point_mana/3.0, (double)point_mana/2.0) + degats(0.25 + point_mana/15.0, 0.5 + point_mana / 10.0, CHOIXBOUCLIER);
+		DEGATS = (int)((double)DEGATS * modificateur);
 		reduireBouclier(bouclierMax());
 		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(), C, window, allSounds);
 		ajouterMana(-point_mana);
