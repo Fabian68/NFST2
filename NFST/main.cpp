@@ -189,7 +189,7 @@ int main()
 		Objets Obj;
 		Succes S;
 		
-		H.dessinerTexte("Version 4.0 ", window);
+		H.dessinerTexte("Version 5.0 avec Steve !", window);
 
 		Meuchant.liberer();
 		reinitListeEquipe(choix);

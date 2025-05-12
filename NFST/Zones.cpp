@@ -89,7 +89,7 @@ void Zones::equipeEnZone(int i,Equipes & E)
 		E.ajouterPerso(new Lapin(1, "Lapin nain"));
 		E.ajouterPerso(new Lapin(4, "Petit lapin"));
 		E.ajouterPerso(new Lapin(2, "Lapin nain"));
-		E.ajouterPerso(new Lapin(4, "Petit lapin"));
+		E.ajouterPerso(new Lapin(5, "Clippy",3));
 		E.ajouterPerso(new Lapin(2, "Lapin nain"));
 		break;
 	case 8:
@@ -110,11 +110,11 @@ void Zones::equipeEnZone(int i,Equipes & E)
 		E.ajouterPerso(new Sanglier(15, "SANGLOT", 1, 9, 1));
 		break;
 	case 11:
-		E.ajouterPerso(new Sanglier(22, "Sanglier"));
-		E.ajouterPerso(new Lapin(26, "Lapin"));
-		E.ajouterPerso(new Cerf(20, "Cerf a rien"));
+		E.ajouterPerso(new Sanglier(25, "GLONK",3));
+		E.ajouterPerso(new Lapin(25, "Lapin"));
+		E.ajouterPerso(new Cerf(25, "Cerf a rien"));
 		E.ajouterPerso(new Lapin(25, "Teddy"));
-		E.ajouterPerso(new PhenixE(32, "phephe"));
+		E.ajouterPerso(new PhenixE(25, "phephe"));
 		break;
 	case 12:
 		E.ajouterPerso(new Sanglier(25, "Sanglier"));
@@ -144,7 +144,7 @@ void Zones::equipeEnZone(int i,Equipes & E)
 	case 16:
 		E.ajouterPerso(new Sanglier(50, "Sanglier"));
 		E.ajouterPerso(new Cerf(52, "Cerf"));
-		E.ajouterPerso(new Cerf(57, "Cerf"));
+		E.ajouterPerso(new Cerf(60, "Tchat Twitch Véner",3));
 		E.ajouterPerso(new Lapin(59, "Lapin"));
 		E.ajouterPerso(new PhenixE(65, "Phenwick",2));
 		break;
@@ -185,7 +185,7 @@ void Zones::equipeEnZone(int i,Equipes & E)
 	case 22:
 		E.ajouterPerso(new Zombie(100, "Zombie"));
 		E.ajouterPerso(new Zombie(102, "Zombie"));
-		E.ajouterPerso(new Zombie(105, "Zombie"));
+		E.ajouterPerso(new Zombie(105, "Poisson Steve",3));
 		E.ajouterPerso(new Zombie(102, "Zombie"));
 		E.ajouterPerso(new PhenixE(115, "phephe",2));
 		break;

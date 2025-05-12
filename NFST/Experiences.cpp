@@ -39,7 +39,7 @@ Experiences::Experiences()
 	for (int i = 0;i < 10000;i++) {
 
 
-		UnEntierTresTresLong = static_cast<long long int>(100 * pow(1.0024, i)  + 2 * i*i)*10-1000;
+		UnEntierTresTresLong = static_cast<long long int>(100 * pow(1.0024, i)  + 2 * i*i)*10-1020;
 		
 		os.write((char*)&UnEntierTresTresLong, sizeof(UnEntierTresTresLong));
 		_tabXp[i] = UnEntierTresTresLong;

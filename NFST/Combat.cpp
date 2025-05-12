@@ -58,7 +58,7 @@ Combat::Combat(Equipes & Joueur, Equipes & Ia, Zones& Z, Animaux& A, Orbes& O, s
 		del = (int)((double)del * 0.75);
 	}
 	delais.setDelais(del);
-
+	int cptdelreduc = 0;
 	modifierQuiJoue();
 
 	AffichageCombat AC;
@@ -77,6 +77,11 @@ Combat::Combat(Equipes & Joueur, Equipes & Ia, Zones& Z, Animaux& A, Orbes& O, s
 					if (nbFoisJouer % _nbJouerPourAugmenterTour == 0) {
 						_tour++;
 						for (int t = 0; t < _joueur.taille(); t++) {
+							//ici changer vitesse
+							if (_tour % 10 == 0 && _joueur[i]->possedeObjetNumero(OBJET_HORLOGE) && cptdelreduc < 90) {
+								cptdelreduc++;
+								delais.setDelais((int)((double)del * (1.0 - cptdelreduc / 100.0)));
+							}
 							if (_joueur.perso(t)->estEnVie()) {
 								_joueur.perso(t)->passif(_tour,*this, window, allSounds);
 								if (_joueur.perso(t)->possedeObjetNumero(OBJET_ANTIDOTE)) {

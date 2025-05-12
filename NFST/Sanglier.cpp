@@ -1,6 +1,7 @@
 #include "Sanglier.h"
 #include "Affichage.h"
 #include "Aleatoire.h"
+#include "Objets.h"
 
 Sanglier::Sanglier(int LVL, std::string nom, int difficulte, int animal, int rareteAnimal,int id) : Personnage(LVL, nom, 4, 4, 2, 0, 30, 30, 3, 30, 0, 0, animal, rareteAnimal)
 {
@@ -18,6 +19,18 @@ Sanglier::Sanglier(int LVL, std::string nom, int difficulte, int animal, int rar
 		ajouterForce(force()*2);
 		ajouterVie(19 * vie());
 		if (!_texture.loadFromFile("graphics/sanglier_d2.png"))
+		{
+			// error...
+		}
+		_sprite.setTexture(_texture);
+	}
+	else if (difficulte == 3) {
+		ajouterForce(force() * 2);
+		ajouterVie(29 * vie());
+		//Glonk
+		Objets obj;
+		setObjets(obj.objetNumero(OBJET_MALEDICTION), obj.objetNumero(OBJET_MALADRESSE));
+		if (!_texture.loadFromFile("graphics/glonk.png"))
 		{
 			// error...
 		}

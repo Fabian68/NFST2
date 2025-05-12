@@ -1,5 +1,6 @@
 #include "Cerf.h"
 #include "Affichage.h"
+#include "Objets.h"
 
 Cerf::Cerf(int LVL, std::string nom, int difficulte, int animal, int rareteAnimal) : Personnage(LVL, nom, 2, 6, 2, 50, 0, 0, 0, 10, 0, 0, animal, rareteAnimal)
 {
@@ -19,6 +20,20 @@ Cerf::Cerf(int LVL, std::string nom, int difficulte, int animal, int rareteAnima
 		ajouterVie(19 * vie());
 		ajouterReduction(90);
 		if (!_texture.loadFromFile("graphics/cerf_diamand.png"))
+		{
+			// error...
+		}
+		_sprite.setTexture(_texture);
+	}
+	else if (difficulte == 3) {
+		ajouterForce(force()*2);
+		//ajouterVitesse(vitesse());
+		ajouterVie(4 * vie());
+		ajouterReduction(40);
+		Objets obj;
+		setObjets(obj.objetNumero(43), obj.objetNumero(39));
+		//Tchat Twitch
+		if (!_texture.loadFromFile("graphics/tchat_twitch.png"))
 		{
 			// error...
 		}

@@ -1,5 +1,6 @@
 #include "Lapin.h"
 #include "Affichage.h"
+#include "Objets.h"
 
 
 Lapin::Lapin(int LVL,std::string nom,int difficulte,int animal,int rareteAnimal,int id) : Personnage(LVL, nom, 2, 4, 4, 30, 0, 0, 0, 0, 10, 0,animal,rareteAnimal) 
@@ -15,7 +16,7 @@ Lapin::Lapin(int LVL,std::string nom,int difficulte,int animal,int rareteAnimal,
 		}
 		_sprite.setTexture(_texture);
 	}
-	if (difficulte == 2) {
+	else if (difficulte == 2) {
 		if (!_texture.loadFromFile("graphics/lapin_d2.png"))
 		{
 			// error...
@@ -24,6 +25,18 @@ Lapin::Lapin(int LVL,std::string nom,int difficulte,int animal,int rareteAnimal,
 		ajouterVitesse(vitesse());
 		ajouterVie(19 * vie());
 		ajouterReduction(99);
+	}
+	if (difficulte == 3) {
+		ajouterVitesse(vitesse()*3);
+		ajouterVie(2 * vie());
+		//Clippy
+		Objets obj;
+		setObjets(obj.objetNumero(OBJET_FLEAU_SADIQUE), obj.objetNumero(OBJET_CAPE_NINJA));
+		if (!_texture.loadFromFile("graphics/clippy.png"))
+		{
+			// error...
+		}
+		_sprite.setTexture(_texture);
 	}
 	else if (difficulte == 5) {
 		ajouterVie(vie());

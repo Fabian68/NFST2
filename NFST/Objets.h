@@ -61,6 +61,7 @@ const int OBJET_BOUCLIER_AMELIORER = 53;
 const int OBJET_MALADRESSE = 54;
 const int OBJET_FER_CHEVAL = 55;
 const int OBJET_TREFLE_QUATTRE = 56;
+const int OBJET_HORLOGE = 57;
 
 
 class Objets
