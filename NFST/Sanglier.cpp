@@ -81,7 +81,7 @@ void Sanglier::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector<
 
 		ajouterChanceHabileter(3);
 		equipeEnnemi().plusProcheVivant()->status().ajouterCompteurFragile(3);
-		ajouterForce(force() / 5);
+		ajouterForce(force() / 10);
 		ajouterMana(1);
 		break;
 	case 3:

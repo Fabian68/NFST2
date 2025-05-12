@@ -20,10 +20,8 @@ public:
 	void dessinerDeuxEquipes(Equipes J, Equipes E, Combat & C, sf::RenderWindow* window)const;
 	void dessinerStatistiques(Equipes Joueur, Equipes IA, Combat& C, sf::RenderWindow* window) const;
 	void dessinerAttaque(Personnage* Attaquant, Personnage* Defenseur, sf::RenderWindow* window);
-	void afficherStats(Equipes joueur, sf::RenderWindow* window);
-	void dessinerTour(std::vector<Personnage*> quiJoue,int index, sf::RenderWindow* window);
+	void afficherStats(Equipes joueur, sf::RenderWindow* window) const;
+	void dessinerTour(std::vector<Personnage*> quiJoue,int index, sf::RenderWindow* window) const;
 	void cleanMainZone(sf::RenderWindow* window)const;
-private:
-	
 };
 

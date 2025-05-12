@@ -151,6 +151,7 @@
     <ClCompile Include="Elite.cpp" />
     <ClCompile Include="entiter.cpp" />
     <ClCompile Include="Equipes.cpp" />
+    <ClCompile Include="Evan.cpp" />
     <ClCompile Include="Experiences.cpp" />
     <ClCompile Include="Fabian.cpp" />
     <ClCompile Include="Fiona.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="Elite.h" />
     <ClInclude Include="entiter.h" />
     <ClInclude Include="Equipes.h" />
+    <ClInclude Include="Evan.h" />
     <ClInclude Include="Experiences.h" />
     <ClInclude Include="Fabian.h" />
     <ClInclude Include="Fiona.h" />

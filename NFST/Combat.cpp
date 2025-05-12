@@ -8,6 +8,7 @@
 #include "Succes.h"
 #include "Lapin.h"
 #include "Sanglier.h"
+#include "Zombie.h"
 
 Combat::Combat(Equipes & Joueur, Equipes & Ia, Zones& Z, Animaux& A, Orbes& O, std::vector< sf::Sound >& allSounds) : _joueur{ Joueur }, _ia{ Ia }, _tour{ 0 }
 {
@@ -97,12 +98,27 @@ Combat::Combat(Equipes & Joueur, Equipes & Ia, Zones& Z, Animaux& A, Orbes& O, s
 								_joueur.perso(t)->status().effetBrulure();
 								_joueur.perso(t)->status().effetPoison();
 							}
-							else if (_joueur.perso(t)->id() == 16) {
-								int un = 1;
-								std::ifstream is("phstd.txt", std::ios::binary);
-								is.read((char*)&un, sizeof(un));
-								is.close();
+							else {
+								//Gestion des zombifications
+								if (_joueur.perso(t)->status().estContaminer()) {
+									if (_ia.taille() < 10) {
+										Affichage().dessinerTexte(_joueur.perso(t)->nom() + " zombification ! ", window);
+										_ia.ajouterPerso(new Zombie(_joueur.perso(t)->niveau(),_joueur.perso(t)->nom() + " zombie"));
+										int dernier = _ia.taille() - 1;
+										_ia.perso(dernier)->setEnnemis(_joueur);
+										_ia.perso(dernier)->setAllier(_ia);
+										_ia.perso(dernier)->setId(-2);
+									}
+								}
+								//reset phenix
+								if (_joueur.perso(t)->id() == 16) {
+									int un = 1;
+									std::ifstream is("phstd.txt", std::ios::binary);
+									is.read((char*)&un, sizeof(un));
+									is.close();
+								}
 							}
+							
 							if (_joueur.perso(t)->id() == 3 && _joueur.perso(t)->estEnVie() && _tour == 25) {
 								Personnage* L = new Lapin(_joueur.perso(t)->niveau(), "Perle", 0, 9, 5, 21);
 								L->ajouterVie(_joueur.perso(t)->vieMax() / 10);

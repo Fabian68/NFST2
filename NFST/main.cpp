@@ -32,11 +32,12 @@
 #include"AffichageCombat.h"
 #include "Succes.h"
 #include "Phenix.h"
+#include "Evan.h"
 #define PI 3.14159265
 #include<memory>
 
 
-void reinitListeEquipe(Equipes& Liste) {
+static void reinitListeEquipe(Equipes& Liste) {
 	Experiences E;
 	Orbes O;
 	Animaux A;
@@ -61,40 +62,41 @@ void reinitListeEquipe(Equipes& Liste) {
 	Liste.ajouterPerso(new Tortue(E, O, A, Obj));
 	Liste.ajouterPerso(new Salim(E, O, A, Obj));
 	Liste.ajouterPerso(new Phenix(E, O, A, Obj));
+	Liste.ajouterPerso(new Evan(E, O, A, Obj));
 }
 
-void reinitEquipe(Equipes& monEquipe, Equipes& ListePerso) {
+static void reinitEquipe(Equipes& monEquipe, Equipes& ListePerso) {
 	monEquipe.vider();
 	monEquipe.chargerEquipe(ListePerso);
 }
 
-void loadSongs2(std::vector<std::shared_ptr<sf::SoundBuffer>>& allBuffers, std::vector<sf::Sound>& sounds) {
+static void loadSongs2(std::vector<std::shared_ptr<sf::SoundBuffer>>& allBuffers, std::vector<sf::Sound>& sounds) {
 	// Charger les buffers et les stocker dans allBuffers
-	std::shared_ptr<sf::SoundBuffer> buffer1 = std::make_shared<sf::SoundBuffer>();
+	auto buffer1 = std::make_shared<sf::SoundBuffer>();
 	buffer1->loadFromFile("./song/giga-chad.ogg");
 	allBuffers.push_back(buffer1);
 
-	std::shared_ptr<sf::SoundBuffer> buffer2 = std::make_shared<sf::SoundBuffer>();
+	auto buffer2 = std::make_shared<sf::SoundBuffer>();
 	buffer2->loadFromFile("./song/vine-boom.ogg");
 	allBuffers.push_back(buffer2);
 
-	std::shared_ptr<sf::SoundBuffer> buffer3 = std::make_shared<sf::SoundBuffer>();
+	auto buffer3 = std::make_shared<sf::SoundBuffer>();
 	buffer3->loadFromFile("./song/bow_shoot.ogg");
 	allBuffers.push_back(buffer3);
 
-	std::shared_ptr<sf::SoundBuffer> buffer4 = std::make_shared<sf::SoundBuffer>();
+	auto buffer4 = std::make_shared<sf::SoundBuffer>();
 	buffer4->loadFromFile("./song/xbox-rare-achievement.ogg");
 	allBuffers.push_back(buffer4);
 
-	std::shared_ptr<sf::SoundBuffer> buffer5 = std::make_shared<sf::SoundBuffer>();
+	auto buffer5 = std::make_shared<sf::SoundBuffer>();
 	buffer5->loadFromFile("./song/ta-da_yrvBrlS.ogg");
 	allBuffers.push_back(buffer5);
 
-	std::shared_ptr<sf::SoundBuffer> buffer6 = std::make_shared<sf::SoundBuffer>();
+	auto buffer6 = std::make_shared<sf::SoundBuffer>();
 	buffer6->loadFromFile("./song/anime-wow-sound-effect.ogg");
 	allBuffers.push_back(buffer6);
 
-	std::shared_ptr<sf::SoundBuffer> buffer7 = std::make_shared<sf::SoundBuffer>();
+	auto buffer7 = std::make_shared<sf::SoundBuffer>();
 	buffer7->loadFromFile("./song/outro-song_oqu8zAg.ogg");
 	allBuffers.push_back(buffer7);
 	// Créer les objets sf::Sound en utilisant les buffers stockés dans allBuffers
@@ -107,7 +109,7 @@ void loadSongs2(std::vector<std::shared_ptr<sf::SoundBuffer>>& allBuffers, std::
 	sounds.emplace_back(*buffer7);
 }
 
-void jouer(sf::RenderWindow* window,Zones & Z,Objets Obj, std::vector<sf::Sound>& allSounds, Affichage & H, Equipes & Meuchant, Equipes & Gentil,Equipes & choix) {
+static void jouer(sf::RenderWindow* window,Zones & Z,Objets Obj, std::vector<sf::Sound>& allSounds, Affichage & H, Equipes & Meuchant, Equipes & Gentil,Equipes & choix) {
 	(*window).clear();
 	int niveauChoisit = Z.niveauActuel();
 	int repetition = 1;
@@ -220,6 +222,10 @@ int main()
 		if (!S.estDebloque(SUCCES_NIV10_NICOLAS_SEBASTIEN) && choix[1]->niveau() >= 10 && choix[8]->niveau() >= 10) {
 			S.debloquerSucces(SUCCES_NIV10_NICOLAS_SEBASTIEN);
 			S.affichageDeblocageSucces(SUCCES_NIV10_NICOLAS_SEBASTIEN, allSounds);
+		}
+		if (!S.estDebloque(SUCCES_NIV50_David_Fiona) && choix[6]->niveau() >= 50 && choix[3]->niveau() >= 50) {
+			S.debloquerSucces(SUCCES_NIV50_David_Fiona);
+			S.affichageDeblocageSucces(SUCCES_NIV50_David_Fiona, allSounds);
 		}
 		int nb_niv10 = 0;
 		int nb_niv25 = 0;

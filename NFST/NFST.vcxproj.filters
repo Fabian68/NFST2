@@ -210,8 +210,11 @@
     <ClCompile Include="Orbes.cpp">
       <Filter>Fichiers sources\Fonctionnalites</Filter>
     </ClCompile>
+    <ClCompile Include="Evan.cpp">
+      <Filter>Fichiers sources\Personnages</Filter>
+    </ClCompile>
     <ClCompile Include="Succes.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\Fonctionnalites</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -383,8 +386,11 @@
     <ClInclude Include="AffichageCombat.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Evan.h">
+      <Filter>Fichiers d%27en-tête\Personnages</Filter>
+    </ClInclude>
     <ClInclude Include="Succes.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>Fichiers d%27en-tête\Fonctionnalites</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

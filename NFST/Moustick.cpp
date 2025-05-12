@@ -19,7 +19,7 @@ void Moustick::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector<
 	int choix = choixAttaque();
 	int DEGATS;
 
-	int ratio = static_cast <int>(100.0 * (1.0 - (vie() * 1.0) / (vieMax() * 1.0)));
+	auto ratio = static_cast <int>(100.0 * (1.0 - (vie() * 1.0) / (vieMax() * 1.0)));
 	ratio = std::min(99, ratio);
 	int ratioPositif = static_cast<int>((vieMax() * 1.0) / (vie() * 1.0))+1;
 	ratioPositif = std::min(ratioPositif, 30);
@@ -75,17 +75,14 @@ void Moustick::passif(int tour, Combat & C, sf::RenderWindow* window, std::vecto
 {
 	reduireVie(static_cast<int>(vie() / 100.0));
 
-	int ratio = static_cast <int>(100.0 * (1.0 - (vie() * 1.0) / (vieMax() * 1.0)));
+	auto ratio = static_cast <int>(100.0 * (1.0 - (vie() * 1.0) / (vieMax() * 1.0)));
 	ratio = std::min(99, ratio);
 	setReduction(ratio);
-	std::cout << pourcentageReduction() << std::endl;
 }
 
 void Moustick::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, Combat & C, int degats, Personnage* P)
 {
-	int ratio = static_cast < int>(100.0 * (1.0 - (vie() * 1.0) / (vieMax() * 1.0)));
+	auto ratio = static_cast < int>(100.0 * (1.0 - (vie() * 1.0) / (vieMax() * 1.0)));
 	ratio = std::min(99, ratio);
-	setReduction(ratio);
-	std::cout << pourcentageReduction() << std::endl;
-	
+	setReduction(ratio);	
 }

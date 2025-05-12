@@ -1,4 +1,4 @@
-#include "Succes.h"
+ï»¿#include "Succes.h"
 #include <fstream>
 
 Succes::Succes()
@@ -29,48 +29,50 @@ Succes::Succes()
 	_listeSucces.reserve(100);
 	_succesCache.reserve(100);
 
-	_listeSucces.push_back(std::make_pair("Trouver le texte BOING caché", "+ 1 à chaque stats pour chaque personnage" ));
+	_listeSucces.emplace_back("Trouver le texte BOING cachï¿½", "+ 1 ï¿½ chaque stats pour chaque personnage");
 	_succesCache.push_back(true);
-	_listeSucces.push_back(std::make_pair("Finir le niveau 1", "Une médaille en chocolat"));
+	_listeSucces.emplace_back("Finir le niveau 1", "Une mï¿½daille en chocolat");
 	_succesCache.push_back(false);
-	_listeSucces.push_back(std::make_pair("Finir le niveau 5", "Nouveau personnage : Thomas"));
+	_listeSucces.emplace_back("Finir le niveau 5", "Nouveau personnage : Thomas");
 	_succesCache.push_back(false);
-	_listeSucces.push_back(std::make_pair("Finir le niveau 10", "Nouveau personnage : Moustick"));
+	_listeSucces.emplace_back("Finir le niveau 10", "Nouveau personnage : Moustick");
 	_succesCache.push_back(false);
-	_listeSucces.push_back(std::make_pair("Finir le niveau 15", "Nouveau personnage : Jean Baptiste"));
+	_listeSucces.emplace_back("Finir le niveau 15", "Nouveau personnage : Jean Baptiste");
 	_succesCache.push_back(false);
-	_listeSucces.push_back(std::make_pair("Finir le niveau 20", "Nouveau personnage : Salim"));
+	_listeSucces.emplace_back("Finir le niveau 20", "Nouveau personnage : Salim");
 	_succesCache.push_back(false);
-	_listeSucces.push_back(std::make_pair("Finir le niveau 25", "Nouveau personnage : A VENIR"));
+	_listeSucces.emplace_back("Finir le niveau 25", "Nouveau personnage : A VENIR");
 	_succesCache.push_back(false);
-	_listeSucces.push_back(std::make_pair("Finir le niveau 50", "???"));
+	_listeSucces.emplace_back("Finir le niveau 50", "???");
 	_succesCache.push_back(false);
-	_listeSucces.push_back(std::make_pair("Obtenir un objet légendaire", "Nouveau personnage : Bryan"));
+	_listeSucces.emplace_back("Obtenir un objet lï¿½gendaire", "Nouveau personnage : Bryan");
 	_succesCache.push_back(false);
-	_listeSucces.push_back(std::make_pair("Obtenir un animal légendaire", "Nouveau personnage : Fiona"));
+	_listeSucces.emplace_back("Obtenir un animal lï¿½gendaire", "Nouveau personnage : Fiona");
 	_succesCache.push_back(false);
-	_listeSucces.push_back(std::make_pair("Obtenir une orbe légendaire", "Nouveau personnage : Salim"));
+	_listeSucces.emplace_back("Obtenir une orbe lï¿½gendaire", "Nouveau personnage : Salim");
 	_succesCache.push_back(false);
-	_listeSucces.push_back(std::make_pair("Obtenir l'oeuf de tortue", "Nouveau personnage : Tortue"));
+	_listeSucces.emplace_back("Obtenir l'oeuf de tortue", "Nouveau personnage : Tortue");
 	_succesCache.push_back(false);
-	_listeSucces.push_back(std::make_pair("Obtenir la cendre de Phénix", "Nouveau personnage : Phénix"));
+	_listeSucces.emplace_back("Obtenir la cendre de Phï¿½nix", "Nouveau personnage : Phï¿½nix");
 	_succesCache.push_back(false);
-	_listeSucces.push_back(std::make_pair("Monter Nicolas au niveau 25", "Nouveau personnage : Isidore"));
+	_listeSucces.emplace_back("Monter Nicolas au niveau 25", "Nouveau personnage : Isidore");
 	_succesCache.push_back(false);
-	_listeSucces.push_back(std::make_pair("Monter Fiona au niveau 25", "Nouveau personnage : David"));
+	_listeSucces.emplace_back("Monter Fiona au niveau 25", "Nouveau personnage : David");
 	_succesCache.push_back(false);
-	_listeSucces.push_back(std::make_pair("Monter deux perso niveau 10", "Nouveau personnage : Sebastien"));
+	_listeSucces.emplace_back("Monter deux perso niveau 10", "Nouveau personnage : Sebastien");
 	_succesCache.push_back(false);
-	_listeSucces.push_back(std::make_pair("Monter Fabian et Fiona niveau 10", "Nouveau personnage : Cloe"));
+	_listeSucces.emplace_back("Monter Fabian et Fiona niveau 10", "Nouveau personnage : Cloe");
 	_succesCache.push_back(false);
-	_listeSucces.push_back(std::make_pair("Monter 3 personnages niveau 25", "Nouveau personnage : Amine"));
+	_listeSucces.emplace_back("Monter 3 personnages niveau 25", "Nouveau personnage : Amine");
 	_succesCache.push_back(false);
-	_listeSucces.push_back(std::make_pair("Monter Nicolas et Sebastien au niv 10", "Nouveau personnage : Florian"));
+	_listeSucces.emplace_back("Monter Nicolas et Sebastien au niv 10", "Nouveau personnage : Florian");
 	_succesCache.push_back(false);
-	_listeSucces.push_back(std::make_pair("Monter Fabian, Fiona et Cloe au niv 25", "Nouveau personnage : Maelle"));
+	_listeSucces.emplace_back("Monter Fabian, Fiona et Cloe au niv 25", "Nouveau personnage : Maelle");
 	_succesCache.push_back(false);
-	_listeSucces.push_back(std::make_pair("Débloquer 10 succès", "Les combats seront 25% plus rapide"));
+	_listeSucces.emplace_back("Dï¿½bloquer 10 succï¿½s", "Les combats seront 25% plus rapide");
 	_succesCache.push_back(true);
+	_listeSucces.emplace_back("Monter Fiona et David au niveau 50", "Nouveau personnage : Evan");
+	_succesCache.push_back(false);
 }
 
 void Succes::sauvegarder()
@@ -91,7 +93,7 @@ bool Succes::estDebloque(int succes) const
 
 void Succes::affichageDeblocageSucces(int succes, std::vector< sf::Sound> allSounds) const
 {
-	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(400, 200), "Succes débloqué");
+	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(400, 200), "Succes dÃ©bloquÃ©");
 	allSounds[3].play();
 	sf::Color couleurTexte = sf::Color::White;
 	sf::Color couleurFond = sf::Color::Black;
@@ -105,10 +107,10 @@ void Succes::affichageDeblocageSucces(int succes, std::vector< sf::Sound> allSou
 	sf::Event event;
 	while (window->pollEvent(event))
 	{
-		// on regarde le type de l'évènement...
+		// on regarde le type de l'Ã©vÃ¨nement...
 		switch (event.type)
 		{
-			// fenêtre fermée
+			// fenÃªtre fermÃ©e
 		case sf::Event::Closed:
 			window->close();
 			break;

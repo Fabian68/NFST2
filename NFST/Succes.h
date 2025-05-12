@@ -25,6 +25,8 @@ const int SUCCES_NIV25_3PERSOS = 17;
 const int SUCCES_NIV10_NICOLAS_SEBASTIEN = 18;
 const int SUCCES_NIV25_FABIAN_FIONA_CLOE = 19;
 const int SUCCES_10SUCCES = 20;
+const int SUCCES_NIV50_David_Fiona = 21;
+
 class Succes
 {
 public:

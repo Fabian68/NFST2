@@ -1,4 +1,4 @@
-#include "Objets.h"
+ï»¿#include "Objets.h"
 #include <fstream>
 #include "Affichage.h"
 #include "Bouton.h"
@@ -88,63 +88,63 @@ Objets::Objets()
 	is3.close();
 
 	_listeObjets.reserve(300);
-	_listeObjets.push_back(Objet());
-	_listeObjets.push_back(Objet("Antidote", 1, 100000, "Rend insensible au poison"));
-	_listeObjets.push_back(Objet("Voile de feu", 2, 100000, "Les brûlures vous soignent"));
-	_listeObjets.push_back(Objet("Bénédiction", 3, 1000, "Augmente la vie Maximum de 50%"));
-	_listeObjets.push_back(Objet("Sceptre de druide", 4, 1000, "20% de chance qu'un soins donne également du bouclier, 10% de chance qu'ajouter du bouclier octroie une protection."));
-	_listeObjets.push_back(Objet("Malediction", 5, 100, "Consomme votre bouclier et reduit votre vie de 10% de votre vie max chaque tour mais augmente vos dégats de 150%"));
-	_listeObjets.push_back(Objet("Cape habilete", 6, 10000, "+10% coup habile, 6% de chance que les coup habile fassent 3 fois plus de dégats et 3% de chance qu'elle fassent 4 fois plus de dégats(pas pour les attaques bruts)"));
-	_listeObjets.push_back(Objet("Patte de lapin", 7, 100000, "+33% vitesse, l'experience gagner au comba par ce personnage est augmenter de 33%"));
-	_listeObjets.push_back(Objet("Beuh", 8, 10000, "-80% vitesse, l'experience gagner par ce personnage est multiplier par 2"));
-	_listeObjets.push_back(Objet("Voile miroir", 9, 1000, "+ 6% de chance de deviation, les attaques devier sont 50% plus puissantes"));
-	_listeObjets.push_back(Objet("Marshmallow", 10, 1000, "10% de chance d'absorber une attaque ennemi et de transformer les dégats en bouclier"));
-	_listeObjets.push_back(Objet("Armure du protecteur", 11, 100000, "+10% de reduction de dégats, 25% de chance de recevoir une attaque qui cible un allier a sa place"));
-	_listeObjets.push_back(Objet("Kunai", 12, 1000, "Toute les 3 attaques voient leurs dégats augmenter de 30%"));
-	_listeObjets.push_back(Objet("Flèche transpercante", 13, 10000, "Après chaque attaques vous infliger une attaque brute avec 5% à 10% de votre force"));
-	_listeObjets.push_back(Objet("Armure de Sakeratsu", 14, 100000, "+10% de reduction de dégats, renvoie 10% des dégats reçu sous forme de dégats brut a l'ennemi(après calcul des reductions)"));
-	_listeObjets.push_back(Objet("Cape de ninja", 15, 10000, "+10% de chance d'esquive, +3% de chance de coup critique, effectuer une esquive augmente vos dégats critique de 5%"));
-	_listeObjets.push_back(Objet("Dague de ninja", 16, 10000, "Augmente les dégats critiques de 20%, après avoir effectuer une esquive vous faites une attaque brute sur l'ennemi le plus faible a hauteur de 5% à 20% de votre force augmenter par vos dégats critique "));
-	_listeObjets.push_back(Objet("Soie de lapin", 17, 10, "+10% de vitesse"));
-	_listeObjets.push_back(Objet("Sauciflar", 18, 100, "+5% chance de coup critique"));
-	_listeObjets.push_back(Objet("J&B", 19, 100, "+10 points dans chaque stats"));
-	_listeObjets.push_back(Objet("Colère de Florian ", 20, 1000, "+30 points dans chaque stats"));
-	_listeObjets.push_back(Objet("Trinité", 21, 10000, "+75 points dans chaque stats"));
-	_listeObjets.push_back(Objet("Debardeur de Nicolas ", 22, 1000, "Attaque l'attaquant pour des dégats de 100% votre niveau,+5% d'attaque"));
-	_listeObjets.push_back(Objet(" Jue de pomme", 23, 100, "+5% de vie max"));
-	_listeObjets.push_back(Objet("Les chaussetes de FLO", 24, 10000, " Attaque l'attaquant pour des dégats de 100% votre niveau, 1 chance sur 10 000 d'ifnliger poison lors d'une attaque"));
-	_listeObjets.push_back(Objet(" Gilet par balle", 25, 10000," Les dégats sont reduit de 1 par niveau du personnage "));
-	_listeObjets.push_back(Objet("EXCALIBUR", 26, 10000, "+150 points dans chaque stats"));
-	_listeObjets.push_back(Objet("Flèches tranchantes", 27, 10000, "+7% de chance de ricochet, les ricochet font 37% de plus de dégats."));
-	_listeObjets.push_back(Objet("Cote du sadomaso", 28, 10000, "Reduit de 1(+ 1 tout les 100 niveau) les dégats par coup reçu."));
-	_listeObjets.push_back(Objet("Fléau du sadique", 29, 10000, "Ajoute 1(+1 tout les 100 niveau) de dégats par attaques réaliser."));
-	_listeObjets.push_back(Objet("Totem immunitée", 30, 100000, "Permet de revivre avec toute sa vie une fois."));
-	_listeObjets.push_back(Objet("MEMEMTOM", 31, 10000, "A chaque attaque vous avez : 1/10 de lancer une nouvelle attaque 1-10% de vos dégats attaque, 1/100 => 10-100%,1/1000 => 100-1000%"));
-	_listeObjets.push_back(Objet("Jeu NES", 32, 1000, "Un jeux vidéo Nes, The Legend Of Zelda"));
-	_listeObjets.push_back(Objet("Sablier", 33, 10000, "Reduit le temps des combats par 4"));
-	_listeObjets.push_back(Objet("Tardis", 34, 100000, "Reduit considérablement le temps des combats"));
-	_listeObjets.push_back(Objet("Lame maléfique", 35, 1000, "+50% de dégats, reçois deux fois plus de dégats"));
-	_listeObjets.push_back(Objet("Mégamorph", 36, 1000, "Recever deux fois plus de dégats quand vie superieur a 50% de votre vie maximum sinon deux fois moins"));
-	_listeObjets.push_back(Objet("Némésis", 37, 10000, "Faites 50% plus de dégats a l'ennemi qui a la même position dans son equipe que vous dans la votre et recever deux fois moins de dégats de sa part"));
-	_listeObjets.push_back(Objet("Casse-noix", 38, 1000, "Vous faites 50% de dégats en plus a un ennemi qui possède un bouclier et 100% a un ennemis qui possede tout son bouclier"));
-	_listeObjets.push_back(Objet("Esprit du guerrier", 39, 1000, "Vous faites 1% de dégats en plus pour chaque pourceentage de point de vie qu'ils vous manquent"));
-	_listeObjets.push_back(Objet("T6wins", 40, 10000, "Un ricochet envoie 2 attaques au lieu d'une, +2% chance de ricochets"));
-	_listeObjets.push_back(Objet("Oeil d'aigle", 41, 100000, "Vos attaques font des dégats supplémentaires équivalent a 1% de la vie actuelle de l'ennemi "));
-	_listeObjets.push_back(Objet("Peau épaisse", 42, 100000, "Vous recever des dégats en moins équivalent a 1% de votre vie maximum "));
-	_listeObjets.push_back(Objet("Dildo", 43, 100000, "Vos attaques passent a travers 50% de la reduction de dégats et des blocages "));
-	_listeObjets.push_back(Objet("Oeuf de Tortue", 44, 10000, "Permet de jouer un nouveau personnage, pas besoin de l'équiper "));
-	_listeObjets.push_back(Objet("Cendre de Phénix", 45, 10000, "Permet de jouer un nouveau personnage, pas besoin de l'équiper  "));
-	_listeObjets.push_back(Objet("Hantise", 46, 1000, "Le personnage equiper fais 3 fois plus de dégats s'il est KO"));
-	_listeObjets.push_back(Objet("Magic 8 ball", 47, 100000, "+8% Force Vie et Vitesse et +8 dans les stats fixes"));
-	_listeObjets.push_back(Objet("Spartan armor", 48, 10000, "Vous faites plus de dégats en fonction du montant d'armure actuelle jusqu'a +100%"));
-	_listeObjets.push_back(Objet("Avance rapide", 49, 1000, "Les combats vont deux fois plus vite"));
-	_listeObjets.push_back(Objet("Vase antique magique", 50, 100000, "+1 mana par tour, +3% de dégats par points de mana"));
-	_listeObjets.push_back(Objet("Racine Eternel", 51, 10000, "+ 0,1-1% de votre vie en dégats supplémentaires"));
-	_listeObjets.push_back(Objet("Force grandissante", 52, 10000, " -10% de dégats critiques, +1% de dégats critique par tour"));
-	_listeObjets.push_back(Objet("Bouclier amélioré", 53, 10000, " reduit de 25% les dégats subis pendant que bouclier"));
-	_listeObjets.push_back(Objet("Maladresse", 54, 1000, " +10% dégats, +10% dégats critiques, quand vous attaquer vous recevez une attaque équivalent à 10% des dégats (post reduction)"));
-	_listeObjets.push_back(Objet("Fer à cheval", OBJET_FER_CHEVAL, 10000, "+14% de forces, +25% xp"));
-	_listeObjets.push_back(Objet("Trèfle à quattre feuilles", OBJET_TREFLE_QUATTRE, 100000, "+20% de points de vie, +50% xp"));
+	_listeObjets.emplace_back();
+	_listeObjets.emplace_back("Antidote", 1, 100000, "Rend insensible au poison");
+	_listeObjets.emplace_back("Voile de feu", 2, 100000, "Les brï¿½lures vous soignent");
+	_listeObjets.emplace_back("Bï¿½nï¿½diction", 3, 1000, "Augmente la vie Maximum de 50%");
+	_listeObjets.emplace_back("Sceptre de druide", 4, 1000, "20% de chance qu'un soins donne ï¿½galement du bouclier, 10% de chance qu'ajouter du bouclier octroie une protection.");
+	_listeObjets.emplace_back("Malediction", 5, 100, "Consomme votre bouclier et reduit votre vie de 10% de votre vie max chaque tour mais augmente vos dï¿½gats de 150%");
+	_listeObjets.emplace_back("Cape habilete", 6, 10000, "+10% coup habile, 6% de chance que les coup habile fassent 3 fois plus de dï¿½gats et 3% de chance qu'elle fassent 4 fois plus de dï¿½gats(pas pour les attaques bruts)");
+	_listeObjets.emplace_back("Patte de lapin", 7, 100000, "+33% vitesse, l'experience gagner au comba par ce personnage est augmenter de 33%");
+	_listeObjets.emplace_back("Beuh", 8, 10000, "-80% vitesse, l'experience gagner par ce personnage est multiplier par 2");
+	_listeObjets.emplace_back("Voile miroir", 9, 1000, "+ 6% de chance de deviation, les attaques devier sont 100% plus puissantes");
+	_listeObjets.emplace_back("Marshmallow", 10, 1000, "20% de chance d'absorber une attaque ennemi et de transformer les dï¿½gats en bouclier");
+	_listeObjets.emplace_back("Armure du protecteur", 11, 100000, "+10% de reduction de dï¿½gats, 25% de chance de recevoir une attaque qui cible un allier a sa place");
+	_listeObjets.emplace_back("Kunai", 12, 1000, "Toute les 3 attaques voient leurs dï¿½gats augmenter de 30%");
+	_listeObjets.emplace_back("Flï¿½che transpercante", 13, 10000, "Aprï¿½s chaque attaques vous infliger une attaque brute avec 5% ï¿½ 10% de votre force");
+	_listeObjets.emplace_back("Armure de Sakeratsu", 14, 100000, "+10% de reduction de dï¿½gats, renvoie 10% des dï¿½gats reï¿½u sous forme de dï¿½gats brut a l'ennemi(aprï¿½s calcul des reductions)");
+	_listeObjets.emplace_back("Cape de ninja", 15, 10000, "+10% de chance d'esquive, +3% de chance de coup critique, effectuer une esquive augmente vos dï¿½gats critique de 5%");
+	_listeObjets.emplace_back("Dague de ninja", 16, 10000, "Augmente les dï¿½gats critiques de 20%, aprï¿½s avoir effectuer une esquive vous faites une attaque brute sur l'ennemi le plus faible a hauteur de 5% ï¿½ 20% de votre force augmenter par vos dï¿½gats critique ");
+	_listeObjets.emplace_back("Soie de lapin", 17, 10, "+10% de vitesse");
+	_listeObjets.emplace_back("Sauciflar", 18, 100, "+5% chance de coup critique");
+	_listeObjets.emplace_back("J&B", 19, 100, "+10 points dans chaque stats");
+	_listeObjets.emplace_back("Colï¿½re de Florian ", 20, 1000, "+30 points dans chaque stats");
+	_listeObjets.emplace_back("Trinitï¿½", 21, 10000, "+75 points dans chaque stats");
+	_listeObjets.emplace_back("Debardeur de Nicolas ", 22, 1000, "Attaque l'attaquant pour des dï¿½gats de 100% votre niveau,+5% d'attaque");
+	_listeObjets.emplace_back(" Jue de pomme", 23, 100, "+5% de vie max");
+	_listeObjets.emplace_back("Les chaussetes de FLO", 24, 10000, " Attaque l'attaquant pour des dï¿½gats de 100% votre niveau, 1 chance sur 10 000 d'ifnliger poison lors d'une attaque");
+	_listeObjets.emplace_back(" Gilet par balle", 25, 10000," Les dï¿½gats sont reduit de 1 par niveau du personnage ");
+	_listeObjets.emplace_back("EXCALIBUR", 26, 10000, "+150 points dans chaque stats");
+	_listeObjets.emplace_back("Flï¿½ches tranchantes", 27, 10000, "+7% de chance de ricochet, les ricochet font 37% de plus de dï¿½gats.");
+	_listeObjets.emplace_back("Cote du sadomaso", 28, 10000, "Reduit de 1(+ 1 tout les 100 niveau) les dï¿½gats par coup reï¿½u.");
+	_listeObjets.emplace_back("Flï¿½au du sadique", 29, 10000, "Ajoute 1(+1 tout les 100 niveau) de dï¿½gats par attaques rï¿½aliser.");
+	_listeObjets.emplace_back("Totem immunitï¿½e", 30, 100000, "Permet de revivre avec toute sa vie une fois.");
+	_listeObjets.emplace_back("MEMEMTOM", 31, 10000, "A chaque attaque vous avez : 1/10 de lancer une nouvelle attaque 1-10% de vos dï¿½gats attaque, 1/100 => 10-100%,1/1000 => 100-1000%");
+	_listeObjets.emplace_back("Jeu NES", 32, 1000, "Un jeux vidï¿½o Nes, The Legend Of Zelda");
+	_listeObjets.emplace_back("Sablier", 33, 10000, "Reduit le temps des combats par 4");
+	_listeObjets.emplace_back("Tardis", 34, 100000, "Reduit considï¿½rablement le temps des combats");
+	_listeObjets.emplace_back("Lame malï¿½fique", 35, 1000, "+50% de dï¿½gats, reï¿½ois deux fois plus de dï¿½gats");
+	_listeObjets.emplace_back("Mï¿½gamorph", 36, 1000, "Recever deux fois plus de dï¿½gats quand vie superieur a 50% de votre vie maximum sinon deux fois moins");
+	_listeObjets.emplace_back("Nï¿½mï¿½sis", 37, 10000, "Faites 50% plus de dï¿½gats a l'ennemi qui a la mï¿½me position dans son equipe que vous dans la votre et recever deux fois moins de dï¿½gats de sa part");
+	_listeObjets.emplace_back("Casse-noix", 38, 1000, "Vous faites 50% de dï¿½gats en plus a un ennemi qui possï¿½de un bouclier et 100% a un ennemis qui possede tout son bouclier");
+	_listeObjets.emplace_back("Esprit du guerrier", 39, 1000, "Vous faites 1% de dï¿½gats en plus pour chaque pourceentage de point de vie qu'ils vous manquent");
+	_listeObjets.emplace_back("T6wins", 40, 10000, "Un ricochet envoie 2 attaques au lieu d'une, +2% chance de ricochets");
+	_listeObjets.emplace_back("Oeil d'aigle", 41, 100000, "Vos attaques font des dï¿½gats supplï¿½mentaires ï¿½quivalent a 1% de la vie actuelle de l'ennemi ");
+	_listeObjets.emplace_back("Peau ï¿½paisse", 42, 100000, "Vous recever des dï¿½gats en moins ï¿½quivalent a 1% de votre vie maximum ");
+	_listeObjets.emplace_back("Dildo", 43, 100000, "Vos attaques passent a travers 50% de la reduction de dï¿½gats et des blocages ");
+	_listeObjets.emplace_back("Oeuf de Tortue", 44, 10000, "Permet de jouer un nouveau personnage, pas besoin de l'ï¿½quiper ");
+	_listeObjets.emplace_back("Cendre de Phï¿½nix", 45, 10000, "Permet de jouer un nouveau personnage, pas besoin de l'ï¿½quiper  ");
+	_listeObjets.emplace_back("Hantise", 46, 1000, "Le personnage equiper fais 3 fois plus de dï¿½gats s'il est KO");
+	_listeObjets.emplace_back("Magic 8 ball", 47, 100000, "+8% Force Vie et Vitesse et +8 dans les stats fixes");
+	_listeObjets.emplace_back("Spartan armor", 48, 10000, "Vous faites plus de dï¿½gats en fonction du montant d'armure actuelle jusqu'a +100%");
+	_listeObjets.emplace_back("Avance rapide", 49, 1000, "Les combats vont deux fois plus vite");
+	_listeObjets.emplace_back("Vase antique magique", 50, 100000, "+1 mana par tour, +3% de dï¿½gats par points de mana");
+	_listeObjets.emplace_back("Racine Eternel", 51, 10000, "+ 0,1-1% de votre vie en dï¿½gats supplï¿½mentaires");
+	_listeObjets.emplace_back("Force grandissante", 52, 10000, " -10% de dï¿½gats critiques, +1% de dï¿½gats critique par tour");
+	_listeObjets.emplace_back("Bouclier amï¿½liorï¿½", 53, 10000, " reduit de 25% les dï¿½gats subis pendant que bouclier");
+	_listeObjets.emplace_back("Maladresse", 54, 1000, " +10% dï¿½gats, +10% dï¿½gats critiques, quand vous attaquer vous recevez une attaque ï¿½quivalent ï¿½ 10% des dï¿½gats (post reduction)");
+	_listeObjets.emplace_back("Fer ï¿½ cheval", OBJET_FER_CHEVAL, 10000, "+14% de forces, +25% xp");
+	_listeObjets.emplace_back("Trï¿½fle ï¿½ quattre feuilles", OBJET_TREFLE_QUATTRE, 100000, "+20% de points de vie, +50% xp");
 
 	//_listeObjets.push_back(Objet("Antidote", 18, 100000, "Rend insensible au poison"));
 
@@ -445,7 +445,7 @@ Objet  Objets::objetNumero(int numero) {
 void Objets::deblocageObjet(int indiceObjet, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
 	std::string txt = "";
-	txt += "Vous avez débloquer l'objet : ";
+	txt += "Vous avez dÃ©bloquer l'objet : ";
 	txt += _listeObjets[indiceObjet].nom() + " " + _listeObjets[indiceObjet].rareterTexte();
 	Bouton(300.f, 400.f, txt, sf::Color::Black, sf::Color::Green, sf::Color::Green).afficher(window);
 

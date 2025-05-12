@@ -310,6 +310,14 @@ void Affichage::afficherJoueurs(int indice, Equipes& Liste, sf::RenderWindow* wi
 		sprite.setTexture(texture);
 
 		break;
+	case 17:
+		if (!texture.loadFromFile("graphics/thevanH.png"))
+		{
+			// error...
+		}
+		sprite.setTexture(texture);
+
+		break;
 	}
 	sprite.setPosition(10.f, 435.f);
 	window->draw(sprite);
@@ -633,6 +641,10 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 			str = "Les statistiques sont améliorés selon le temps joué Taille = T (1 à 4) sur le personnage,les améliorations redescendent à zéro si le personnage tombe KO";
 			str = str + "\^n" + "+ niveau dégats et -niveau de reduction de dégats fixe";
 			break;
+		case 17:
+			str = "Le premier coéquipier de l'équipe prend les attaques non brut à sa place";
+			str = str + "\^n" + " -45% de dégats critiques +10% de vitesses, gagne 1% de dégats sur ses attaques à chaque tour joué";
+			break;
 
 	}
 	afficherTexte(x, y + 30.f, str, couleurTexte, window);
@@ -705,6 +717,9 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 	case 16:
 		str = "Tout les tours soigne 10% de ses pv manquent et bouclier 10% du bouclier manquent";
 		break;
+	case 17:
+		str = "Chaque tour gagne 1% chance de coup critique et 3% de dégats critique";
+		break;
 	}
 	afficherTexte(x, y + 110.f, str, couleurTexte, window);
 
@@ -763,6 +778,9 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		break;
 	case 16:
 		str = "Taille = T (1 à 4) selon le temps joué, attaque brut l'ennemi le plus proche pour (1 x T)-(2 + 2 x T)% de votre force";
+		break;
+	case 17:
+		str = "Gagne 1% de chance de double attaque et 1% chance de coup habile, le coupo est dévié sur le coéquipier le plus vers l'avant";
 		break;
 	}
 	afficherTexte(x, y + 180.f, str, couleurTexte, window);
@@ -831,6 +849,9 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		break;
 	case 16:
 		str = "Attaque taille fois l'ennemi le plus proche pour 45-85% de votre force, + 1 mana, ré-attaque si attaque double";
+		break;
+	case 17:
+		str = "Attaque deux fois l'ennemi le plus éloigné pour 10-30% de sa force, ajoute 1 point de mana";
 		break;
 	}
 	afficherTexte(x, y + 250.f, str, couleurTexte, window);
@@ -916,6 +937,9 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		str = "Compétence disponible si taile = 2 ou plus : Soigne les brulures et poisons de tout les alliers puis ";
 		str = str + "\n" + "Soigne l'équipe pour (20 x (T-1))-(40 x (T-1))% de votre force, -1 mana";
 		break;
+	case 17:
+		str = "Attaque l'ennemi le plus proche pour 10-30% de sa force + 3% des pv de l'ennemi + 1% des pv max de l'ennemi, consomme 1 point de mana";
+		break;
 	}
 	afficherTexte(x, y + 340.f, str, couleurTexte, window);
 
@@ -974,6 +998,9 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 	case 16:
 		str = "Compétence disponible si taile = 3 ou plus : Ajoute T chance de double attaque, chance habileter et chance coup critique";
 		str = str + "\n" + "T/2 reduction de dégats et chance de ricochets, T x 2 compteurs de protections et T x 2 +2 dégats critiques, -2 mana";
+		break;
+	case 17:
+		str = "Ajoute 3% de chance de ricochets";
 		break;
 	}
 	afficherTexte(x, y + 430.f, str, couleurTexte, window);
@@ -1039,6 +1066,9 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		break;
 	case 16:
 		str = "Compétence disponible si taile = 4 (max) : Attaque l'équipe ennemi pour 100-400% de votre force";
+		break;
+	case 17:
+		str = "Attaque l'ennemi le plus faible pour 30-60% de sa force + 10-40% de sa vitesse, consomme 3 points de mana";
 		break;
 	}
 	afficherTexte(x, y + 520.f, str, couleurTexte, window);
@@ -1108,7 +1138,7 @@ void Affichage::afficherMecaniques(sf::RenderWindow* window, std::vector<sf::Sou
 	str = "Pourcentage de reduction de dégats : Reduit les dégats reçu en pourcentage, ne fonctionne pas avec les dégats brut";
 	afficherTexte(x, y + 120.f, str, sf::Color::Green, window);
 
-	str = "Pourcentage de déviation : Renvoie une attaque après le calcul des dégats, ne fonctionne pas avec les attaques brut,le passif défensif ne s'applique pas";
+	str = "Pourcentage de déviation : Renvoie une attaque avant les augmentation et diminuation des dégats, ne fonctionne pas avec les attaques brut,le passif défensif ne s'applique pas";
 	afficherTexte(x, y + 140.f, str, sf::Color::Magenta, window);
 
 	str = "Pourcentage de blocage : Une attaque bloqué bloque 50% des dégats, ne fonctionne pas avec les attaques brut";
@@ -1745,15 +1775,22 @@ void Affichage::menuModifierEquipe(Equipes & Gentil, Equipes choix,Zones & Z, in
 
 	i++;
 	if (S.estDebloque(SUCCES_NIV20) && !Gentil.comprendPersonnage(choix[i]->id())) {
-		Bouton Bouton_Salim = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
+		Bouton Bouton_Salim = Bouton(700.f, (float)(i + -14) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
 		les_boutons->push_back(Bouton_Salim);
 		ids.push_back(i);
 	}
 
 	i++;
 	if (O.estDebloquer(O.objetNumero(OBJET_CENDRE_PHENIX)) && !Gentil.comprendPersonnage(choix[i]->id())) {
-		Bouton Bouton_Phenix = Bouton(400.f, (float)(i + 1) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
+		Bouton Bouton_Phenix = Bouton(700.f, (float)(i -14) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
 		les_boutons->push_back(Bouton_Phenix);
+		ids.push_back(i);
+	}
+
+	i++;
+	if (S.estDebloque(SUCCES_NIV50_David_Fiona) && !Gentil.comprendPersonnage(choix[i]->id())) {
+		Bouton Bouton_Evan = Bouton(700.f, (float)(i -14) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau()));
+		les_boutons->push_back(Bouton_Evan);
 		ids.push_back(i);
 	}
 
@@ -1762,22 +1799,6 @@ void Affichage::menuModifierEquipe(Equipes & Gentil, Equipes choix,Zones & Z, in
 		for (Bouton& bouton : *les_boutons) {
 			bouton.afficher(window);
 		}
-		/*
-		for (int i = 14; i < choix.taille(); i++) {
-			if (i == 14 && !O.estDebloquer(O.objetNumero(OBJET_OEUF_TORTUE))) {
-
-			}
-			else {
-				if (i == 16 && !O.estDebloquer(O.objetNumero(OBJET_CENDRE_PHENIX))) {
-
-				}
-				else {
-					Bouton(600.f, (float)(i - 13) * 45.f, std::to_string(i) + " " + choix[i]->nom() + " LVL : " + std::to_string(choix[i]->niveau())).afficher(window);
-				}
-
-			}
-
-		}*/
 	}
 	else {
 		afficherTexte(400.f, 20.f, "Maximum de personnages selectionnable atteintes", sf::Color::White, window);

@@ -21,7 +21,6 @@ Lapin::Lapin(int LVL,std::string nom,int difficulte,int animal,int rareteAnimal,
 			// error...
 		}
 		_sprite.setTexture(_texture);
-		ajouterForce(force());
 		ajouterVitesse(vitesse());
 		ajouterVie(19 * vie());
 		ajouterReduction(99);

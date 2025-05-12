@@ -20,6 +20,9 @@ const int actionSOINS=0;
 const int actionDEGATS=1;
 const int actionBOUCLIER=2;
 const int actionNULL=3;
+
+const int ID_EVAN = 17;
+
 class Personnage
 {
 public:
@@ -65,7 +68,9 @@ public:
 	Equipes& equipeEnnemi();
 	bool habile() const;
 	void traitementAnimaux(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound > &allSounds);
-    void   Attaque(int Degat, Personnage * Defenseur, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound > &allSounds) ;
+	int calcul_ajout_degats(int Degat, Personnage* Defenseur);
+	int calcul_reduction_degats(int Degat, Personnage* Defenseur);
+	void   Attaque(int Degat, Personnage * Defenseur, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound > &allSounds) ;
 	void changeTour(bool estSonTour);
 	bool estSonTour()const;
 	void AttaqueBrut(int Degat, Personnage* Defenseur, Combat & C, sf::RenderWindow* window);
@@ -102,7 +107,6 @@ public:
 	void ajouterCoupCritique(int pourcentage);
 	void ajouterDegatsCritique(int pourcentage);
 	void setNom(std::string nom);
-	//void modifierStats(double ratio);
 	Status & status();
 	std::pair <Objet, Objet> objets();
 	std::pair <Objet, Objet> objets2();

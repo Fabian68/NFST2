@@ -32,9 +32,7 @@ std::string conversion(long long int nombre) {
 	return nombrestr;
 }
 
-AffichageCombat::AffichageCombat()
-{
-}
+AffichageCombat::AffichageCombat() = default;
 
 void AffichageCombat::dessinerTexteModificationVie(Personnage* P, sf::RenderWindow* window) const {
 
@@ -213,7 +211,7 @@ void AffichageCombat::dessinerJoueur(int indice, bool equipeIA, Personnage* P, s
 	dessinerTexteModificationVie(P, window);
 
 	int pourcentage = 0;
-	float max = (float)std::max(P->equipeAllier().meilleurDegats()->stats().degatsProvoquer(), P->equipeEnnemi().meilleurDegats()->stats().degatsProvoquer());
+	auto max = (float)std::max(P->equipeAllier().meilleurDegats()->stats().degatsProvoquer(), P->equipeEnnemi().meilleurDegats()->stats().degatsProvoquer());
 	pourcentage = (int)(100.f * ((float)P->stats().degatsProvoquer() / max));
 	if (pourcentage < 0 || pourcentage >100) {
 		pourcentage = 0;
@@ -221,7 +219,7 @@ void AffichageCombat::dessinerJoueur(int indice, bool equipeIA, Personnage* P, s
 
 	sf::Color couleur1 = sf::Color::Red;
 	sf::Color couleur2 = sf::Color::Black;
-	float val1 = (float)pourcentage;
+	auto val1 = (float)pourcentage;
 	float val2 = -(float)pourcentage + 100.f;
 	x = 5.f;
 	if (equipeIA) {
@@ -249,7 +247,6 @@ void AffichageCombat::dessinerJoueur(int indice, bool equipeIA, Personnage* P, s
 	afficherTexte(x + 52.f, y, conversion(P->stats().degatsProvoquer()), sf::Color::White, window);
 
 	y += 16.f;
-	pourcentage = 0;
 	max = (float)std::max(P->equipeAllier().meilleurTank()->stats().degatsRecu(), P->equipeEnnemi().meilleurTank()->stats().degatsRecu());
 	pourcentage = (int)(100.f * ((float)P->stats().degatsRecu() / max));
 	if (pourcentage < 0 || pourcentage >100) {
@@ -284,7 +281,6 @@ void AffichageCombat::dessinerJoueur(int indice, bool equipeIA, Personnage* P, s
 	afficherTexte(x + 52.f, y, conversion(P->stats().degatsRecu()), sf::Color::White, window);
 
 	y += 16.f;
-	pourcentage = 0;
 	max = (float)std::max(P->equipeAllier().meilleurSoigneur()->stats().soinsDonner(), P->equipeEnnemi().meilleurSoigneur()->stats().soinsDonner());
 	pourcentage = (int)(100.f * ((float)P->stats().soinsDonner() / max));
 	if (pourcentage < 0 || pourcentage >100) {
@@ -319,7 +315,6 @@ void AffichageCombat::dessinerJoueur(int indice, bool equipeIA, Personnage* P, s
 	afficherTexte(x + 52.f, y, conversion(P->stats().soinsDonner()), sf::Color::White, window);
 
 	y += 16.f;
-	pourcentage = 0;
 	max = (float)std::max(P->equipeAllier().meilleurBouclier()->stats().bouclierDonner(), P->equipeEnnemi().meilleurBouclier()->stats().bouclierDonner());
 	pourcentage = (int)(100.f * ((float)P->stats().bouclierDonner() / max));
 	if (pourcentage < 0 || pourcentage >100) {
@@ -372,7 +367,6 @@ void AffichageCombat::dessinerStatsJoueur(int indice,Equipes E, bool equipeIA, P
 {
 	float x=0.f;
 	sf::Color couleurTexte = sf::Color::White;
-	sf::Color couleurFond = sf::Color::Black;
 	sf::Color couleurRectangle = sf::Color::Red;
 
 	std::string categorie = "";
@@ -523,7 +517,6 @@ void AffichageCombat::dessinerDeuxEquipes(Equipes Joueur, Equipes IA, Combat & C
 	sf::Time  DELAY = sf::milliseconds(Delais().getDelais() * 20);
 	sf::sleep(DELAY);
 	(*window).clear();
-	//cleanMainZone(window);
 }
 
 void AffichageCombat::dessinerStatistiques(Equipes Joueur, Equipes IA, Combat& C, sf::RenderWindow* window) const
@@ -537,23 +530,18 @@ void AffichageCombat::dessinerStatistiques(Equipes Joueur, Equipes IA, Combat& C
 
 	}
 	(*window).display();
-
-	
-	//cleanMainZone(window);
 }
 void AffichageCombat::dessinerAttaque(Personnage* Attaquant, Personnage* Defenseur, sf::RenderWindow* window) {
 
-	int i, j;
+	int i;
+	int j;
 	if (!Attaquant->equipeAllier().ia()) {
 		i = Attaquant->indiceEquipe() + 1;
 		j = Defenseur->indiceEquipe() + 1;
-		//animationCercle(390, -20 + 70 * i, 810, -20 + 70 * j);
-
 	}
 	else {
 		j = Attaquant->indiceEquipe() + 1;
 		i = Defenseur->indiceEquipe() + 1;
-		//	animationCercle(810, -20 + 70 * j, 390, -20 + 70 * i);
 	}
 
 	sf::Vertex line[] =
@@ -562,8 +550,6 @@ void AffichageCombat::dessinerAttaque(Personnage* Attaquant, Personnage* Defense
 		sf::Vertex(sf::Vector2f(800.f,  -25.f + 70 * (float)j))
 	};
 	(*window).draw(line, 2, sf::Lines);
-
-	//line(385, -25 + 70 * i, 800, -25 + 70 * j);
 
 	if (!Attaquant->equipeAllier().ia()) {
 		sf::Vertex line2[] =
@@ -579,9 +565,6 @@ void AffichageCombat::dessinerAttaque(Personnage* Attaquant, Personnage* Defense
 			sf::Vertex(sf::Vector2f(800.f,  -25.f + 70 * (float)j))
 		};
 		(*window).draw(line3, 2, sf::Lines);
-
-		//line(780, -5 + 70 *j, 800, -25 + 70 * j);
-		//line(780, -45 + 70 * j, 800, -25 + 70 * j);
 	}
 	else {
 
@@ -599,15 +582,10 @@ void AffichageCombat::dessinerAttaque(Personnage* Attaquant, Personnage* Defense
 		};
 
 		(*window).draw(line3, 2, sf::Lines);
-		//line(405, -5 + 70 * i, 385, -25 + 70 * i);
-		//line(405, -45 + 70 * i, 385, -25 + 70 * i);
-
-	}
-	//(*window).display();
-	
+	}	
 }
 
-void AffichageCombat::afficherStats(Equipes joueur, sf::RenderWindow* window) {
+void AffichageCombat::afficherStats(Equipes joueur, sf::RenderWindow* window) const {
 	afficherTexte(400.f, 20.f, "Statistiques du dernier combat : ", sf::Color::White, window);
 	afficherTexte(30.f, 60.f, "Meilleur DPS : " + joueur.meilleurDegats()->nom() + " " + std::to_string(joueur.meilleurDegats()->stats().degatsProvoquer()) + " degats.", sf::Color::White, window);
 	afficherTexte(30.f, 100.f, "Meilleur TANK : " + joueur.meilleurTank()->nom() + " " + std::to_string(joueur.meilleurTank()->stats().degatsRecu()) + " degats.", sf::Color::White, window);
@@ -628,7 +606,7 @@ void AffichageCombat::afficherStats(Equipes joueur, sf::RenderWindow* window) {
 	std::cout << "Combat finis" << std::endl;
 }
 
-void AffichageCombat::dessinerTour(std::vector<Personnage*> quiJoue,int index, sf::RenderWindow* window)
+void AffichageCombat::dessinerTour(std::vector<Personnage*> quiJoue,int index, sf::RenderWindow* window) const
 {
 	float hauteur1 = 1026.f;
 	float hauteur2 = 1045.f;
