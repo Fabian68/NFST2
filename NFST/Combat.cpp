@@ -78,7 +78,7 @@ Combat::Combat(Equipes & Joueur, Equipes & Ia, Zones& Z, Animaux& A, Orbes& O, s
 						_tour++;
 						for (int t = 0; t < _joueur.taille(); t++) {
 							//ici changer vitesse
-							if (_tour % 10 == 0 && _joueur[i]->possedeObjetNumero(OBJET_HORLOGE) && cptdelreduc < 90) {
+							if (_tour % 10 == 0 && _joueur[t]->possedeObjetNumero(OBJET_HORLOGE) && cptdelreduc < 90) {
 								cptdelreduc++;
 								delais.setDelais((int)((double)del * (1.0 - cptdelreduc / 100.0)));
 							}
