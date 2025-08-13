@@ -2,7 +2,7 @@
 #include "Affichage.h"
 #include "Aleatoire.h"
 
-JeanBaptiste::JeanBaptiste(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(12, E, O, A, Obj, "JB", 1, 1, 1, 0, 10, 50, 15, 50, 15, 5)
+JeanBaptiste::JeanBaptiste(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(12, E, O, A, Obj, "JB", 1, 1, 1, 0, 10, 50, 5, 50, 15, 5)
 {
 	ajouterVie(9 * vie());
 
@@ -56,8 +56,8 @@ void JeanBaptiste::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vec
 			break;
 		case 3:
 			Affichage().dessinerTexte(nom() + " protege le plus faible ! ",window);
-			equipeAllier().moinsResistant()->status().ajouterCompteurProteger(1);
-			equipeAllier().moinsResistant()->ajouterReduction(15);
+			equipeAllier().moinsResistant()->status().ajouterCompteurProteger(3);
+			equipeAllier().moinsResistant()->ajouterReduction(10);
 			ajouterMana(-3);
 			break;
 		}

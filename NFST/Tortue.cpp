@@ -2,14 +2,14 @@
 
 #include "Affichage.h"
 #include "Aleatoire.h"
-Tortue::Tortue(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(14, E, O, A, Obj, "Tortue", 1, 1, 4, 0, 10, 10, 10, 100, 0, 3)
+Tortue::Tortue(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(14, E, O, A, Obj, "Tortue", 1, 1, 4, 0, 10, 10, 2, 100, 0, 3)
 {
 	if (niveau() > 999) {
 		setNom("Ancienne tortue");
 		ajouterForce(5 * niveau());
 		ajouterVitesse(-3*niveau());
-		ajouterVie((long long int)120 * niveau());
-		ajouterReduction(80);
+		ajouterVie((long long int)90 * niveau());
+		ajouterReduction(60);
 		if (!_texture.loadFromFile("graphics/tortue4.png"))
 		{
 			// error...
@@ -19,8 +19,8 @@ Tortue::Tortue(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(14, E
 		setNom("Adulte tortue");
 		ajouterForce(3 * niveau());
 		ajouterVitesse(-2*niveau());
-		ajouterVie((long long int)40 * niveau());
-		ajouterReduction(50);
+		ajouterVie((long long int)30 * niveau());
+		ajouterReduction(30);
 		if (!_texture.loadFromFile("graphics/tortue3.png"))
 		{
 			// error...
@@ -31,7 +31,7 @@ Tortue::Tortue(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(14, E
 		ajouterForce(niveau());
 		ajouterVitesse(-niveau());
 		ajouterVie((long long int)10 * niveau());
-		ajouterReduction(20);
+		ajouterReduction(15);
 		if (!_texture.loadFromFile("graphics/tortue2.png"))
 		{
 			// error...
@@ -45,7 +45,7 @@ Tortue::Tortue(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(14, E
 		}
 	}
 	_sprite.setTexture(_texture);
-	status().setReducteur(2 * niveau());
+	status().setReducteur( niveau());
 	status().devientEnmagasineur();
 }
 

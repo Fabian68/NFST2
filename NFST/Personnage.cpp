@@ -43,8 +43,6 @@ Personnage::Personnage(int id, Experiences E, Orbes O, Animaux A, Objets Obj, st
 	_vitesse = (vitesseLVL + bonusLVLvitesse) * _niveau;
 	_indiceAnimal = A.indiceAnimal(_id);
 	_rareteAnimal = A.rareteAnimal(_id, _indiceAnimal);
-	//A.animalDuPersonnage(_id, _indiceAnimal, _rareteAnimal);
-	//std::cout << _indiceAnimal << " " << _rareteAnimal;
 	_animal = Animal(_indiceAnimal);
 	_statusPerso = Status(this);
 	Succes().appliquerBonus(this);
@@ -112,14 +110,14 @@ void Personnage::reduireVie(long long int nb)
 {
 	if (_vie < nb) {
 		_S.ajouterDegatsRecu(_vie);
-		setDerniereActionMontant(_vie);
+		setDerniereActionMontant(static_cast<int>(_vie));
 		setDerniereActionType(actionDEGATS);
 		_vie = 0;
 	}
 	else {
 		_vie -= nb;
 		_S.ajouterDegatsRecu(nb);
-		setDerniereActionMontant(nb);
+		setDerniereActionMontant(static_cast<int>(nb));
 		setDerniereActionType(actionDEGATS);
 	}
 }
@@ -447,7 +445,7 @@ int Personnage::calcul_ajout_degats(int Degat, Personnage* Defenseur) {
 		Degat += (int)(Aleatoire(1.0 / 1000.0, 1.0 / 100.0).decimal() * (double)_vie);
 	}
 	if (possedeObjetNumero(OBJET_MALADRESSE)) {
-		Degat += Degat / 10;
+		Degat += Degat / 7;
 	}
 	if (possedeObjetNumero(OBJET_OEIL_AIGLE)) {
 		Degat += Defenseur->vie() / 100;
@@ -541,22 +539,7 @@ int Personnage::calcul_ajout_degats(int Degat, Personnage* Defenseur) {
 }
 
 int Personnage::calcul_reduction_degats(int Degat, Personnage* Defenseur) {
-	if (Defenseur->possedeObjetNumero(OBJET_GILET_PARBALLE)) {
-		Degat -= Defenseur->niveau();
-	}
-	if (possedeObjetNumero(OBJET_COTE_SADO)) {
-		Degat -= Defenseur->stats().nbAttaquesRecues() * (1 + Defenseur->niveau() / 100);
-	}
-	if (Defenseur->possedeObjetNumero(OBJET_PEAU_EPAISSE)) {
-		Degat -= Defenseur->vieMax() / 100;
-	}
-	Defenseur->status().decrementerCompteur();
-
-	if (Defenseur->status().estEnMagasineur()) {
-		Defenseur->status().ajoutEnmagasination(Degat / 10);
-	}
-	Degat -= Defenseur->status().reducteur();
-
+	
 	if (!possedeObjetNumero(OBJET_DILDO)) {
 		Degat = Defenseur->reductionDesDegats(Degat);
 	}
@@ -590,6 +573,22 @@ int Personnage::calcul_reduction_degats(int Degat, Personnage* Defenseur) {
 	if (Degat < 0) {
 		Degat = 1;
 	}
+
+	if (Defenseur->possedeObjetNumero(OBJET_GILET_PARBALLE)) {
+		Degat -= Defenseur->niveau();
+	}
+	if (possedeObjetNumero(OBJET_COTE_SADO)) {
+		Degat -= Defenseur->stats().nbAttaquesRecues() * (1 + Defenseur->niveau() / 100);
+	}
+	if (Defenseur->possedeObjetNumero(OBJET_PEAU_EPAISSE)) {
+		Degat -= Defenseur->vieMax() / 100;
+	}
+	Defenseur->status().decrementerCompteur();
+
+	if (Defenseur->status().estEnMagasineur()) {
+		Defenseur->status().ajoutEnmagasination(Degat / 10);
+	}
+	Degat -= Defenseur->status().reducteur();
 	return Degat;
 }
 void  Personnage::Attaque(int Degat, Personnage* Defenseur, Combat& C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
@@ -604,7 +603,7 @@ void  Personnage::Attaque(int Degat, Personnage* Defenseur, Combat& C, sf::Rende
 				this->Attaque(Degat, Defenseur->equipeAllier().plusProcheVivant(), C, window, allSounds);
 		}
 		else {
-			if (possedeObjetNumero(OBJET_MALADRESSE)) {
+			if (possedeObjetNumero(OBJET_MALADRESSE) && Aleatoire(0, 101).entier() < 50) {
 				Attaque(Degat / 10, this, C, window, allSounds);
 			}
 
@@ -616,6 +615,7 @@ void  Personnage::Attaque(int Degat, Personnage* Defenseur, Combat& C, sf::Rende
 				if (Defenseur->possedeObjetNumero(OBJET_VOILE_MIROIR)) {
 					Degat = (int)((double)Degat * 2);
 				}
+				Degat = (int)((double)Degat / 2);
 				Defenseur->Attaque(Degat, this, C, window, allSounds);
 			}
 			else {
@@ -794,6 +794,10 @@ void  Personnage::AttaqueBrut(int Degat, Personnage* Defenseur, Combat& C, sf::R
 int Personnage::degatsCritiques()const {
 	return _degatCritique;
 }
+int Personnage::chancesCritiques() const
+{
+	return _pourcentageCritique;
+}
 void Personnage::setReduction(int montant) {
 	_pourcentageReduction = montant;
 }
@@ -838,11 +842,11 @@ int Personnage::bouclier()const {
 	return _bouclier;
 }
 bool Personnage::bloque()const {
-	return Aleatoire().entier() <= _pourcentageBlocage;
+	return Aleatoire().entier() < _pourcentageBlocage;
 }
 
 bool Personnage::attaqueDouble()const {
-	return Aleatoire().entier() <= _chanceDoubleAttaque;
+	return Aleatoire().entier() < _chanceDoubleAttaque;
 }
 
 void Personnage::ajouterMana(int n) {
@@ -853,11 +857,11 @@ int Personnage::reductionDesDegats(int entier)const {
 }
 
 bool Personnage::devie()const {
-	return Aleatoire().entier() <= _pourcentageDeviation;
+	return Aleatoire().entier() < _pourcentageDeviation;
 }
 
 bool Personnage::ricoche()const {
-	return Aleatoire().entier() <= _pourcentageRicochet;
+	return Aleatoire().entier() < _pourcentageRicochet;
 }
 
 void Personnage::modifierIndiceEquipe(int i) {
@@ -1020,11 +1024,13 @@ void Personnage::appliquerEffets() {
 void Personnage::setObjets(Objet un, Objet deux) {
 	_objets.first = un;
 	_objets.second = deux;
+	appliquerEffets();
 }
 
 void Personnage::setObjets2(Objet un, Objet deux) {
 	_objets2.first = un;
 	_objets2.second = deux;
+	appliquerEffets();
 }
 
 bool Personnage::possedeBouclier() const {

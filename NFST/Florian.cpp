@@ -22,6 +22,9 @@ Florian::Florian(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(11,
 		}
 	}
 	else {
+		if (Aleatoire(0, 100).entier() == 1) {
+			setNom("Floriangina");
+		}
 		if (!_texture.loadFromFile("graphics/florian.png"))
 		{
 			// error...
@@ -106,7 +109,7 @@ void Florian::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< 
 			}
 			if ((habile() && attaqueDouble()) || (vie() == vieMax() && equipeEnnemi().estEnVie())) {
 				Affichage().dessinerTexte(nom() + " est fauché et fauche les ennemis ",window);
-				DEGATS = degats(0.20, 0.60) + static_cast<int>(Aleatoire(0.6, 1.8).decimal() * vitesse());
+				DEGATS = degats(0.20, 0.60) + static_cast<int>(Aleatoire(0.6, 1.2).decimal() * vitesse());
 				equipeEnnemi().attaqueZone(DEGATS, this,C ,window, allSounds);
 			}
 		}

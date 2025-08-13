@@ -3,11 +3,10 @@
 #include "AffichageCombat.h"
 #include "Objets.h"
 
-Zombie::Zombie(int LVL, std::string nom, int difficulte, int animal, int rareteAnimal) : Personnage(LVL, nom, 8, 2, 1, 50, 50, 90, 0, 95, 0, 0, animal, rareteAnimal)
+Zombie::Zombie(int LVL, std::string nom, int difficulte, int animal, int rareteAnimal) : Personnage(LVL, nom, 15, 2, 1, 50, 50, 75, 0, 75, 0, 0, animal, rareteAnimal)
 {
-	ajouterVie(9 * vie());
 	status().ajouterCompteurProteger(10);
-	if (!_texture.loadFromFile("graphics/lapin2.png"))
+	if (!_texture.loadFromFile("graphics/zombie.png"))
 	{
 		// error...
 	}
@@ -21,7 +20,7 @@ Zombie::Zombie(int LVL, std::string nom, int difficulte, int animal, int rareteA
 		ajouterForce(force());
 		ajouterVitesse(vitesse());
 		ajouterVie(19 * vie());
-		ajouterReduction(99);
+		ajouterReduction(80);
 	}
 	else if (difficulte == 3) {
 		ajouterVitesse(vitesse()*2);
@@ -35,6 +34,12 @@ Zombie::Zombie(int LVL, std::string nom, int difficulte, int animal, int rareteA
 			// error...
 		}
 		_sprite.setTexture(_texture);
+		std::shared_ptr<sf::SoundBuffer> buffer0 = std::make_shared<sf::SoundBuffer>();
+		buffer0->loadFromFile("./song/steve.ogg");
+		_allBuffers.push_back(buffer0);
+		_allSounds.emplace_back(*buffer0);
+		_allSounds[0].setLoop(true);
+		_allSounds[0].play();
 	}
 }
 
@@ -64,15 +69,9 @@ void Zombie::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< s
 
 void Zombie::passif(int tour, Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
 {
-	if (tour % 10 == 0) {
-		int SOINS = soins(0.5, 1.0);
-		bouclier(SOINS, C, this, window);
-	}
 }
 
 void Zombie::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, Combat & C, int degats, Personnage* P)
 {
 	ajouterForce(1);
-	int SOINS = soins(0.02, 0.06);
-	bouclier(SOINS, C, this, window);
 }

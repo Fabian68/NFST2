@@ -10,8 +10,11 @@ class AffichageCombat
 public:
 	AffichageCombat();
 	void afficherTexte(float x, float y, std::string texte, sf::Color couleurTexte, sf::RenderWindow* window)const;
-	void dessinerJoueur(int indice, bool equipeIA, Personnage* P, sf::RenderWindow* window)const;
+	void dessinerStatistiquesCombat(Personnage* P, sf::RenderWindow* window, float posX, float posY, bool equipeIA) const;
+	void afficherFenetreStatistiques(Personnage* P, const sf::Vector2f& souris, sf::RenderWindow* window) const;
+	bool dessinerJoueur(int indice, bool equipeIA, Personnage* P, sf::RenderWindow* window)const;
 	void dessinerTexteModificationVie(Personnage* P, sf::RenderWindow* window) const;
+	void afficherVieEtBouclier(float x, float y, Personnage* P, sf::RenderWindow* window)const;
 	void dessinerEquipeJoueur(Equipes  J, sf::RenderWindow* window)const;
 	void dessinerEquipeIA(Equipes I, sf::RenderWindow* window)const;
 	void dessinerStatsJoueur(int indice, Equipes E, bool equipeIA, Personnage* P, sf::RenderWindow* window) const;

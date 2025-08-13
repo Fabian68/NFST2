@@ -122,7 +122,6 @@ void Objet::appliquerEffet(Personnage* P) {
 		P->ajouterVie((int)(0.08*P->vieMax()));
 		P->ajouterVitesse((int)(0.08*P->vitesse()));
 		P->ajouterChanceHabileter(8);
-		P->ajouterDeviation(8);
 		P->ajouterReduction(8);
 		P->ajouterCoupCritique(8);
 		P->ajouterDegatsCritique(8);
@@ -144,6 +143,9 @@ void Objet::appliquerEffet(Personnage* P) {
 		break;
 	case OBJET_TREFLE_QUATTRE:
 		P->ajouterForce(P->vieMax() / 5);
+		break;
+	case OBJET_ROC:
+		P->ajouterBouclier(P->bouclierMax());
 		break;
 	default:
 		break;

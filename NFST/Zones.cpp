@@ -72,18 +72,18 @@ void Zones::equipeEnZone(int i,Equipes & E)
 		break;
 	case 5:
 		E.ajouterPerso(new Lapin(3, "Petit lapin"));
-		E.ajouterPerso(new Lapin(5, "Jojo le lapin", 1, 0, 5));
+		E.ajouterPerso(new Lapin(4, "Jojo le lapin", 1, 0, 5));
 		E.ajouterPerso(new Lapin(3, "Petit lapin"));
 		break;
 	case 6:
-		E.ajouterPerso(new Sanglier(8, "Petit sanglier"));
+		E.ajouterPerso(new Sanglier(6, "Petit sanglier"));
 		E.ajouterPerso(new Lapin(4, "Lapin"));
 		E.ajouterPerso(new Lapin(4, "Lapin"));
 		break;
 	case 7:
-		E.ajouterPerso(new Sanglier(10, "Petit sanglier"));
-		E.ajouterPerso(new Lapin(6, "Lapin"));
 		E.ajouterPerso(new Sanglier(8, "Petit sanglier"));
+		E.ajouterPerso(new Lapin(6, "Lapin"));
+		E.ajouterPerso(new Sanglier(6, "Petit sanglier"));
 		E.ajouterPerso(new Lapin(2, "Lapin nain"));
 		E.ajouterPerso(new Lapin(3, "Petit lapin"));
 		E.ajouterPerso(new Lapin(1, "Lapin nain"));
@@ -93,8 +93,8 @@ void Zones::equipeEnZone(int i,Equipes & E)
 		E.ajouterPerso(new Lapin(2, "Lapin nain"));
 		break;
 	case 8:
-		E.ajouterPerso(new Sanglier(12, "Petit sanglier"));
 		E.ajouterPerso(new Sanglier(10, "Petit sanglier"));
+		E.ajouterPerso(new Sanglier(10, "Schnappi das kleine krokodil",4));
 		E.ajouterPerso(new Sanglier(10, "Petit sanglier"));
 		break;
 	case 9:
@@ -104,187 +104,181 @@ void Zones::equipeEnZone(int i,Equipes & E)
 		E.ajouterPerso(new TortueE(9, ""));
 		break;
 	case 10:
-		E.ajouterPerso(new Sanglier(16, "SANGLINOLANT", 1, 9, 1));
-		E.ajouterPerso(new Sanglier(15, "Petit sanglier"));
-		E.ajouterPerso(new Sanglier(12, "Petit sanglier"));
-		E.ajouterPerso(new Sanglier(15, "SANGLOT", 1, 9, 1));
+		E.ajouterPerso(new Sanglier(12, "SANGLINOLANT", 1, 9, 1));
+		E.ajouterPerso(new Sanglier(10, "Petit sanglier"));
+		E.ajouterPerso(new Sanglier(10, "Petit sanglier"));
+		E.ajouterPerso(new Sanglier(10, "SANGLOT", 1, 9, 1));
 		break;
 	case 11:
-		E.ajouterPerso(new Sanglier(25, "GLONK",3));
-		E.ajouterPerso(new Lapin(25, "Lapin"));
-		E.ajouterPerso(new Cerf(25, "Cerf a rien"));
-		E.ajouterPerso(new Lapin(25, "Teddy"));
-		E.ajouterPerso(new PhenixE(25, "phephe"));
+		E.ajouterPerso(new Sanglier(20, "GLONK",3));
+		E.ajouterPerso(new Lapin(20, "Lapin"));
+		E.ajouterPerso(new Cerf(20, "Cerf à rien",4));
+		E.ajouterPerso(new Lapin(20, "Teddy"));
+		E.ajouterPerso(new PhenixE(20, "phephe"));
 		break;
 	case 12:
-		E.ajouterPerso(new Sanglier(25, "Sanglier"));
+		E.ajouterPerso(new Sanglier(30, "Pingu",6));
 		E.ajouterPerso(new Lapin(28, "Lapinot"));
-		E.ajouterPerso(new Cerf(31, "Cerf volant"));
-		E.ajouterPerso(new Cerf(33, "Cerfsceau"));
+		E.ajouterPerso(new Cerf(25, "Cerf volant",6));
+		E.ajouterPerso(new Cerf(30, "Cerfsceau",7));
 		break;
 	case 13:
-		E.ajouterPerso(new Sanglier(35, "Sanglier"));
-		E.ajouterPerso(new Cerf(34, "Cerftrude"));
-		E.ajouterPerso(new Cerf(36, "Cerftoi"));
-		E.ajouterPerso(new Cerf(38, "Dans sa maison un grand cerf"));
+		E.ajouterPerso(new Sanglier(30, "Brr Brr Patapim",7));
+		E.ajouterPerso(new Sanglier(30, "Udin Din Din Dun",8));
+		E.ajouterPerso(new Cerf(35, "Tung Tung Tung Sahur",9));
+		E.ajouterPerso(new Lapin(30, "Ballerina Capuchina",10));
+		E.ajouterPerso(new Sanglier(30, "Tralalero Tralala",11));
 		break;
 	case 14:
-		E.ajouterPerso(new Sanglier(37, "Sanglier"));
-		E.ajouterPerso(new Cerf(38, "Cerftrude"));
-		E.ajouterPerso(new Cerf(39, "Cerftoi"));
-		E.ajouterPerso(new Cerf(38, "Dans sa maison un grand cerf"));
-		E.ajouterPerso(new TortueE(41, ""));
+		E.ajouterPerso(new Sanglier(40, "Toto l'escargot",5));
+		E.ajouterPerso(new Cerf(41, "Cerftrude"));
+		E.ajouterPerso(new Cerf(42, "Cerftoi"));
+		E.ajouterPerso(new Cerf(40, "Dans sa maison un grand cerf"));
+		E.ajouterPerso(new TortueE(49, ""));
 		break;
 	case 15:
-		E.ajouterPerso(new Cerf(42, "Cerf d'acier",2,8,2));
-		E.ajouterPerso(new Cerf(45, "CerfLaPince",1,3,3));
-		E.ajouterPerso(new Cerf(50, "Cerf gilet jaune",1,3,2));
-		E.ajouterPerso(new Cerf(40, "Cerf"));
+		E.ajouterPerso(new Cerf(50, "Cerf d'acier",2,8,2));
+		E.ajouterPerso(new Cerf(50, "CerfLaPince",1,3,3));
+		E.ajouterPerso(new Lapin(60, "Risitas", 4));
+		E.ajouterPerso(new Lapin(60, "Risitas",4));
+		E.ajouterPerso(new Lapin(60, "Risitas", 4));
+		E.ajouterPerso(new Lapin(60, "Risitas", 4));
+		E.ajouterPerso(new Lapin(60, "Risitas", 4));
 		break;
 	case 16:
-		E.ajouterPerso(new Sanglier(50, "Sanglier"));
-		E.ajouterPerso(new Cerf(52, "Cerf"));
-		E.ajouterPerso(new Cerf(60, "Tchat Twitch Véner",3));
-		E.ajouterPerso(new Lapin(59, "Lapin"));
-		E.ajouterPerso(new PhenixE(65, "Phenwick",2));
+		E.ajouterPerso(new Sanglier(60, "Thomas le train",9));
+		E.ajouterPerso(new Cerf(65, "Cerf"));
+		E.ajouterPerso(new Cerf(69, "Tchat Twitch Véner",3));
+		E.ajouterPerso(new Lapin(65, "Lapin"));
+		E.ajouterPerso(new PhenixE(68, "Phenwick",2));
 		break;
 	case 17:
-		E.ajouterPerso(new Sanglier(60, "Sanglier"));
-		E.ajouterPerso(new Sanglier(62, "Sanglier"));
-		E.ajouterPerso(new Cerf(63, "Cerf"));
-		E.ajouterPerso(new Lapin(65, "Lapin"));
-		break;
-	case 18:
-		E.ajouterPerso(new Sanglier(80, "Sanglier"));
-		E.ajouterPerso(new Sanglier(74, "Sanglier"));
-		E.ajouterPerso(new Cerf(78, "Cerf"));
-		E.ajouterPerso(new Sanglier(76, "Sanglier"));
-		break;
-	case 19:
-		E.ajouterPerso(new Sanglier(86, "Sanglier"));
-		E.ajouterPerso(new Lapin(89, "Lapin"));
-		E.ajouterPerso(new Cerf(84, "Cerf"));
-		E.ajouterPerso(new Sanglier(87, "Sanglier"));
-		break;
-	case 20:
-		E.ajouterPerso(new Lapin(90, "Lapinou",2,9,5));
-		E.ajouterPerso(new Lapin(95, "Lapinouboss",1,2,1));
-		E.ajouterPerso(new Cerf(99, "Cerfa",1,3,2));
-		E.ajouterPerso(new Sanglier(92, "ROi des Sangliers",2,5,2));
-		E.ajouterPerso(new TortueE(99, ""));
-		E.perso(0)->setObjets(obj.objetNumero(10), obj.objetNumero(11));
-		break;
-	case 21:
-		E.ajouterPerso(new Zombie(100, "Zombie"));
-		E.ajouterPerso(new Zombie(100, "Zombie"));
-		E.ajouterPerso(new Zombie(100, "Zombie"));
+		E.ajouterPerso(new Zombie(80, "Zombie"));
+		E.ajouterPerso(new Zombie(85, "Zombie"));
+		E.ajouterPerso(new Sanglier(90, "Capybara", 10));
+		E.ajouterPerso(new Zombie(75, "Zombie"));
 		E.perso(0)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		E.perso(1)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		E.perso(2)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		break;
-	case 22:
-		E.ajouterPerso(new Zombie(100, "Zombie"));
-		E.ajouterPerso(new Zombie(102, "Zombie"));
-		E.ajouterPerso(new Zombie(105, "Poisson Steve",3));
-		E.ajouterPerso(new Zombie(102, "Zombie"));
-		E.ajouterPerso(new PhenixE(115, "phephe",2));
+	case 18:
+		E.ajouterPerso(new Lapin(99, "Lapinou", 2, 9, 4));
+		E.ajouterPerso(new Lapin(99, "Lapinouboss", 1, 2, 1));
+		E.ajouterPerso(new Cerf(99, "Cerfa", 1, 3, 2));
+		E.ajouterPerso(new Sanglier(99, "Roi des Sangliers", 2, 5, 2));
+		E.ajouterPerso(new TortueE(99, ""));
+		E.perso(0)->setObjets(obj.objetNumero(10), obj.objetNumero(11));
 		break;
-	case 23:
-		E.ajouterPerso(new Zombie(115, "Zombie"));
-		E.ajouterPerso(new SqueletteArcher(105, "Squelette archer"));
-		E.ajouterPerso(new SqueletteArcher(110, "Squelette archer"));
-		break;
-	case 24:
-		E.ajouterPerso(new Zombie(125, "Zombie"));
-		E.ajouterPerso(new SqueletteArcher(130, "Squelette archer"));
-		E.ajouterPerso(new SqueletteArcher(120, "Squelette archer"));
-		E.ajouterPerso(new SqueletteArcher(130, "Squelette archer"));
-		break;
-	case 25:
+	case 19:
+		E.ajouterPerso(new Zombie(135, "Zombie"));
 		E.ajouterPerso(new Zombie(140, "Zombie"));
-		E.ajouterPerso(new SqueletteArcher(145, "Squelette archer"));
-		E.ajouterPerso(new SqueletteArcher(125, "Squelette archer"));
-		E.ajouterPerso(new Zombie(135, "Zombie",0,1,3));
-		E.perso(3)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
+		E.ajouterPerso(new Zombie(145, "Poisson Steve", 3));
+		E.ajouterPerso(new Zombie(135, "Zombie"));
+		E.ajouterPerso(new PhenixE(140, "Phephe", 2));
 		break;
-	case 26:
-		E.ajouterPerso(new Zombie(150, "Zombie"));
-		E.ajouterPerso(new SqueletteArcher(145, "Squelette archer"));
-		E.ajouterPerso(new Creeper(150, "Cripeur"));
-		E.ajouterPerso(new Zombie(145, "Squelette archer", 0, 1, 3));
+	case 20:
+		E.ajouterPerso(new Sanglier(150, "Gardien de la porte", 12));
+		E.ajouterPerso(new Dragon(150, "Dragon éclair à deux têtes",3));
+		E.ajouterPerso(new Dragon(150, "Dragon blanc aux yeux bleux", 4));
+		E.ajouterPerso(new Dragon(150, "Grosse mite ultime", 5));
+		E.ajouterPerso(new Dragon(150, "Dragon noir météore", 6));
+		E.ajouterPerso(new Dragon(150, "Dragon noir aux yeux rouges", 7));
+		break;
+	case 21:
+		E.ajouterPerso(new Zombie(135, "Zombie"));
+		E.ajouterPerso(new SqueletteArcher(135, "Squelette archer"));
+		E.ajouterPerso(new SqueletteArcher(130, "Squelette archer"));
+		E.ajouterPerso(new Zombie(175, "Zombie"));
+		E.ajouterPerso(new SqueletteArcher(165, "Squelette archer"));
+		E.ajouterPerso(new Creeper(170, "Cripeur"));
 		E.perso(3)->setObjets(obj.objetNumero(12), obj.objetNumero(29));
 		break;
+	case 22:
+		
+		break;
+	case 23:
+		
+		break;
+	case 24:
+		
+		break;
+	case 25:
+		
+		break;
+	case 26:
+		
+		break;
 	case 27:
-		E.ajouterPerso(new Zombie(160, "Zombie"));
-		E.ajouterPerso(new SqueletteArcher(155, "Squelette archer"));
-		E.ajouterPerso(new Creeper(155, "Creeper"));
-		E.ajouterPerso(new Creeper(160, "Creeper"));
+		E.ajouterPerso(new Zombie(190, "Zombie"));
+		E.ajouterPerso(new SqueletteArcher(185, "Squelette archer"));
+		E.ajouterPerso(new Creeper(185, "Creeper"));
+		E.ajouterPerso(new Creeper(190, "Creeper"));
 		break;
 	case 28:
-		E.ajouterPerso(new Zombie(180, "Zombie"));
-		E.ajouterPerso(new Creeper(175, "Creeper"));
-		E.ajouterPerso(new Creeper(165, "Creeper"));
-		E.ajouterPerso(new Creeper(170, "Creeper"));
+		E.ajouterPerso(new Zombie(200, "Zombie"));
+		E.ajouterPerso(new Creeper(205, "Creeper"));
+		E.ajouterPerso(new Creeper(205, "Creeper"));
+		E.ajouterPerso(new Creeper(2100, "Creeper"));
 		break;
 	case 29:
-		E.ajouterPerso(new Zombie(190, "Zombie"));
-		E.ajouterPerso(new Creeper(180, "Creeper"));
-		E.ajouterPerso(new Lapin(199, "Lapin",0,1,5));
-		E.ajouterPerso(new Creeper(175, "Creeper"));
+		E.ajouterPerso(new Zombie(225, "Zombie"));
+		E.ajouterPerso(new Creeper(220, "Creeper"));
+		E.ajouterPerso(new Lapin(201, "Lapin",0,1,5));
+		E.ajouterPerso(new Creeper(215, "Creeper"));
 		E.perso(3)->setObjets(obj.objetNumero(15), obj.objetNumero(16));
 		break;
 	case 30:
-		E.ajouterPerso(new Zombie(200, "Zombie Cochon",3,1,3));
-		E.ajouterPerso(new Creeper(199, "Creeper",1));
-		E.ajouterPerso(new Ghast(200, "Ghast"));
-		E.ajouterPerso(new WitherSquelette(200, "Wither Squelette"));
+		E.ajouterPerso(new Zombie(250, "Zombie Cochon",3,1,3));
+		E.ajouterPerso(new Creeper(249, "Creeper",1));
+		E.ajouterPerso(new Ghast(250, "Ghast"));
+		E.ajouterPerso(new WitherSquelette(250, "Wither Squelette"));
 		E.perso(0)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		break;
 	case 31:
-		E.ajouterPerso(new Zombie(210, "Zombie Cochon", 3, 1, 3));
-		E.ajouterPerso(new Ghast(215, "Ghast"));
-		E.ajouterPerso(new Ghast(210, "Ghast"));
-		E.ajouterPerso(new WitherSquelette(220, "Wither Squelette"));
+		E.ajouterPerso(new Zombie(275, "Zombie Cochon", 3, 1, 3));
+		E.ajouterPerso(new Ghast(285, "Ghast"));
+		E.ajouterPerso(new Ghast(275, "Ghast"));
+		E.ajouterPerso(new WitherSquelette(260, "Wither Squelette"));
 		E.perso(0)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		break;
 	case 32:
-		E.ajouterPerso(new Zombie(220, "Zombie Cochon", 3, 1, 3));
-		E.ajouterPerso(new WitherSquelette(225, "Wither Squelette"));
-		E.ajouterPerso(new WitherSquelette(230, "Wither Squelette"));
-		E.ajouterPerso(new WitherSquelette(222, "Wither Squelette"));
+		E.ajouterPerso(new Zombie(300, "Zombie Cochon", 3, 1, 3));
+		E.ajouterPerso(new WitherSquelette(305, "Wither Squelette"));
+		E.ajouterPerso(new WitherSquelette(303, "Wither Squelette"));
+		E.ajouterPerso(new WitherSquelette(302, "Wither Squelette"));
 		E.perso(0)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		break;
 	case 33:
-		E.ajouterPerso(new Wither(230, "Wither lvl 1"));
-		E.ajouterPerso(new WitherSquelette(235, "Wither Squelette"));
-		E.ajouterPerso(new WitherSquelette(230, "Wither Squelette"));
-		E.ajouterPerso(new WitherSquelette(225, "Wither Squelette"));
-		E.ajouterPerso(new PhenixE(250, "phephe", 3));
+		E.ajouterPerso(new Wither(300, "Wither lvl 1"));
+		E.ajouterPerso(new WitherSquelette(285, "Wither Squelette"));
+		E.ajouterPerso(new WitherSquelette(280, "Wither Squelette"));
+		E.ajouterPerso(new WitherSquelette(285, "Wither Squelette"));
+		E.ajouterPerso(new PhenixE(289, "phephe", 3));
 		break;
 	case 34:
-		E.ajouterPerso(new WitherSquelette(240, "Wither Squelette GOD ",1));
-		E.ajouterPerso(new WitherSquelette(245, "Wither Squelette"));
-		E.ajouterPerso(new Wither(250, "Super WITHER",1));
-		E.ajouterPerso(new WitherSquelette(245, "Wither Squelette"));
-		E.ajouterPerso(new WitherSquelette(240, "Wither Squelette"));
+		E.ajouterPerso(new WitherSquelette(295, "Wither Squelette GOD ",1));
+		E.ajouterPerso(new WitherSquelette(285, "Wither Squelette"));
+		E.ajouterPerso(new Wither(300, "Super WITHER",1));
+		E.ajouterPerso(new WitherSquelette(285, "Wither Squelette"));
+		E.ajouterPerso(new WitherSquelette(290, "Wither Squelette"));
 		E.perso(0)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		E.perso(2)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		break;
 	case 35:
-		E.ajouterPerso(new Grognard(250, "Grognard"));
-		E.ajouterPerso(new Grognard(250, "Grognard"));
-		E.ajouterPerso(new Grognard(250, "Super Grognard",1,2,5));
+		E.ajouterPerso(new Grognard(315, "Grognard"));
+		E.ajouterPerso(new Grognard(300, "Grognard"));
+		E.ajouterPerso(new Grognard(325, "Super Grognard",1,2,5));
 		E.perso(2)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		E.perso(2)->setObjets2(obj.objetNumero(29), obj.objetNumero(43));
-		E.ajouterPerso(new Grognard(250, "Grognard"));
-		E.ajouterPerso(new Grognard(250, "Grognard"));
+		E.ajouterPerso(new Grognard(300, "Grognard"));
+		E.ajouterPerso(new Grognard(305, "Grognard"));
 		break;
 	case 36:
-		E.ajouterPerso(new Grognard(255, "Grognard"));
-		E.ajouterPerso(new Grognard(255, "Grognard"));
-		E.ajouterPerso(new Elite(255, "Elite"));
-		E.ajouterPerso(new Grognard(255, "Grognard"));
-		E.ajouterPerso(new Grognard(255, "Grognard"));
+		E.ajouterPerso(new Grognard(355, "Grognard"));
+		E.ajouterPerso(new Grognard(355, "Grognard"));
+		E.ajouterPerso(new Elite(355, "Elite"));
+		E.ajouterPerso(new Grognard(355, "Grognard"));
+		E.ajouterPerso(new Grognard(355, "Grognard"));
 		break;
 	case 37:
 		E.ajouterPerso(new Elite(262, "Elite"));

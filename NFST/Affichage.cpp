@@ -9,10 +9,7 @@
 #include "Succes.h"
 #include "Aleatoire.h"
 
-Affichage::Affichage()
-{
-
-}
+Affichage::Affichage() = default;
 
 void Affichage::afficherTexte(float x, float y, std::string texte, sf::Color couleurTexte, sf::RenderWindow* window)const {
 	sf::Font _font;
@@ -587,7 +584,7 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 	afficherTexte(x, y + 10.f, str, couleurTexteG, window);
 	switch (indice) {
 		case 0:
-			str = "Gagne force/(7/5/3/2) + niveau de dégats supplémentaires. Niveau (1/10/100/1000) Valeur actuelle : " + std::to_string(Liste[indice]->status().adducteur());
+			str = "Gagne force/(7/5/3/2) + niveau de dégats supplémentaires (sur chacune des attaques). Niveau (1/10/100/1000) Valeur actuelle : " + std::to_string(Liste[indice]->status().adducteur());
 			str = str + "\n" + "Recois niveaux dégats en moins, Valeur actuel : "+ std::to_string(Liste[indice]->niveau());
 			break;
 		case 1:
@@ -981,7 +978,7 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		str = "Ajoute 1% chance de coup critique et 5% de dégats critique, +1 mana";
 		break;
 	case 11:
-		str = "Soigne l'équipe à hauteur de 25-50% de votre force puis si habile, double attaque et vie au maximum attaque l'équipe adverse à hauteur de 20-60% de votre force + 60-180% de votre vitesse, -2 mana";
+		str = "Soigne l'équipe à hauteur de 25-50% de votre force puis si habile, double attaque et vie au maximum attaque l'équipe adverse à hauteur de 20-60% de votre force + 60-120% de votre vitesse, -2 mana";
 		break;
 	case 12:
 		str = "Soigne l'équipe à hauteur de 22-72% de votre force, + 1 mana";
@@ -1010,7 +1007,7 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 	switch (indice) {
 	case 0:
 		str = "Si vous avez pas toute votre vie et tout votre bouclier, vous soigne et bouclier intégralement - 3 Mana";
-		str = str + "\n" + "Sinon attaque la cible la plus faible pour 50-150% de votre force + 75-125% de votre vitesse, -2 mana";
+		str = str + "\n" + "Sinon attaque la cible la plus faible pour 50-150% de votre force + 25-100% de votre vitesse, -2 mana";
 		DEGATS = Liste[indice]->degats(0.5, 1.5);
 		DEGATS += Liste[indice]->degats(0.75, 1.25, CHOIXVITESSE);
 		str = str + " Dégats potentiels : " + std::to_string(DEGATS);
@@ -1043,14 +1040,14 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		str = "Attaque l'equipe adverse à hauteur de 75-150% de votre force, -3 mana";
 		break;
 	case 10:
-		str = "Point de mana du personnage = PM, attaque l'ennemi le plus proche à hauteur de (PM/3)-(PM/2)% de votre force + (25 + PM/15)-(50+PM/10)% de votre bouclier,reduit le bouclier à 0 et le mana à 0";
+		str = "Point de mana du personnage = PM, attaque l'ennemi le plus proche à hauteur de (PM/3)-(PM/1,5)% de votre force + (50)-(100)% de votre bouclier,reduit le bouclier à 0 et le mana à 0";
 		str = str + "\n" + " dégats augmentés par le pourcentage de reduction de la cible";
 		break;
 	case 11:
 		str = "Attaque un ennemi aléatoire à hauteur de 5-350% de votre force,-3 mana";
 		break;
 	case 12:
-		str = "Ajoute 15% de reduction de dégats au coéquipier le moins résistant et un compteur de protection, -3 mana";
+		str = "Ajoute 10% de reduction de dégats au coéquipier le moins résistant et 3 compteurs de protections, -3 mana";
 		break;
 	case 13:
 		str = "Double sa force et sa vitesse,mutliplie sa vie par 10,augmente ses chances de coup habile de 20%,- 5 mana";
@@ -1065,7 +1062,7 @@ void Affichage::afficherCompetences(int indice, Equipes& Liste, sf::RenderWindow
 		str = str + "\n" + "Si les deux transformations on étés faites : Augmente vie max à hauteur de niveau/10 et soigne pour 20-120% de votre force et bouclier pour 10-60% de votre force";
 		break;
 	case 16:
-		str = "Compétence disponible si taile = 4 (max) : Attaque l'équipe ennemi pour 100-400% de votre force";
+		str = "Compétence disponible si taile = 4 (max) : Attaque l'équipe ennemi pour 100-300% de votre force";
 		break;
 	case 17:
 		str = "Attaque l'ennemi le plus faible pour 30-60% de sa force + 10-40% de sa vitesse, consomme 3 points de mana";
@@ -1138,7 +1135,7 @@ void Affichage::afficherMecaniques(sf::RenderWindow* window, std::vector<sf::Sou
 	str = "Pourcentage de reduction de dégats : Reduit les dégats reçu en pourcentage, ne fonctionne pas avec les dégats brut";
 	afficherTexte(x, y + 120.f, str, sf::Color::Green, window);
 
-	str = "Pourcentage de déviation : Renvoie une attaque avant les augmentation et diminuation des dégats, ne fonctionne pas avec les attaques brut,le passif défensif ne s'applique pas";
+	str = "Pourcentage de déviation : Renvoie (50% des dégats de base) une attaque avant les augmentation et diminuation des dégats, ne fonctionne pas avec les attaques brut,le passif défensif ne s'applique pas";
 	afficherTexte(x, y + 140.f, str, sf::Color::Magenta, window);
 
 	str = "Pourcentage de blocage : Une attaque bloqué bloque 50% des dégats, ne fonctionne pas avec les attaques brut";

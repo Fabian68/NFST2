@@ -24,7 +24,6 @@ void Moustick::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector<
 	int ratioPositif = static_cast<int>((vieMax() * 1.0) / (vie() * 1.0))+1;
 	ratioPositif = std::min(ratioPositif, 30);
 	setReduction(ratio);
-	std::cout << pourcentageReduction() << std::endl;
 	
 	switch (choix) {
 
@@ -35,7 +34,7 @@ void Moustick::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector<
 			DEGATS = degats(ratioPositif / 30.0, ratioPositif / 15.0);
 			Attaque(DEGATS, equipeEnnemi().plusProcheVivant(), C, window, allSounds);
 		}
-		ajouterMana(1+ratio/10);
+		ajouterMana(1+ratioPositif/10);
 		break;
 	case 1:
 		Affichage().dessinerTexte(nom() + " attaque enrage",window);

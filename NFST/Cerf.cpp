@@ -2,10 +2,15 @@
 #include "Affichage.h"
 #include "Objets.h"
 
-Cerf::Cerf(int LVL, std::string nom, int difficulte, int animal, int rareteAnimal) : Personnage(LVL, nom, 2, 6, 2, 50, 0, 0, 0, 10, 0, 0, animal, rareteAnimal)
+Cerf::Cerf(int LVL, std::string nom, int difficulte, int animal, int rareteAnimal) : Personnage(LVL, nom, 2, 6, 3, 50, 0, 0, 0, 10, 0, 0, animal, rareteAnimal)
 {
-	ajouterForce(force()/2);
-	ajouterVitesse(vitesse()/2);
+	std::shared_ptr<sf::SoundBuffer> buffer0 = std::make_shared<sf::SoundBuffer>();
+	buffer0->loadFromFile("./song/Italian_brainrot.ogg");
+	_allBuffers.push_back(buffer0);
+
+	_allSounds.push_back(sf::Sound(*buffer0));
+	_allSounds[0].setLoop(true);
+
 	if (difficulte == 1) {
 		ajouterVie(9 * vie());
 		if (!_texture.loadFromFile("graphics/cerf_tank.png"))
@@ -15,8 +20,6 @@ Cerf::Cerf(int LVL, std::string nom, int difficulte, int animal, int rareteAnima
 		_sprite.setTexture(_texture);
 	}
 	else if (difficulte == 2) {
-		ajouterForce(force());
-		//ajouterVitesse(vitesse());
 		ajouterVie(19 * vie());
 		ajouterReduction(90);
 		if (!_texture.loadFromFile("graphics/cerf_diamand.png"))
@@ -39,9 +42,50 @@ Cerf::Cerf(int LVL, std::string nom, int difficulte, int animal, int rareteAnima
 		}
 		_sprite.setTexture(_texture);
 	}
+	else if (difficulte == 4) {
+		ajouterVie(9 * vie());
+		ajouterReduction(75);
+		Objets obj;
+		setObjets(obj.objetNumero(OBJET_BEUH), obj.objetNumero(OBJET_BEUH));
+		//Tchat Twitch
+		if (!_texture.loadFromFile("graphics/cerfarien.png"))
+		{
+			// error...
+		}
+		_sprite.setTexture(_texture);
+	}
 	else if (difficulte == 5) {
 		ajouterVie(2*vie());
-		ajouterReduction(99);
+		ajouterReduction(90);
+	}
+	else if (difficulte == 6) {
+		ajouterVitesse(vitesse());
+		if (!_texture.loadFromFile("graphics/cerfvolant.png"))
+		{
+			// error...
+		}
+		_sprite.setTexture(_texture);
+	}
+	else if (difficulte == 7) {
+		ajouterVitesse(vitesse());
+		ajouterForce(force());
+		ajouterReduction(75);
+		if (!_texture.loadFromFile("graphics/cerfseau.png"))
+		{
+			// error...
+		}
+		_sprite.setTexture(_texture);
+	}
+	else if (difficulte == 9) {
+		ajouterVitesse(vitesse());
+		ajouterVie(4 * vie());
+		ajouterForce(force());
+		if (!_texture.loadFromFile("graphics/Tung-Tung-Tung-Sahur.png"))
+		{
+			// error...
+		}
+		_sprite.setTexture(_texture);
+		_allSounds[0].play();
 	}
 	else {
 		if (!_texture.loadFromFile("graphics/cerf.png"))

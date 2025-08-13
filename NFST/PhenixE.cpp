@@ -7,7 +7,7 @@ PhenixE::PhenixE(int LVL, std::string nom,int taille, int difficulte, int animal
 	if (taille == 4) {
 		setNom("Ancien Phenix");
 		ajouterForce(3 * niveau());
-		ajouterVitesse(12* niveau());
+		ajouterVitesse(10* niveau());
 		ajouterVie((long long int)70 * niveau());
 		ajouterReduction(30);
 		ajouterChanceDoubleAttaque(15);
@@ -21,7 +21,7 @@ PhenixE::PhenixE(int LVL, std::string nom,int taille, int difficulte, int animal
 	else if (taille==3) {
 		setNom("Phénix Adulte");
 		ajouterForce(2 * niveau());
-		ajouterVitesse(8* niveau());
+		ajouterVitesse(6* niveau());
 		ajouterVie((long long int)30 * niveau());
 		ajouterReduction(20);
 		ajouterChanceDoubleAttaque(10);
@@ -35,7 +35,7 @@ PhenixE::PhenixE(int LVL, std::string nom,int taille, int difficulte, int animal
 	else if (taille==2) {
 		setNom("Jeune Phénix");
 		ajouterForce(1 * niveau());
-		ajouterVitesse(4*niveau());
+		ajouterVitesse(2*niveau());
 		ajouterVie((long long int)10 * niveau());
 		ajouterReduction(10);
 		ajouterChanceDoubleAttaque(5);
@@ -127,7 +127,7 @@ void PhenixE::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< 
 		break;
 		if(_taille == 4) {
 			Affichage().dessinerTexte(nom() + " MAELSTROM !  ",window);
-			DEGATS = (2.0, 4.0);
+			DEGATS = (1.0, 3.0);
 			equipeEnnemi().attaqueZone(DEGATS, this,C ,window, allSounds);
 			ajouterMana(-3);
 		}

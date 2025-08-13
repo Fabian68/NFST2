@@ -2,7 +2,7 @@
 #include "Affichage.h"
 #include "Aleatoire.h"
 
-Salim::Salim(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(15, E, O, A, Obj, "Salim", 6, 1, 1, 0, 25, -20, 0, 0, 0, 3), estTransformer{ false }, superTransformation{ false } {
+Salim::Salim(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(15, E, O, A, Obj, "Salim", 5, 1, 1, 0, 25, -20, 0, 0, 0, 3), estTransformer{ false }, superTransformation{ false } {
 
 	if (!_texture.loadFromFile("graphics/salim.png"))
 	{

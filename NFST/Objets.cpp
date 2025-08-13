@@ -25,7 +25,6 @@ Objets::Objets()
 	std::ifstream is("objdblc.txt", std::ios::binary);
 	for (int i = 0; i < 300; i++) {
 		is.read((char*)&_objetsDebloquer[i], sizeof(_objetsDebloquer[i]));
-		//is >> _objetsDebloquer[i];
 	}
 	is.close();
 
@@ -37,8 +36,6 @@ Objets::Objets()
 		for (int i = 0; i < 30; i++) {
 			os.write((char*)&zero, sizeof(zero));
 			os.write((char*)&zero, sizeof(zero));
-			//os << 0 <<" "<< 0;
-			//os << std::endl;
 		}
 		os.close();
 	}
@@ -47,12 +44,11 @@ Objets::Objets()
 	}
 	_listeObjetEquiper.resize(30);
 	std::ifstream is2("objeqp.txt", std::ios::binary);
-	int v1, v2;
+	int v1;
+	int v2;
 	for (int i = 0; i < 30; i++) {
 		is2.read((char*)&v1, sizeof(v1));
 		is2.read((char*)&v2, sizeof(v2));
-		//is2 >> v1;
-		//is2 >> v2;
 		_listeObjetEquiper[i].first = v1;
 		_listeObjetEquiper[i].second= v2;
 	}
@@ -66,8 +62,6 @@ Objets::Objets()
 		for (int i = 0; i < 30; i++) {
 			os.write((char*)&zero, sizeof(zero));
 			os.write((char*)&zero, sizeof(zero));
-			//os << 0 <<" "<< 0;
-			//os << std::endl;
 		}
 		os.close();
 	}
@@ -80,8 +74,6 @@ Objets::Objets()
 	for (int i = 0; i < 30; i++) {
 		is3.read((char*)&v1, sizeof(v1));
 		is3.read((char*)&v2, sizeof(v2));
-		//is2 >> v1;
-		//is2 >> v2;
 		_listeObjetEquiper2[i].first = v1;
 		_listeObjetEquiper2[i].second = v2;
 	}
@@ -102,7 +94,7 @@ Objets::Objets()
 	_listeObjets.emplace_back("Armure du protecteur", 11, 100000, "+10% de reduction de dégats, 25% de chance de recevoir une attaque qui cible un allier a sa place");
 	_listeObjets.emplace_back("Kunai", 12, 1000, "Toute les 3 attaques voient leurs dégats augmentés de 30%");
 	_listeObjets.emplace_back("Flèche transpercante", 13, 10000, "Après chaque attaques vous infliger une attaque brute avec 5% à 10% de votre force");
-	_listeObjets.emplace_back("Armure de Sakeratsu", 14, 100000, "+10% de reduction de dégats, renvoie 10% des d�gats reçu sous forme de dégats brut a l'ennemi(après calcul des reductions)");
+	_listeObjets.emplace_back("Armure de Sakeratsu", 14, 100000, "+10% de reduction de dégats, renvoie 10% des dégats reçu sous forme de dégats brut a l'ennemi(après calcul des reductions)");
 	_listeObjets.emplace_back("Cape de ninja", 15, 10000, "+10% de chances d'esquives, +3% de chances de coup critique, effectuer une esquive augmente vos dégats critique de 5%");
 	_listeObjets.emplace_back("Dague de ninja", 16, 10000, "Augmente les dégats critiques de 20%, après avoir effectuer une esquive vous faites une attaque brute sur l'ennemi le plus faible a hauteur de 5% à 20% de votre force augmenter par vos dégats critique ");
 	_listeObjets.emplace_back("Soie de lapin", 17, 10, "+10% de vitesses");
@@ -116,7 +108,7 @@ Objets::Objets()
 	_listeObjets.emplace_back(" Gilet par balle", 25, 10000," Les dégats sont reduit de 1 par niveau du personnage ");
 	_listeObjets.emplace_back("EXCALIBUR", 26, 10000, "+150 points dans chaque stats");
 	_listeObjets.emplace_back("Flèches tranchantes", 27, 10000, "+7% de chance de ricochet, les ricochet font 37% de plus de dégats.");
-	_listeObjets.emplace_back("Cote du sadomaso", 28, 10000, "Reduit de 1(+ 1 tout les 100 niveau) les d�gats par coup reçu.");
+	_listeObjets.emplace_back("Cote du sadomaso", 28, 10000, "Reduit de 1(+ 1 tout les 100 niveau) les dégats par coup reçu.");
 	_listeObjets.emplace_back("Fléau du sadique", 29, 10000, "Ajoute 1(+1 tout les 100 niveau) de dégats par attaques réalisé.");
 	_listeObjets.emplace_back("Totem immunitée", 30, 100000, "Permet de revivre avec toute sa vie une fois.");
 	_listeObjets.emplace_back("MEMEMTOM", 31, 10000, "A chaque attaque vous avez : 1/10 de lancer une nouvelle attaque 1-10% de vos dégats attaque, 1/100 => 10-100%,1/1000 => 100-1000%");
@@ -124,28 +116,29 @@ Objets::Objets()
 	_listeObjets.emplace_back("Sablier", 33, 10000, "Reduit le temps des combats par 4");
 	_listeObjets.emplace_back("Tardis", 34, 100000, "Reduit considérablement le temps des combats");
 	_listeObjets.emplace_back("Lame maléfique", 35, 1000, "+50% de dégats, reçois deux fois plus de dégats");
-	_listeObjets.emplace_back("Mégamorph", 36, 1000, "Recever deux fois plus de d�gats quand vie superieur a 50% de votre vie maximum sinon deux fois moins");
+	_listeObjets.emplace_back("Mégamorph", 36, 1000, "Recever deux fois plus de dégats quand vie superieur a 50% de votre vie maximum sinon deux fois moins");
 	_listeObjets.emplace_back("Némésis", 37, 10000, "Faites 50% plus de dégats a l'ennemi qui a la même position dans son equipe que vous dans la votre et recever deux fois moins de dégats de sa part");
 	_listeObjets.emplace_back("Casse-noix", 38, 1000, "Vous faites 50% de dégats en plus a un ennemi qui possède un bouclier et 100% a un ennemis qui possede tout son bouclier");
 	_listeObjets.emplace_back("Esprit du guerrier", 39, 1000, "Vous faites 1% de dégats en plus pour chaque pourcentage de point de vie qu'ils vous manquent");
 	_listeObjets.emplace_back("T6wins", 40, 10000, "Un ricochet envoie 2 attaques au lieu d'une, +2% chance de ricochets");
 	_listeObjets.emplace_back("Oeil d'aigle", 41, 100000, "Vos attaques font des dégats supplémentaires équivalent a 1% de la vie actuelle de l'ennemi ");
 	_listeObjets.emplace_back("Peau épaisse", 42, 100000, "Vous recever des dégats en moins équivalent a 1% de votre vie maximum ");
-	_listeObjets.emplace_back("Dildo", 43, 100000, "Vos attaques passent a travers 50% de la reduction de dégats et des blocages ");
+	_listeObjets.emplace_back("Percetout", 43, 100000, "Vos attaques passent a travers 50% de la reduction de dégats et des blocages ");
 	_listeObjets.emplace_back("Oeuf de Tortue", 44, 10000, "Permet de jouer un nouveau personnage, pas besoin de l'équiper ");
 	_listeObjets.emplace_back("Cendre de Phénix", 45, 10000, "Permet de jouer un nouveau personnage, pas besoin de l'équiper  ");
 	_listeObjets.emplace_back("Hantise", 46, 1000, "Le personnage equipé fais 3 fois plus de dégats s'il est KO");
 	_listeObjets.emplace_back("Magic 8 ball", 47, 100000, "+8% Force Vie et Vitesse et +8 dans les stats fixes");
-	_listeObjets.emplace_back("Spartan armor", 48, 10000, "Vous faites plus de dégats en fonction du montant d'armure actuelle jusqu'a +100%");
+	_listeObjets.emplace_back("Armure de Spartan", 48, 10000, "Vous faites plus de dégats en fonction du montant d'armure actuelle jusqu'a +100%");
 	_listeObjets.emplace_back("Avance rapide", 49, 1000, "Les combats vont deux fois plus vite");
 	_listeObjets.emplace_back("Vase antique magique", 50, 100000, "+1 mana par tour, +3% de dégats par points de mana");
-	_listeObjets.emplace_back("Racine Eternel", 51, 10000, "+ 0,1-1% de votre vie en d�gats supplémentaires");
-	_listeObjets.emplace_back("Force grandissante", 52, 10000, " -10% de d�gats critiques, +1% de dégats critique par tour");
-	_listeObjets.emplace_back("Bouclier amélioré", 53, 10000, " reduit de 25% les d�gats subis pendant que bouclier");
-	_listeObjets.emplace_back("Maladresse", 54, 1000, " +10% dégats, +10% dégats critiques, quand vous attaquer vous recevez une attaque équivalent à 10% des dégats (post reduction)");
+	_listeObjets.emplace_back("Racine Eternel", 51, 10000, "+ 0,1-1% de votre vie en dégats supplémentaires");
+	_listeObjets.emplace_back("Force grandissante", 52, 10000, " -10% de dégats critiques, +1% de dégats critique par tour");
+	_listeObjets.emplace_back("Bouclier amélioré", 53, 10000, " reduit de 25% les dégats subis pendant que bouclier");
+	_listeObjets.emplace_back("Maladresse", 54, 1000, " +15% dégats, +10% dégats critiques, quand vous attaquer vous avez 1 chance sur de recevoir une attaque équivalent à 10% des dégats ");
 	_listeObjets.emplace_back("Fer à cheval", OBJET_FER_CHEVAL, 10000, "+14% de forces, +25% xp");
 	_listeObjets.emplace_back("Trèfle à quattre feuilles", OBJET_TREFLE_QUATTRE, 100000, "+20% de points de vie, +50% xp");
 	_listeObjets.emplace_back("Horloge", OBJET_HORLOGE, 100000, "Le combat est 1% plus rapide chaque tour");
+	_listeObjets.emplace_back("Solide comme un roc", OBJET_ROC, 1000, "Commance le combat avec un bouclier");
 
 	//_listeObjets.push_back(Objet("Antidote", 18, 100000, "Rend insensible au poison"));
 
@@ -153,11 +146,12 @@ Objets::Objets()
 	for (int niveau = 1;niveau < 300;niveau++) {
 		_tableLoot[niveau].reserve(10);
 	}
+
 	_tableLoot[51].push_back(_listeObjets[44]);
 	for (int i = 1;i <= 10;i++) {
 		_tableLoot[74].push_back(_listeObjets[44]);
 	}
-
+	_tableLoot[16].push_back(_listeObjets[OBJET_ROC]);
 	_tableLoot[33].push_back(_listeObjets[45]);
 	for (int i = 1;i <= 10;i++) {
 		_tableLoot[44].push_back(_listeObjets[45]);

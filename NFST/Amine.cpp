@@ -44,8 +44,8 @@ void Amine::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf
 		break;
 	case 3:
 		Affichage().dessinerTexte(nom() + " ASURA STRIKE ! ",window);
-		double modificateur = 1.0 + (double)equipeEnnemi().plusProcheVivant()->pourcentageReduction() / 100.0;
-		DEGATS = degats((double)point_mana/3.0, (double)point_mana/2.0) + degats(0.25 + point_mana/15.0, 0.5 + point_mana / 10.0, CHOIXBOUCLIER);
+		double modificateur = 1.0 + 2*(double)equipeEnnemi().plusProcheVivant()->pourcentageReduction() / 100.0;
+		DEGATS = degats((double)point_mana/3.0, (double)point_mana/1.5) + degats(0.5, 1.0, CHOIXBOUCLIER);
 		DEGATS = (int)((double)DEGATS * modificateur);
 		reduireBouclier(bouclierMax());
 		Attaque(DEGATS, equipeEnnemi().plusProcheVivant(), C, window, allSounds);

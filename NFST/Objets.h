@@ -62,6 +62,7 @@ const int OBJET_MALADRESSE = 54;
 const int OBJET_FER_CHEVAL = 55;
 const int OBJET_TREFLE_QUATTRE = 56;
 const int OBJET_HORLOGE = 57;
+const int OBJET_ROC = 58;
 
 
 class Objets

@@ -75,6 +75,7 @@ public:
 	bool estSonTour()const;
 	void AttaqueBrut(int Degat, Personnage* Defenseur, Combat & C, sf::RenderWindow* window);
 	int degatsCritiques() const;
+	int chancesCritiques() const;
 	void setReduction(int montant);
 	void ajouterChanceDoubleAttaque(int montant);
 	void ajouterChanceHabileter(int montant);

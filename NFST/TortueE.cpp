@@ -9,7 +9,7 @@ TortueE::TortueE(int LVL, std::string nom, int difficulte, int animal, int raret
 		ajouterForce(6 * niveau());
 		ajouterVitesse(-3 * niveau());
 		ajouterVie((long long int)520 * niveau());
-		ajouterReduction(80);
+		ajouterReduction(60);
 		if (!_texture.loadFromFile("graphics/tortue4E.png"))
 		{
 			// error...
@@ -20,7 +20,7 @@ TortueE::TortueE(int LVL, std::string nom, int difficulte, int animal, int raret
 		ajouterForce(4 * niveau());
 		ajouterVitesse(-2 * niveau());
 		ajouterVie((long long int)160 * niveau());
-		ajouterReduction(50);
+		ajouterReduction(30);
 		if (!_texture.loadFromFile("graphics/tortue3E.png"))
 		{
 			// error...
@@ -31,7 +31,7 @@ TortueE::TortueE(int LVL, std::string nom, int difficulte, int animal, int raret
 		ajouterForce(2 * niveau());
 		ajouterVitesse(-niveau());
 		ajouterVie((long long int)40 * niveau());
-		ajouterReduction(20);
+		ajouterReduction(15);
 		if (!_texture.loadFromFile("graphics/tortue2E.png"))
 		{
 			// error...
@@ -45,7 +45,7 @@ TortueE::TortueE(int LVL, std::string nom, int difficulte, int animal, int raret
 		}
 	}
 	_sprite.setTexture(_texture);
-	status().setReducteur(2 * niveau());
+	status().setReducteur( niveau());
 	status().devientEnmagasineur();
 }
 

@@ -31,7 +31,7 @@ Phenix::Phenix(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(16, E
 	if (_taille == 4) {
 		setNom("Ancien Phenix");
 		ajouterForce(4 * niveau());
-		ajouterVitesse(7 * niveau());
+		ajouterVitesse(6 * niveau());
 		ajouterVie((long long int)40 * niveau());
 		ajouterReduction(30);
 		ajouterChanceDoubleAttaque(15);
@@ -45,7 +45,7 @@ Phenix::Phenix(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(16, E
 	else if (_taille == 3) {
 		setNom("Phénix Adulte");
 		ajouterForce(2 * niveau());
-		ajouterVitesse(5 * niveau());
+		ajouterVitesse(4 * niveau());
 		ajouterVie((long long int)20 * niveau());
 		ajouterReduction(20);
 		ajouterChanceDoubleAttaque(10);
@@ -59,7 +59,7 @@ Phenix::Phenix(Experiences E, Orbes O, Animaux A, Objets Obj) : Personnage(16, E
 	else if (_taille == 2) {
 		setNom("Jeune Phénix");
 		ajouterForce(1 * niveau());
-		ajouterVitesse(3 * niveau());
+		ajouterVitesse(2 * niveau());
 		ajouterVie((long long int)10 * niveau());
 		ajouterReduction(10);
 		ajouterChanceDoubleAttaque(5);
@@ -150,7 +150,7 @@ void Phenix::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< s
 		break;
 		if (_taille == 4) {
 			Affichage().dessinerTexte(nom() + " MAELSTROM !  ",window);
-			DEGATS = (1.0, 4.0);
+			DEGATS = (1.0, 3.0);
 			equipeEnnemi().attaqueZone(DEGATS, this,C ,window, allSounds);
 			ajouterMana(-3);
 		}

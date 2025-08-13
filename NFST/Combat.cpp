@@ -38,6 +38,7 @@ Combat::Combat(Equipes & Joueur, Equipes & Ia, Zones& Z, Animaux& A, Orbes& O, s
 
 	int xp;
 	xp = _ia.xpDonner();
+	
 
 	Delais delais = Delais();
 	int del = 100;
@@ -92,7 +93,7 @@ Combat::Combat(Equipes & Joueur, Equipes & Ia, Zones& Z, Animaux& A, Orbes& O, s
 								}
 								if (_joueur.perso(t)->possedeObjetNumero(OBJET_MALEDICTION)) {
 									_joueur.perso(t)->reduireVie(_joueur.perso(t)->vieMax() / 10);
-									_joueur.perso(t)->reduireBouclier(_joueur.perso(t)->bouclierMax());
+									_joueur.perso(t)->reduireBouclier(_joueur.perso(t)->bouclier());
 								}
 								if (_joueur.perso(t)->possedeObjetNumero(OBJET_VASE_ANTIQUE_MAGIQUE)) {
 									_joueur.perso(t)->ajouterMana(1);
@@ -113,7 +114,10 @@ Combat::Combat(Equipes & Joueur, Equipes & Ia, Zones& Z, Animaux& A, Orbes& O, s
 										_ia.perso(dernier)->setEnnemis(_joueur);
 										_ia.perso(dernier)->setAllier(_ia);
 										_ia.perso(dernier)->setId(-2);
+										_joueur.setAllierEtEnnemis(_ia);
+										_ia.setAllierEtEnnemis(_joueur);
 									}
+									_joueur.perso(t)->status().decontamination();
 								}
 								//reset phenix
 								if (_joueur.perso(t)->id() == 16) {
@@ -155,6 +159,13 @@ Combat::Combat(Equipes & Joueur, Equipes & Ia, Zones& Z, Animaux& A, Orbes& O, s
 								if (_ia.perso(k)->possedeObjetNumero(OBJET_VASE_ANTIQUE_MAGIQUE)) {
 									_ia.perso(k)->ajouterMana(1);
 								}
+								if (_ia.perso(k)->possedeObjetNumero(OBJET_MALEDICTION)) {
+									_ia.perso(k)->reduireVie(_ia.perso(k)->vieMax() / 10);
+									_ia.perso(k)->reduireBouclier(_ia.perso(k)->bouclier());
+								}
+								if (_ia.perso(k)->possedeObjetNumero(OBJET_FORCE_GRANDISSANTE)) {
+									_ia.perso(k)->ajouterDegatsCritique(1);
+								}
 								_ia.perso(k)->status().effetBrulure();
 								_ia.perso(k)->status().effetPoison();
 							}
@@ -174,10 +185,13 @@ Combat::Combat(Equipes & Joueur, Equipes & Ia, Zones& Z, Animaux& A, Orbes& O, s
 		Z.niveauBattu();
 		Experiences E;
 
-		_joueur.ajouterExperience(xp, E);
+		
 		Succes succes;
 		int niveau_actuel = Z.niveauActuel();
 		int succes_id = -1;
+
+		xp = (int)((double)xp * (1.0 + niveau_actuel / 100.0));
+		_joueur.ajouterExperience(xp, E);
 		switch (niveau_actuel) {
 		case 1:
 			succes_id = SUCCES_NIV1;

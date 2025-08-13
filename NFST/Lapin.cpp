@@ -5,6 +5,32 @@
 
 Lapin::Lapin(int LVL,std::string nom,int difficulte,int animal,int rareteAnimal,int id) : Personnage(LVL, nom, 2, 4, 4, 30, 0, 0, 0, 0, 10, 0,animal,rareteAnimal) 
 {
+	std::shared_ptr<sf::SoundBuffer> buffer0 = std::make_shared<sf::SoundBuffer>();
+	buffer0->loadFromFile("./song/iniciowindows.ogg");
+	_allBuffers.push_back(buffer0);
+
+	std::shared_ptr<sf::SoundBuffer> buffer1 = std::make_shared<sf::SoundBuffer>();
+	buffer1->loadFromFile("./song/windowsxperror.ogg");
+	_allBuffers.push_back(buffer1);
+
+	std::shared_ptr<sf::SoundBuffer> buffer2 = std::make_shared<sf::SoundBuffer>();
+	buffer2->loadFromFile("./song/issou0.ogg");
+	_allBuffers.push_back(buffer2);
+
+	std::shared_ptr<sf::SoundBuffer> buffer3 = std::make_shared<sf::SoundBuffer>();
+	buffer3->loadFromFile("./song/issou1.ogg");
+	_allBuffers.push_back(buffer3);
+
+	std::shared_ptr<sf::SoundBuffer> buffer4 = std::make_shared<sf::SoundBuffer>();
+	buffer4->loadFromFile("./song/issou2.ogg");
+	_allBuffers.push_back(buffer4);
+
+	_allSounds.push_back(sf::Sound(*buffer0));
+	_allSounds.push_back(sf::Sound(*buffer1));
+	_allSounds.push_back(sf::Sound(*buffer2));
+	_allSounds.push_back(sf::Sound(*buffer3));
+	_allSounds.push_back(sf::Sound(*buffer4));
+
 	setId(id);
 	if (difficulte == 1) {
 		ajouterForce(force());
@@ -24,9 +50,9 @@ Lapin::Lapin(int LVL,std::string nom,int difficulte,int animal,int rareteAnimal,
 		_sprite.setTexture(_texture);
 		ajouterVitesse(vitesse());
 		ajouterVie(19 * vie());
-		ajouterReduction(99);
+		ajouterReduction(80);
 	}
-	if (difficulte == 3) {
+	else if (difficulte == 3) {
 		ajouterVitesse(vitesse()*3);
 		ajouterVie(2 * vie());
 		//Clippy
@@ -37,12 +63,31 @@ Lapin::Lapin(int LVL,std::string nom,int difficulte,int animal,int rareteAnimal,
 			// error...
 		}
 		_sprite.setTexture(_texture);
+		_allSounds[0].play();
+	}
+	else if (difficulte == 4) {
+		ajouterVie(4*vie());
+		ajouterReduction(30);
+		if (!_texture.loadFromFile("graphics/risitas.png"))
+		{
+			// error...
+		}
+		_sprite.setTexture(_texture);
+		_allSounds[2].play();
 	}
 	else if (difficulte == 5) {
 		ajouterVie(vie());
-		ajouterReduction(90);
+		ajouterReduction(80);
 	}
-
+	else if (difficulte == 10) {
+		ajouterVie(vie());
+		ajouterVitesse(vitesse() * 2);
+		if (!_texture.loadFromFile("graphics/Ballerina-Capuchina.png"))
+		{
+			// error...
+		}
+		_sprite.setTexture(_texture);
+	}
 	if (id == 21) {
 		if (!_texture.loadFromFile("graphics/Perle.png"))
 		{
@@ -50,12 +95,18 @@ Lapin::Lapin(int LVL,std::string nom,int difficulte,int animal,int rareteAnimal,
 		}
 		_sprite.setTexture(_texture);
 	}
+	_difficulte = difficulte;
 }
 void Lapin::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds) {
 	int choix = choixAttaque();
 	int DEGATS;
 
-	
+	if (_difficulte == 3) {
+		_allSounds[1].play();
+	}
+	if (_difficulte == 4) {
+		_allSounds[3].play();
+	}
 	switch (choix) {
 
 	case 0:
@@ -86,7 +137,9 @@ void Lapin::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf
 		ajouterMana(-1);
 		break;
 	case 2:
-
+		if (_difficulte == 4) {
+			_allSounds[4].play();
+		}
 		DEGATS = degats(0.1, 0.5)+degats(0.2,0.6,CHOIXVITESSE);
 		Affichage().dessinerTexte(nom() + " sautille !  ",window);
 
@@ -100,6 +153,9 @@ void Lapin::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf
 		ajouterMana(-2);
 		break;
 	case 3:
+		if (_difficulte == 4) {
+			_allSounds[4].play();
+		}
 		Affichage().dessinerTexte(nom() + "s'enrage !",window);
 		DEGATS = degats(1.3, 2.2);
 		equipeEnnemi().plusProcheVivant()->status().appliquerPoison();
@@ -120,4 +176,7 @@ void Lapin::passif(int tour, Combat & C, sf::RenderWindow* window, std::vector< 
 
 void Lapin::passifDefensif(sf::RenderWindow* window, std::vector< sf::Sound >& allSounds, Combat & C, int degats, Personnage* P)
 {
+	if (_difficulte == 4) {
+		_allSounds[2].play();
+	}
 }
