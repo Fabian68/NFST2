@@ -5,32 +5,6 @@
 
 Lapin::Lapin(int LVL,std::string nom,int difficulte,int animal,int rareteAnimal,int id) : Personnage(LVL, nom, 2, 4, 4, 30, 0, 0, 0, 0, 10, 0,animal,rareteAnimal) 
 {
-	std::shared_ptr<sf::SoundBuffer> buffer0 = std::make_shared<sf::SoundBuffer>();
-	buffer0->loadFromFile("./song/iniciowindows.ogg");
-	_allBuffers.push_back(buffer0);
-
-	std::shared_ptr<sf::SoundBuffer> buffer1 = std::make_shared<sf::SoundBuffer>();
-	buffer1->loadFromFile("./song/windowsxperror.ogg");
-	_allBuffers.push_back(buffer1);
-
-	std::shared_ptr<sf::SoundBuffer> buffer2 = std::make_shared<sf::SoundBuffer>();
-	buffer2->loadFromFile("./song/issou0.ogg");
-	_allBuffers.push_back(buffer2);
-
-	std::shared_ptr<sf::SoundBuffer> buffer3 = std::make_shared<sf::SoundBuffer>();
-	buffer3->loadFromFile("./song/issou1.ogg");
-	_allBuffers.push_back(buffer3);
-
-	std::shared_ptr<sf::SoundBuffer> buffer4 = std::make_shared<sf::SoundBuffer>();
-	buffer4->loadFromFile("./song/issou2.ogg");
-	_allBuffers.push_back(buffer4);
-
-	_allSounds.push_back(sf::Sound(*buffer0));
-	_allSounds.push_back(sf::Sound(*buffer1));
-	_allSounds.push_back(sf::Sound(*buffer2));
-	_allSounds.push_back(sf::Sound(*buffer3));
-	_allSounds.push_back(sf::Sound(*buffer4));
-
 	setId(id);
 	if (difficulte == 1) {
 		ajouterForce(force());
@@ -63,6 +37,17 @@ Lapin::Lapin(int LVL,std::string nom,int difficulte,int animal,int rareteAnimal,
 			// error...
 		}
 		_sprite.setTexture(_texture);
+
+		std::shared_ptr<sf::SoundBuffer> buffer0 = std::make_shared<sf::SoundBuffer>();
+		buffer0->loadFromFile("./song/iniciowindows.ogg");
+		_allBuffers.push_back(buffer0);
+		_allSounds.push_back(sf::Sound(*buffer0));
+
+		std::shared_ptr<sf::SoundBuffer> buffer1 = std::make_shared<sf::SoundBuffer>();
+		buffer1->loadFromFile("./song/windowsxperror.ogg");
+		_allBuffers.push_back(buffer1);
+		_allSounds.push_back(sf::Sound(*buffer1));
+
 		_allSounds[0].play();
 	}
 	else if (difficulte == 4) {
@@ -73,11 +58,41 @@ Lapin::Lapin(int LVL,std::string nom,int difficulte,int animal,int rareteAnimal,
 			// error...
 		}
 		_sprite.setTexture(_texture);
-		_allSounds[2].play();
+
+		std::shared_ptr<sf::SoundBuffer> buffer2 = std::make_shared<sf::SoundBuffer>();
+		buffer2->loadFromFile("./song/issou0.ogg");
+		_allBuffers.push_back(buffer2);
+
+		std::shared_ptr<sf::SoundBuffer> buffer3 = std::make_shared<sf::SoundBuffer>();
+		buffer3->loadFromFile("./song/issou1.ogg");
+		_allBuffers.push_back(buffer3);
+
+		std::shared_ptr<sf::SoundBuffer> buffer4 = std::make_shared<sf::SoundBuffer>();
+		buffer4->loadFromFile("./song/issou2.ogg");
+		_allBuffers.push_back(buffer4);
+		_allSounds.push_back(sf::Sound(*buffer2));
+		_allSounds.push_back(sf::Sound(*buffer3));
+		_allSounds.push_back(sf::Sound(*buffer4));
+		_allSounds[0].play();
 	}
 	else if (difficulte == 5) {
 		ajouterVie(vie());
 		ajouterReduction(80);
+	}
+	else if (difficulte == 6) {
+		ajouterVie(9*vie());
+		ajouterVitesse(4 * vitesse());
+		if (!_texture.loadFromFile("graphics/nyancat.gif"))
+		{
+			// error...
+		}
+		_sprite.setTexture(_texture);
+
+		std::shared_ptr<sf::SoundBuffer> buffer0 = std::make_shared<sf::SoundBuffer>();
+		buffer0->loadFromFile("./song/nyancat.ogg");
+		_allBuffers.push_back(buffer0);
+		_allSounds.push_back(sf::Sound(*buffer0));
+		_allSounds[0].play();
 	}
 	else if (difficulte == 10) {
 		ajouterVie(vie());
@@ -105,7 +120,7 @@ void Lapin::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf
 		_allSounds[1].play();
 	}
 	if (_difficulte == 4) {
-		_allSounds[3].play();
+		_allSounds[0].play();
 	}
 	switch (choix) {
 
@@ -138,7 +153,7 @@ void Lapin::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf
 		break;
 	case 2:
 		if (_difficulte == 4) {
-			_allSounds[4].play();
+			_allSounds[1].play();
 		}
 		DEGATS = degats(0.1, 0.5)+degats(0.2,0.6,CHOIXVITESSE);
 		Affichage().dessinerTexte(nom() + " sautille !  ",window);
@@ -154,7 +169,7 @@ void Lapin::attaqueEnnemis(Combat & C, sf::RenderWindow* window, std::vector< sf
 		break;
 	case 3:
 		if (_difficulte == 4) {
-			_allSounds[4].play();
+			_allSounds[1].play();
 		}
 		Affichage().dessinerTexte(nom() + "s'enrage !",window);
 		DEGATS = degats(1.3, 2.2);

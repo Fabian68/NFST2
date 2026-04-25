@@ -264,7 +264,7 @@ bool AffichageCombat::dessinerJoueur(int indice, bool equipeIA, Personnage* P, s
 	sf::RectangleShape rectangleJoueur(sf::Vector2f(360.f, 65.f));
 	rectangleJoueur.setOutlineColor(couleurTexte);
 	rectangleJoueur.setOutlineThickness(1.f);
-	rectangleJoueur.setFillColor(P->estSonTour() ? sf::Color(0, 0, 102) : couleurFond);
+	rectangleJoueur.setFillColor(P->estSonTour() ? sf::Color(0, 125, 125) : couleurFond);
 	rectangleJoueur.setPosition(sf::Vector2f(x, y));
 	window->draw(rectangleJoueur);
 

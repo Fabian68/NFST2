@@ -190,7 +190,7 @@ Combat::Combat(Equipes & Joueur, Equipes & Ia, Zones& Z, Animaux& A, Orbes& O, s
 		int niveau_actuel = Z.niveauActuel();
 		int succes_id = -1;
 
-		xp = (int)((double)xp * (1.0 + niveau_actuel / 100.0));
+		xp = (int)((double)xp * (1.0 + ((double)(1/niveau_actuel) +1.0)*niveau_actuel / 100.0));
 		_joueur.ajouterExperience(xp, E);
 		switch (niveau_actuel) {
 		case 1:

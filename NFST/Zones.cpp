@@ -185,84 +185,70 @@ void Zones::equipeEnZone(int i,Equipes & E)
 		E.ajouterPerso(new Dragon(150, "Dragon noir aux yeux rouges", 7));
 		break;
 	case 21:
-		E.ajouterPerso(new Zombie(135, "Zombie"));
-		E.ajouterPerso(new SqueletteArcher(135, "Squelette archer"));
-		E.ajouterPerso(new SqueletteArcher(130, "Squelette archer"));
+		E.ajouterPerso(new Zombie(175, "Zombie"));
+		E.ajouterPerso(new SqueletteArcher(175, "Squelette archer"));
+		E.ajouterPerso(new Lapin(180, "NYANCAT",6));
 		E.ajouterPerso(new Zombie(175, "Zombie"));
 		E.ajouterPerso(new SqueletteArcher(165, "Squelette archer"));
 		E.ajouterPerso(new Creeper(170, "Cripeur"));
 		E.perso(3)->setObjets(obj.objetNumero(12), obj.objetNumero(29));
 		break;
 	case 22:
-		
-		break;
-	case 23:
-		
-		break;
-	case 24:
-		
-		break;
-	case 25:
-		
-		break;
-	case 26:
-		
-		break;
-	case 27:
-		E.ajouterPerso(new Zombie(190, "Zombie"));
-		E.ajouterPerso(new SqueletteArcher(185, "Squelette archer"));
-		E.ajouterPerso(new Creeper(185, "Creeper"));
-		E.ajouterPerso(new Creeper(190, "Creeper"));
-		break;
-	case 28:
-		E.ajouterPerso(new Zombie(200, "Zombie"));
-		E.ajouterPerso(new Creeper(205, "Creeper"));
-		E.ajouterPerso(new Creeper(205, "Creeper"));
-		E.ajouterPerso(new Creeper(2100, "Creeper"));
-		break;
-	case 29:
 		E.ajouterPerso(new Zombie(225, "Zombie"));
 		E.ajouterPerso(new Creeper(220, "Creeper"));
-		E.ajouterPerso(new Lapin(201, "Lapin",0,1,5));
+		E.ajouterPerso(new Lapin(201, "Lapin", 0, 1, 5));
 		E.ajouterPerso(new Creeper(215, "Creeper"));
 		E.perso(3)->setObjets(obj.objetNumero(15), obj.objetNumero(16));
 		break;
-	case 30:
-		E.ajouterPerso(new Zombie(250, "Zombie Cochon",3,1,3));
-		E.ajouterPerso(new Creeper(249, "Creeper",1));
+	case 23:
+		E.ajouterPerso(new Zombie(250, "Zombie Cochon", 3, 1, 3));
+		E.ajouterPerso(new Creeper(249, "Creeper", 1));
 		E.ajouterPerso(new Ghast(250, "Ghast"));
 		E.ajouterPerso(new WitherSquelette(250, "Wither Squelette"));
 		E.perso(0)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		break;
-	case 31:
-		E.ajouterPerso(new Zombie(275, "Zombie Cochon", 3, 1, 3));
-		E.ajouterPerso(new Ghast(285, "Ghast"));
-		E.ajouterPerso(new Ghast(275, "Ghast"));
-		E.ajouterPerso(new WitherSquelette(260, "Wither Squelette"));
-		E.perso(0)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
-		break;
-	case 32:
-		E.ajouterPerso(new Zombie(300, "Zombie Cochon", 3, 1, 3));
-		E.ajouterPerso(new WitherSquelette(305, "Wither Squelette"));
-		E.ajouterPerso(new WitherSquelette(303, "Wither Squelette"));
-		E.ajouterPerso(new WitherSquelette(302, "Wither Squelette"));
-		E.perso(0)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
-		break;
-	case 33:
+	case 24:
 		E.ajouterPerso(new Wither(300, "Wither lvl 1"));
 		E.ajouterPerso(new WitherSquelette(285, "Wither Squelette"));
 		E.ajouterPerso(new WitherSquelette(280, "Wither Squelette"));
 		E.ajouterPerso(new WitherSquelette(285, "Wither Squelette"));
 		E.ajouterPerso(new PhenixE(289, "phephe", 3));
 		break;
-	case 34:
-		E.ajouterPerso(new WitherSquelette(295, "Wither Squelette GOD ",1));
+	case 25:
+		E.ajouterPerso(new WitherSquelette(295, "Wither Squelette GOD ", 1));
 		E.ajouterPerso(new WitherSquelette(285, "Wither Squelette"));
-		E.ajouterPerso(new Wither(300, "Super WITHER",1));
+		E.ajouterPerso(new Wither(300, "Super WITHER", 1));
 		E.ajouterPerso(new WitherSquelette(285, "Wither Squelette"));
 		E.ajouterPerso(new WitherSquelette(290, "Wither Squelette"));
 		E.perso(0)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
 		E.perso(2)->setObjets(obj.objetNumero(28), obj.objetNumero(30));
+		break;
+	case 26:
+		
+		break;
+	case 27:
+	
+		break;
+	case 28:
+	
+		break;
+	case 29:
+		
+		break;
+	case 30:
+		
+		break;
+	case 31:
+	
+		break;
+	case 32:
+		
+		break;
+	case 33:
+		
+		break;
+	case 34:
+		
 		break;
 	case 35:
 		E.ajouterPerso(new Grognard(315, "Grognard"));

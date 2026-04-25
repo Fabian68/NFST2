@@ -1132,7 +1132,7 @@ void Affichage::afficherMecaniques(sf::RenderWindow* window, std::vector<sf::Sou
 	str = "Coup critique : Un coup critique permet de faire des dégats/soins critiques, de base 5% de chances de faire 50% de dégats/soins supplémentaires";
 	afficherTexte(x, y + 100.f, str, sf::Color::Red, window);
 
-	str = "Pourcentage de reduction de dégats : Reduit les dégats reçu en pourcentage, ne fonctionne pas avec les dégats brut";
+	str = "Pourcentage de reduction de dégats : Reduit les dégats reçu en pourcentage, ne fonctionne pas avec les dégats brut (avant reduction fixes)";
 	afficherTexte(x, y + 120.f, str, sf::Color::Green, window);
 
 	str = "Pourcentage de déviation : Renvoie (50% des dégats de base) une attaque avant les augmentation et diminuation des dégats, ne fonctionne pas avec les attaques brut,le passif défensif ne s'applique pas";

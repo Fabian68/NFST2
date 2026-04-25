@@ -453,14 +453,8 @@ int Personnage::calcul_ajout_degats(int Degat, Personnage* Defenseur) {
 	if (possedeObjetNumero(OBJET_FLEAU_SADIQUE)) {
 		Degat += stats().nbAttaques() * (1 + _niveau / 100);
 	}
-	if (this->estEnVie() && possedeObjetNumero(OBJET_ESPRIT_GUERRIER)) {
-		double ratio = 1.0 - ((vie() * 1.0) / (vieMax() * 1.0));
-		Degat += (int)((Degat * 1.0) * ratio);
-	}
-
-	if (possedeObjetNumero(OBJET_SPARTAN_ARMOR) && bouclier() >= 1) {
-		Degat = (int)(Degat * (1.0 + (bouclier() * 1.0) / (bouclierMax() * 1.0)));
-	}
+	Degat += status().adducteur();
+	
 
 	if (!this->estEnVie() && possedeObjetNumero(OBJET_HANTISE)) {
 		Degat *= 3;
@@ -530,7 +524,14 @@ int Personnage::calcul_ajout_degats(int Degat, Personnage* Defenseur) {
 		Degat *= 2;
 	}
 
-	Degat += status().adducteur();
+	if (this->estEnVie() && possedeObjetNumero(OBJET_ESPRIT_GUERRIER)) {
+		double ratio = 1.0 - ((vie() * 1.0) / (vieMax() * 1.0));
+		Degat += (int)((Degat * 1.0) * ratio);
+	}
+	
+	if (possedeObjetNumero(OBJET_SPARTAN_ARMOR) && bouclier() >= 1) {
+		Degat = (int)(Degat * (1.0 + (bouclier() * 1.0) / (bouclierMax() * 1.0)));
+	}
 
 	if (Degat < 0) {
 		Degat = 1;
@@ -570,14 +571,11 @@ int Personnage::calcul_reduction_degats(int Degat, Personnage* Defenseur) {
 			Degat = Degat - Degat / 4;
 		}
 	}
-	if (Degat < 0) {
-		Degat = 1;
-	}
 
 	if (Defenseur->possedeObjetNumero(OBJET_GILET_PARBALLE)) {
 		Degat -= Defenseur->niveau();
 	}
-	if (possedeObjetNumero(OBJET_COTE_SADO)) {
+	if (Defenseur->possedeObjetNumero(OBJET_COTE_SADO)) {
 		Degat -= Defenseur->stats().nbAttaquesRecues() * (1 + Defenseur->niveau() / 100);
 	}
 	if (Defenseur->possedeObjetNumero(OBJET_PEAU_EPAISSE)) {
@@ -588,7 +586,12 @@ int Personnage::calcul_reduction_degats(int Degat, Personnage* Defenseur) {
 	if (Defenseur->status().estEnMagasineur()) {
 		Defenseur->status().ajoutEnmagasination(Degat / 10);
 	}
+
 	Degat -= Defenseur->status().reducteur();
+
+	if (Degat < 0) {
+		Degat = 1;
+	}
 	return Degat;
 }
 void  Personnage::Attaque(int Degat, Personnage* Defenseur, Combat& C, sf::RenderWindow* window, std::vector< sf::Sound >& allSounds)
@@ -732,9 +735,6 @@ void  Personnage::Attaque(int Degat, Personnage* Defenseur, Combat& C, sf::Rende
 		}
 	}
 }
-
-
-
 
 
 void Personnage::changeTour(bool estSonTour) {
